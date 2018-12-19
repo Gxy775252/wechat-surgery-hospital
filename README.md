@@ -1,4 +1,4 @@
-# tide-star
+# wechat-surgery-hospital
 
 ## Project setup
 ```
