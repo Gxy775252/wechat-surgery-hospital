@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import 'we-vue/lib/style.css'
-import { Tabbar, TabbarItem, Badge } from 'we-vue'
+import {Tabbar,TabbarItem,Badge} from 'we-vue'
 import config from './assets/js/config'
 import 'babel-polyfill'
 import wx from 'weixin-js-sdk'
@@ -24,14 +24,12 @@ import * as API from '@/assets/js/api'
 //     jsApiList: [] // 必填，需要使用的JS接口列表
 //   });
 // })
-
-
 Vue.use(Tabbar).use(TabbarItem).use(Badge).use(config).use(wx);
 Vue.config.productionTip = false
 Vue.config.debug = true
 
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+	router,
+	store,
+	render: h => h(App)
 }).$mount('#app')

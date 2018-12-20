@@ -1,6 +1,15 @@
 <template>
 	<div>
-		
+		<div class="logo">
+			<img src="@/assets/images/icon/logo.png"/>
+		</div>
+		<!-- <div class="">
+			<div>
+				<wv-swipe>
+				  <wv-swipe-item style="background-color: #f44336">1</wv-swipe-item>
+				</wv-swipe>
+			</div>
+		</div> -->
 	</div>
 </template>
 
@@ -13,7 +22,10 @@ import { Authorization, parseUrl } from '@/assets/js/utils';
 import wx from 'weixin-js-sdk';
 import * as api from '@/assets/js/api';
 
-Vue.use(Swipe).use(SwipeItem).use(Flex).use(FlexItem);
+Vue.use(Swipe)
+    .use(SwipeItem)
+    .use(Flex)
+    .use(FlexItem);
 
 export default {
     name: 'index',
@@ -33,5 +45,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// @import '@/assets/css/MissionSquare.scss';
+@import '@/assets/css/Index.scss';
 </style>
