@@ -1,15 +1,28 @@
 <template>
 	<div>
-		<div class="logo">
-			<img src="@/assets/images/icon/logo.png"/>
+		<div class="TopContent">
+			<div class="logo">
+				<img src="@/assets/images/icon/logo.png"/>
+			</div>
+			<div class="search">
+				<img src="@/assets/images/icon/search.png"/>
+			</div>
 		</div>
-		<!-- <div class="">
-			<div>
-				<wv-swipe>
-				  <wv-swipe-item style="background-color: #f44336">1</wv-swipe-item>
+		<div class="swiper">
+			<div class="swiperImg">
+				<wv-swipe  :autoplay="4000" class="swiperImg">
+					<wv-swipe-item>
+						<img src="@/assets/images/icon/doctore.png" />	
+					</wv-swipe-item>
+					<wv-swipe-item>
+						<img src="@/assets/images/icon/doctore.png" />	
+					</wv-swipe-item>
+					<wv-swipe-item>
+						<img src="@/assets/images/icon/doctore.png" />	
+					</wv-swipe-item>
 				</wv-swipe>
 			</div>
-		</div> -->
+		</div>
 
 	</div>
 </template>
@@ -37,7 +50,7 @@ export default {
         return {
             isShowTaskWindow: true,
             taskInfo: {},
-			num: 3
+            num: 3
         };
     },
     created: function() {},
