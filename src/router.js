@@ -10,7 +10,7 @@ export default new Router({
 	routes: [{
 		path: '/',
 		name: 'index',
-		component: () => import('./views/MissionSquare.vue'),
+		component: () => import('./views/Index.vue'),
 		beforeEnter: (to, from, next) => {
 			document.title = '医美'
 			next()

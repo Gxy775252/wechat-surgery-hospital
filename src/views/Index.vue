@@ -1,14 +1,16 @@
 <template>
-	<div class="content">
-		<div class="header logo">
-			<img src="../assets/images/icon/logo.png" />
-			<img src="" />
+	<div>
+		<div class="logo">
+			<img src="@/assets/images/icon/logo.png"/>
 		</div>
-		<div class="MSswiper">
-			<div class="ppt_img">
-				<img v-for="(item, index) in num" :key="index" src="@/assets/images/icon/doctore.png" alt="">
+		<!-- <div class="">
+			<div>
+				<wv-swipe>
+				  <wv-swipe-item style="background-color: #f44336">1</wv-swipe-item>
+				</wv-swipe>
 			</div>
-		</div>
+		</div> -->
+
 	</div>
 </template>
 
@@ -45,5 +47,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/css/MissionSquare.scss';
+@import '@/assets/css/Index.scss';
 </style>
