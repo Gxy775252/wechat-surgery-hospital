@@ -39,5 +39,14 @@ export default new Router({
 			document.title = '我的'
 			next()
 		}
-	}, ]
+	}, {
+		path: '/docInfo',
+		name: 'docInfo',
+		component: () => import('./views/DocInfo.vue'),
+		beforeEnter: (to, from, next) => {
+			document.title = '医生详情'
+			next()
+		}
+	},
+]
 })

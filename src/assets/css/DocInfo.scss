@@ -1,0 +1,60 @@
+.content{
+  .header{
+    padding: .93rem;
+    >img{
+      width: 100%;
+      height: calc(31.33rem/2);
+      background: #000;
+      display: block;
+    }
+    .doc_name{
+      display: flex;
+      align-items: center;
+      color: #454545;
+      padding: 1rem 0;
+      .name{
+        font-size: 1.07rem;
+        font-weight: bold;
+      }
+      .info{
+        font-size: .67rem;
+      }
+      >i{
+        display: block;
+        width: 1px;
+        height: 15px;
+        background: #008e83;
+        margin: 0 .67rem;
+      }
+    }
+    .doc_jieshao{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      >p{
+        font-size: .67rem;
+        color: #777777;
+        width: 70%;
+      }
+      .doc_chengjiu{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .chengjiu_list{
+          padding: 0 1rem;         
+          >p{
+            text-align: center;
+          }
+          >p:first-child{
+            font-size: .93rem;
+            color: #008e83;
+          }
+          >p:last-child{
+            font-size: .67rem;
+            color: #666666;
+          }
+        }
+      }
+    }
+  }
+}
