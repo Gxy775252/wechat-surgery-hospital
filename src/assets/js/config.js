@@ -2,7 +2,7 @@ export default {
   install(Vue,options) {
 
     Vue.prototype.globalData = {
-      openid: null || 'omzBAwtLMNdrE3YXKj-85CGcR7T4'
+      openid: null || ''
     }
   }
 }

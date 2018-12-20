@@ -1,1 +1,1 @@
-export const requestUrl = 'https://chaoxing.juyouyueqi.com/api/post.php'
+export const requestUrl = ''

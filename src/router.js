@@ -5,17 +5,39 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 export default new Router({
-  // mode: 'history',
-  base: process.env.BASE_URL,
-  routes: [
-    {
-      path: '/',
-      name: 'task',
-      component: () => import('./views/MissionSquare.vue'),
-      beforeEnter: (to, from, next) => {
-        document.title = '任务广场'
-        next()
-      }
-    }
-  ]
+	// mode: 'history',
+	base: process.env.BASE_URL,
+	routes: [{
+		path: '/',
+		name: 'index',
+		component: () => import('./views/MissionSquare.vue'),
+		beforeEnter: (to, from, next) => {
+			document.title = '医美'
+			next()
+		}
+	}, {
+		path: '/reserve',
+		name: 'reserve',
+		component: () => import('./views/Reserve.vue'),
+		beforeEnter: (to, from, next) => {
+			document.title = '预约'
+			next()
+		}
+	}, {
+		path: '/shoppingMall',
+		name: 'shoppingMall',
+		component: () => import('./views/ShoppingMall.vue'),
+		beforeEnter: (to, from, next) => {
+			document.title = '商城'
+			next()
+		}
+	}, {
+		path: '/mine',
+		name: 'mine',
+		component: () => import('./views/Mine.vue'),
+		beforeEnter: (to, from, next) => {
+			document.title = '我的'
+			next()
+		}
+	}, ]
 })

@@ -24,5 +24,3 @@ npm run test
 ```
 npm run lint
 ```
-
-### 张钰杰修改 测试
