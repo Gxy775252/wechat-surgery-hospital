@@ -1,13 +1,14 @@
 .content{
   .header{
     padding: .93rem;
+    border-bottom: 16.5px solid #ededf1;
     >img{
       width: 100%;
       height: calc(31.33rem/2);
-      background: #000;
+      // background: #000;
       display: block;
     }
-    .doc_name{
+    .dortor_name{
       display: flex;
       align-items: center;
       color: #454545;
@@ -27,7 +28,7 @@
         margin: 0 .67rem;
       }
     }
-    .doc_jieshao{
+    .dortor_jieshao{
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -36,12 +37,12 @@
         color: #777777;  
         width: 70%;
       }
-      .doc_chengjiu{
+      .dortor_chengjiu{
         display: flex;
         align-items: center;
         justify-content: space-between;
         .chengjiu_list{
-          padding: 0 1rem;         
+          padding: 0 1rem;
           >p{
             text-align: center;
           }
@@ -55,6 +56,135 @@
           }
         }
       }
+    }
+  }
+  .hospital{
+    padding: 1rem;
+    // display: flex;
+    // align-items: center;
+    // justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1.5fr 5fr 1fr;
+    .hospital_img{
+      width: 3.33rem;
+      height: 3.33rem;
+      background: #000;
+    }
+    .hospital_info{
+      // margin-left: 1rem;
+      // display: flex;
+      // flex-wrap: nowrap;
+      // justify-content: space-between;
+      .hospital_name{
+        >p:first-child{
+          font-size: .8rem;
+          color: #333333;
+        }
+        >p:last-child{
+          font-size: .67rem;
+          color: #cccccc;
+        }
+      }
+      .hospital_address{
+        font-size: 10px;
+        color: #333333;
+      }
+    }
+    .hospital_tipe{
+      margin-left: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      >img{
+        width: 1.33rem;
+        height: 1.33rem;
+        background: #000;
+      }
+    }
+  }
+  .dortor_title{
+    background: #ededf1;
+    padding: .53rem 15px;
+    display: flex;
+    align-items: center;
+    >i{
+      display: block;
+      width: 1rem;
+      height: 1px;
+      background: #008e83;
+    }
+    >p{
+      font-size: 1rem;
+      color: #333333;
+      margin-left: .4rem;
+    }
+  }
+  .dortor_resume{
+    // padding: 1rem;
+    margin: 1rem;
+    border-left: 2px solid #008e83;
+    >img{
+      width: 4.93rem;
+      height: 2rem;
+      // background: #000;
+      margin-left: .67rem;
+      margin-bottom: 1rem;
+    }
+    .dortor_resume_list{
+      margin-left: .4rem;
+      padding: .67rem;
+      .dortor_resume_list_title{
+        display: flex;
+        align-items: center;
+        >i{
+          width: 15px;
+          height: 1px;
+          background: #008e83;
+        }
+        >p{
+          font-size: .8rem;
+          color: #008e83;
+          margin-left: .4rem;
+        }
+      }
+      >p{
+        margin-left: 1.33rem;
+        color: #333333;
+        font-size: .8rem;
+      }
+    }
+  }
+  .dortor_certificate{
+    padding: 1.6rem;
+    border-bottom: 1rem solid #ededf1;
+    .certificate_title{
+      color: #666666;
+      >p:first-child{
+        font-size: 1.07rem;
+      }
+      >p:last-child{
+        font-size: .8rem;
+      }
+    }
+    .certificate_img{
+      width: 100%;
+      height: calc(32.33rem/2);
+      background: #000;
+      margin: .93rem 0;
+    }
+  }
+  .page_bottom{
+    padding: 2.33rem;
+    >p{
+      text-align: center;
+    }
+    >p:first-child{
+      font-size: 1.5rem;
+      color: #008e83;
+    }
+    >p:last-child{
+      font-size: 1rem;
+      color: #666666;
     }
   }
 }
