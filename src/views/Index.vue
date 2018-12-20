@@ -10,6 +10,7 @@
 				</wv-swipe>
 			</div>
 		</div> -->
+
 	</div>
 </template>
 
@@ -35,7 +36,8 @@ export default {
     data: function() {
         return {
             isShowTaskWindow: true,
-            taskInfo: {}
+            taskInfo: {},
+			num: 3
         };
     },
     created: function() {},

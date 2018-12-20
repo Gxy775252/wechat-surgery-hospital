@@ -1,0 +1,12 @@
+.MSswiper {
+    width: 100%;
+    .ppt_img {
+        padding:0 1rem;
+        height: calc(470px/2);
+        > img {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+    }
+}
