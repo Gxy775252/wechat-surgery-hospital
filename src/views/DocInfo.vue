@@ -107,7 +107,11 @@
       <p>看见自己</p>
       <p>Discover yourself</p>
     </div>
-    <div style="height: 50px;"></div>
+    <div class="bottom_btn">
+      <button type="button" name="button">在线预约</button>
+      <button type="button" name="button">在线咨询</button>
+    </div>
+    <div style="height: 90px;"></div>
   </div>
 </template>
 

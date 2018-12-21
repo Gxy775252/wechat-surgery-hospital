@@ -34,7 +34,7 @@
       justify-content: space-between;
       >p{
         font-size: .67rem;
-        color: #777777;  
+        color: #777777;
         width: 70%;
       }
       .dortor_chengjiu{
@@ -185,6 +185,25 @@
     >p:last-child{
       font-size: 1rem;
       color: #666666;
+    }
+  }
+  .bottom_btn{
+    display: flex;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    bottom: 50px;
+    >button{
+      flex: 1;
+      padding: .67rem 1rem;
+      color: #ffffff;
+      font-size: 1.07rem;
+    }
+    >button:first-child{
+      background: #008e83;
+    }
+    >button:last-child{
+      background: #828d93;
     }
   }
 }
