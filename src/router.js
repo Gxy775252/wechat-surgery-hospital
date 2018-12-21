@@ -47,6 +47,13 @@ export default new Router({
 			document.title = '医生详情'
 			next()
 		}
-	},
-]
+	}, {
+		path: '/commodityList',
+		name: 'commodityList',
+		component: () => import('./views/commodityList.vue'),
+		beforeEnter: (to, from, next) => {
+			document.title = '商品列表'
+			next()
+		}
+	}, ]
 })
