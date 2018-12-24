@@ -28,7 +28,7 @@ export default new Router({
 		name: 'shoppingMall',
 		component: () => import('./views/ShoppingMall.vue'),
 		beforeEnter: (to, from, next) => {
-			document.title = '商城'
+			document.title = '商城首页'
 			next()
 		}
 	}, {
@@ -53,6 +53,14 @@ export default new Router({
 		component: () => import('./views/commodityList.vue'),
 		beforeEnter: (to, from, next) => {
 			document.title = '商品列表'
+			next()
+		}
+	}, {
+		path: '/register',
+		name: 'register',
+		component: () => import('./views/Register.vue'),
+		beforeEnter: (to, from, next) => {
+			document.title = '注册'
 			next()
 		}
 	}, ]
