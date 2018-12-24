@@ -120,6 +120,11 @@ export default {
   name: 'info',
   components: {
 
+  },
+  created: function(){
+    this.$store.commit('showBottomNav', {
+      isShow: false
+    })
   }
 }
 </script>

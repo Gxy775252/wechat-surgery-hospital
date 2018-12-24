@@ -95,7 +95,12 @@
 export default {
     data() {
         return {};
-    }
+    },
+		created: function(){
+			this.$store.commit('showBottomNav', {
+				isShow: false
+			})
+		}
 };
 </script>
 

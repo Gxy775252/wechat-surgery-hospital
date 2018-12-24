@@ -12,13 +12,13 @@
 			<div class="swiperImg">
 				<wv-swipe  :autoplay="4000" class="swiperImg">
 					<wv-swipe-item>
-						<img src="@/assets/images/icon/doctore.png" />	
+						<img src="@/assets/images/icon/doctore.png" />
 					</wv-swipe-item>
 					<wv-swipe-item>
-						<img src="@/assets/images/icon/doctore.png" />	
+						<img src="@/assets/images/icon/doctore.png" />
 					</wv-swipe-item>
 					<wv-swipe-item>
-						<img src="@/assets/images/icon/doctore.png" />	
+						<img src="@/assets/images/icon/doctore.png" />
 					</wv-swipe-item>
 				</wv-swipe>
 			</div>
@@ -142,7 +142,11 @@ export default {
             num: 3
         };
     },
-    created: function() {},
+    created: function() {
+			this.$store.commit('showBottomNav', {
+				isShow: true
+			})
+		},
     mounted: function() {},
     methods: {}
 };

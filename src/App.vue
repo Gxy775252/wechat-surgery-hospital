@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view/>
-    <Tabber></Tabber>
+    <Tabber v-if="$store.state.showBottomNav"></Tabber>
   </div>
 </template>
 <script type="text/javascript">

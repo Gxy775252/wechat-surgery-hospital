@@ -13,25 +13,24 @@
 			<div class="phone" style="padding-top:calc(6rem /2);">
 				<p>Phone number</p>
 				<div>
-					<input maxlength="11"/>
-					<p>点击发送验证码</p>
+					<input ref="phone" maxlength="11" value="" />
+					<p @click="getCode()">{{codeText}}</p>
 				</div>
 			</div>
 			<div class="phone" style="padding:calc(6rem /2) 0;">
 				<p>Verification Code</p>
 				<div>
-					<input maxlength="6"/>
-					<!-- <p>点击发送验证码</p> -->
+					<input ref="code" maxlength="6" value="" />
 				</div>
 			</div>
-			<div class="primary"> 
-				<button type="button">注册</button>
+			<div class="primary">
+				<button type="button" @click="submit">注册</button>
 			</div>
 		</div>
 		<div class="seeI">
 			<img src="@/assets/images/icon/kanjian.png" />
 		</div>
-		<Tan-Chuang>
+		<Tan-Chuang v-if="false">
 			<div class="slotImg">
 				<img src="@/assets/images/icon/lihe.png" />
 			</div>
@@ -46,22 +45,97 @@
 <script type="text/javascript">
 import TanChuang from '@/components/tanChuang';
 import Vue from 'vue';
-import { Button } from 'we-vue';
-import { Authorization, parseUrl } from '@/assets/js/utils';
+import { Button, Toast } from 'we-vue';
+import { Authorization, parseUrl, showBottomNav } from '@/assets/js/utils';
 import wx from 'weixin-js-sdk';
 import * as api from '@/assets/js/api';
 Vue.use(Button);
 export default {
-    name: 'background',
+    name: 'register',
+		data(){
+			return {
+				count: 60,
+				codeText: '点击发送验证码'
+			}
+		},
     components: {
         TanChuang
     },
     created: function() {
-        // function aaa(){
-        //   console.log('222')
-        // }
+			this.$store.commit('showBottomNav', {
+				isShow: false
+			})
     },
-    mounted: function() {}
+    mounted: function() {
+
+		},
+		methods: {
+			getCode: function(){
+				let isPhone = /^1(3|4|5|7|8)\d{9}$/
+        let { value } = this.$refs.phone
+				if(!isPhone.test(value)){
+					Toast.text({
+						duration: 1000,
+						message: '请输入正确格式的手机号'
+					})
+					return
+				}
+				api.getAndSendSms({
+					data: {
+						phone: value,
+						openid: this.globalData.openid
+					}
+				}).then(json => {
+					const { code } = res.data.info
+          if(res.data.code == 0){
+            this.code = code
+            Toast.text({
+              duration: 1000,
+              message: '已发送'
+            })
+            this.setTime(this.count)
+
+          }else{
+            Toast.text({
+              duration: 1000,
+              message: '发送失败'
+            })
+          }
+					console.log(json,'--------json')
+				})
+			},
+			submit: function(){
+				let isPhone = /^1(3|4|5|7|8)\d{9}$/
+				let { code, phone } = this.$refs
+				if(!isPhone.test(phone.value)){
+					Toast.text({
+						duration: 1000,
+						message: '请输入正确格式的手机号'
+					})
+					return
+				}
+				if(code.value != this.code){
+					Toast.text({
+						duration: 1000,
+						message: '验证码不正确'
+					})
+					return
+				}
+			},
+			setTime: function(num){
+				let run = setInterval(() => {
+					num--
+					if(num == 0){
+						this.codeText = '点击发送验证码'
+						this.getCodeIsClick = true
+						clearInterval(run)
+					}else{
+						this.codeText = `${num}s`
+						this.getCodeIsClick = false
+					}
+				}, 1000)
+			}
+		}
 };
 </script>
 <style lang="scss" scoped>
