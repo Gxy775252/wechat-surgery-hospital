@@ -11,4 +11,4 @@ import { _apiPOST, _apiGET, _apiPUT, _apiDELETE } from './apiUtils'
 export const getAndSendSms = (options) => _apiPOST(`${API_ROOT}/wx/getAndSendSms`, options)
 
 // post获取数据
-export const postAPI = (options) => _apiPOST(`${API_ROOT}`, options)
+export const postRegister = (options) => _apiPOST(`${API_ROOT}/wx/register`, options)

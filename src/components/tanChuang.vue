@@ -3,7 +3,7 @@
 		<div class="model">
 			<div class="modelWhite">
 				<slot></slot>
-				<button type="button">确定</button>
+				<button type="button" @click="clickDetermine">确定</button>
 			</div>
 		</div>
 	</div>
@@ -11,9 +11,17 @@
 
 <script>
 export default {
+		props:['data'],
     data() {
         return {};
-    }
+    },
+		methods: {
+			clickDetermine: function(){
+				if(this.data == "register"){
+					this.$emit("HideTanChuang",{data: this.data});
+				}
+      },
+		}
 };
 </script>
 
