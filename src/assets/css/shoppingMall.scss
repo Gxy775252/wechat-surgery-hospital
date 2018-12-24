@@ -1,6 +1,83 @@
 .mallTop {
     width: calc(47.6rem / 2);
     height: calc(4.4rem / 2);
-    margin: calc(2.4rem / 2) auto;
-	background-color: #f7f7f7;
+    margin: auto;
+    background-color: #f7f7f7;
+    display: flex;
+    align-items: center;
+    margin-top: calc(2.4rem / 2);
+    .mallCenter {
+        display: flex;
+        align-items: center;
+        margin: auto;
+        .mallImg {
+            width: calc(1.6rem / 2);
+            height: calc(1.6rem / 2);
+            > img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        > p {
+            font-size: calc(1.73rem / 2);
+            padding: 0 0.5rem;
+        }
+    }
+}
+
+.navList {
+    width: calc(47.6rem / 2) !important;
+    margin: auto;
+    > p {
+        margin: 0 !important;
+        margin-right: 1.5rem !important;
+    }
+}
+.centerImg {
+    width: 100%;
+    height: calc(30rem / 2);
+    margin-top: calc(2.3rem / 2);
+    display: flex;
+    justify-content: space-between;
+    .left {
+        width: calc(22rem / 2);
+        height: 100%;
+        > img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .right {
+        height: 100%;
+        width: calc(26.66rem / 2);
+        position: relative;
+        .top {
+            height: calc(13.33rem / 2);
+            width: 100%;
+            position: absolute;
+            top: 0;
+            right: 0;
+            > img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .bottom {
+            width: 100%;
+            height: calc(15.33rem / 2);
+            display: flex;
+            justify-content: space-between;
+			position: absolute;
+			bottom: 0;
+			right: 0;
+            > div {
+                width: calc(12.66rem / 2);
+                height: calc(15.33rem / 2);
+                > img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+    }
 }

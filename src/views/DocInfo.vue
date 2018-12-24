@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="content">
     <div class="header">
-      <img src="@/assets/images/icon/doctor.png" alt="">
+      <img src="@/assets/images/example/doctor.png" alt="">
       <div class="dortor_name">
         <p class="name">黄伟医生</p>
         <i></i>

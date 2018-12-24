@@ -24,7 +24,7 @@
 		<div class="AllList">
 			<div class="listDiv">
 				<div class="listImg">
-					<img src="@/assets/images/icon/doctore.png" />
+					<img src="@/assets/images/example/doctor.png" />
 				</div>
 				<div class="listText">
 					<p>活力眼凝胶</p>
@@ -39,7 +39,7 @@
 			</div>
 			<div class="listDiv">
 				<div class="listImg">
-					<img src="@/assets/images/icon/doctore.png" />
+					<img src="@/assets/images/example/doctor.png" />
 				</div>
 				<div class="listText">
 					<p>活力眼凝胶</p>
@@ -54,7 +54,7 @@
 			</div>
 			<div class="listDiv">
 				<div class="listImg">
-					<img src="@/assets/images/icon/doctore.png" />
+					<img src="@/assets/images/example/doctor.png" />
 				</div>
 				<div class="listText">
 					<p>活力眼凝胶</p>
@@ -69,7 +69,7 @@
 			</div>
 			<div class="listDiv">
 				<div class="listImg">
-					<img src="@/assets/images/icon/doctore.png" />
+					<img src="@/assets/images/example/doctor.png" />
 				</div>
 				<div class="listText">
 					<p>活力眼凝胶</p>

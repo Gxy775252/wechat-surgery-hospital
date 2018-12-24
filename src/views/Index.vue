@@ -12,20 +12,20 @@
 			<div class="swiperImg">
 				<wv-swipe  :autoplay="4000" class="swiperImg">
 					<wv-swipe-item>
-						<img src="@/assets/images/icon/doctore.png" />	
+						<img src="@/assets/images/example/doctor.png" />	
 					</wv-swipe-item>
 					<wv-swipe-item>
-						<img src="@/assets/images/icon/doctore.png" />	
+						<img src="@/assets/images/example/doctor.png" />	
 					</wv-swipe-item>
 					<wv-swipe-item>
-						<img src="@/assets/images/icon/doctore.png" />	
+						<img src="@/assets/images/example/doctore.png" />	
 					</wv-swipe-item>
 				</wv-swipe>
 			</div>
 		</div>
 		<div class="doctor">
 			<div class="doctorImg">
-				<img src="@/assets/images/icon/doctor.png" />
+				<img src="@/assets/images/example/doctor.png" />
 			</div>
 			<div class="doctorText">
 				<div class="centerText">
@@ -52,7 +52,7 @@
 				</div>
 			</div>
 			<div class="doctorImg">
-				<img src="@/assets/images/icon/doctor.png" />
+				<img src="@/assets/images/example/doctor.png" />
 			</div>
 		</div>
 		<div class="diary">
@@ -77,10 +77,10 @@
 			</div>
 			<div class="mationCenter">
 				<div>
-					<img src="@/assets/images/icon/doctore.png" />
+					<img src="@/assets/images/example/doctore.png" />
 				</div>
 				<div>
-					<img src="@/assets/images/icon/doctor.png" />
+					<img src="@/assets/images/example/doctor.png" />
 				</div>
 			</div>
 			<div class="mationBottom">
