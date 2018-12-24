@@ -30,7 +30,7 @@
 		<div class="seeI">
 			<img src="@/assets/images/icon/kanjian.png" />
 		</div>
-		<Tan-Chuang v-if="false">
+		<Tan-Chuang v-if="successReg" @HideTanChuang="clickDetermine" :data="this.$options.name">
 			<div class="slotImg">
 				<img src="@/assets/images/icon/lihe.png" />
 			</div>
@@ -55,13 +55,15 @@ export default {
 		data(){
 			return {
 				count: 60,
-				codeText: '点击发送验证码'
+				codeText: '点击发送验证码',
+				successReg: false
 			}
 		},
     components: {
         TanChuang
     },
     created: function() {
+			// console.log(,'---------???')
 			this.$store.commit('showBottomNav', {
 				isShow: false
 			})
@@ -85,23 +87,21 @@ export default {
 						phone: value,
 						openid: this.globalData.openid
 					}
-				}).then(json => {
-					const { code } = res.data.info
-          if(res.data.code == 0){
-            this.code = code
+				}).then(res => {
+					const code = res.data.code
+          if(res.data.flag){
+            this.code = code || '112233'
             Toast.text({
               duration: 1000,
               message: '已发送'
             })
             this.setTime(this.count)
-
           }else{
             Toast.text({
               duration: 1000,
               message: '发送失败'
             })
           }
-					console.log(json,'--------json')
 				})
 			},
 			submit: function(){
@@ -121,6 +121,17 @@ export default {
 					})
 					return
 				}
+				api.postRegister({
+					data: {
+						openid: this.globalData.openid,
+						phone: phone.value,
+						validcode: code.value
+					}
+				}).then(res => {
+					if(res.data.flag){
+						this.successReg = true
+					}
+				})
 			},
 			setTime: function(num){
 				let run = setInterval(() => {
@@ -134,6 +145,11 @@ export default {
 						this.getCodeIsClick = false
 					}
 				}, 1000)
+			},
+			clickDetermine: function(res){
+				this.$router.push({name: 'index'})
+				// if(this.$options.name == res.data){
+				// }
 			}
 		}
 };
