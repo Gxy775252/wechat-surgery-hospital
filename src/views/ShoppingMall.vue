@@ -56,8 +56,23 @@
 				<p>热销商品</p>
 			</div>
 		</div>
-		
-		
+		<div class="list">
+			<div class="listText">
+				<div class="listImg">
+					<img src="@/assets/images/example/listImgOne.png" />
+				</div>
+				<div class="listContent">
+					<p class="lctA">活力眼凝胶</p>
+					<p class="lctB">香调浓郁，持久清爽，纯植物配方</p>
+					<div class="lctC">
+						<p>￥ 99</p>
+						<div>
+							<img src="@/assets/images/icon/joinCart.png" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div style="height:6rem;"></div>
 	</div>
 </template>
