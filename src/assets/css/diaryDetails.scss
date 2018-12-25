@@ -1,0 +1,146 @@
+body { background-color: #f7f7f7;}
+.userBox{
+	width: 100%;
+	margin: auto;
+	display: flex;
+	align-items: center;
+	height:calc(13.6rem/2);
+	background-color: #ffffff;
+	.userImg{
+		height:calc(9.3rem/2);
+		width: calc(9.3rem/2);
+		margin-left:calc(1.3rem/2);
+		img{
+			height: 100%;
+			width: 100%;
+		}
+	}
+	.userFont{
+		margin-left:calc(1.4rem/2);
+		margin-right:calc(1.3rem/2);
+		.userName{
+			font-size: calc(1.8rem/2);
+			color: #333333;
+			font-weight: bold;
+		}
+		.userTitle{
+			font-size: calc(1.3rem/2);
+			color: #777777;
+		}
+	}
+}
+.lineBox{
+	height:calc(3.6rem/2);
+	display: flex;
+	align-items: center;
+	background-color: #f7f7f7;
+	.lineImg{
+		margin-left:calc(1.4rem/2);
+		width:calc(1.6rem/2);
+		img{
+			width: 100%;
+		}
+	}
+	p{
+		line-height:calc(3.6rem/2);
+		font-size: calc(1.9rem/2);
+		color: #333;
+		margin-left:calc(1.4rem/2);
+	}
+}
+.doctorBox{
+	display:flex;
+	justify-content: space-between;
+	align-items: center;
+	height:calc(12rem/2);
+	.doctorImgName{
+		display: flex;
+		.doctorImg{
+			margin-left: calc(2.5rem/2);
+			height:calc(7.5rem/2);
+			width:calc(7.5rem/2);
+			>img{
+				height: 100%;
+				width: 100%;
+			}
+		}
+		.doctorFont{
+			margin-left:calc(1.4rem/2);
+			height:calc(7.5rem/2);
+			.doctorName{
+				font-size:calc(1.6rem/2);
+				color: #333;
+				font-weight: bold;
+			}
+			.doctorTitle{
+				font-size:calc(1.1rem/2);
+				color:#ccc;
+			}
+			.doctorAdd{
+				color: #333;
+				font-size:calc(1.3rem/2);
+			}
+		}
+	}
+	.doctorHorn{
+		height: calc(3.3rem/2);
+		>img{
+			height: 100%;
+		}
+		margin-right:calc(1.4rem/2);
+	}
+	}
+	.diaryList{
+	  margin:calc(3rem/2) 0 calc(3rem/2) calc(3rem/2);
+	  border-left:calc(0.25rem/2) solid #008e83;
+	  .yearFont{
+	  	color: #999;
+	  	font-size: calc(1.8rem/2);
+		margin-left:calc(1.4rem/2);
+		font-weight: bold;
+	  }
+	  .month{
+		margin-top:calc(0.6rem/2);
+		margin-left:calc(1.4rem/2);
+	  	height:calc(3.6rem/2);
+	  	display: flex;
+	  	align-items: center;
+	  	.monthImg{
+	  		width:calc(1.3rem/2);
+	  		img{
+	  			width: 100%;
+	  		}
+	  	}
+			p{
+				margin-left:calc(1.4rem/2);
+				font-size:calc(1.3rem/2);
+				color: #008e83;
+			}
+	}
+}
+	.listContent{
+		margin-top:calc(0.6rem/2);
+		width:calc(41rem/2);
+		margin-left:calc(4.1rem/2);
+		.contentBox{
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			img{
+				width: calc(20rem/2);
+				height: calc(21.3rem/2);
+			}
+		}
+		.listFont{
+			font-size: calc(1.3rem/2);
+			color: #333;
+			margin-top:calc(1.8rem/2);
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 2;
+			overflow: hidden;
+			margin-bottom:calc(3.5rem/2);
+		}
+		
+	}
+	

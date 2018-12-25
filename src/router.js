@@ -8,60 +8,122 @@ export default new Router({
 	// mode: 'history',
 	base: process.env.BASE_URL,
 	routes: [{
-		path: '/',
-		name: 'index',
-		component: () => import('./views/Index.vue'),
-		beforeEnter: (to, from, next) => {
-			document.title = '医美'
-			next()
-		}
-	}, {
-		path: '/reserve',
-		name: 'reserve',
-		component: () => import('./views/Reserve.vue'),
-		beforeEnter: (to, from, next) => {
-			document.title = '预约'
-			next()
-		}
-	}, {
-		path: '/shoppingMall',
-		name: 'shoppingMall',
-		component: () => import('./views/ShoppingMall.vue'),
-		beforeEnter: (to, from, next) => {
-			document.title = '商城首页'
-			next()
-		}
-	}, {
-		path: '/mine',
-		name: 'mine',
-		component: () => import('./views/Mine.vue'),
-		beforeEnter: (to, from, next) => {
-			document.title = '我的'
-			next()
-		}
-	}, {
-		path: '/docInfo',
-		name: 'docInfo',
-		component: () => import('./views/DocInfo.vue'),
-		beforeEnter: (to, from, next) => {
-			document.title = '医生详情'
-			next()
-		}
-	}, {
-		path: '/commodityList',
-		name: 'commodityList',
-		component: () => import('./views/commodityList.vue'),
-		beforeEnter: (to, from, next) => {
-			document.title = '商品列表'
-			next()
-		}
-	}, {
-		path: '/register',
-		name: 'register',
-		component: () => import('./views/Register.vue'),
-		beforeEnter: (to, from, next) => {
-			document.title = '注册'
-			next()
-		}
-	}, ]
+			path: '/',
+			name: 'index',
+			component: () => import('./views/Index.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '医美'
+				next()
+			}
+		}, {
+			path: '/reserve',
+			name: 'reserve',
+			component: () => import('./views/Reserve.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '预约'
+				next()
+			}
+		}, {
+			path: '/shoppingMall',
+			name: 'shoppingMall',
+			component: () => import('./views/ShoppingMall.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '商城首页'
+				next()
+			}
+		}, {
+			path: '/commodityList',
+			name: 'commodityList',
+			component: () => import('./views/commodityList.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '商品列表'
+				next()
+			}
+		}, {
+			path: '/commodityDetail',
+			name: 'commodityDetail',
+			component: () => import('./views/commodityDetail.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '商品详情'
+				next()
+			}
+		}, {
+			path: '/mine',
+			name: 'mine',
+			component: () => import('./views/Mine.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '我的'
+				next()
+			}
+		}, {
+			path: '/register',
+			name: 'register',
+			component: () => import('./views/Register.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '注册'
+				next()
+			}
+		}, {
+			path: '/docInfo',
+			name: 'docInfo',
+			component: () => import('./views/DocInfo.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '医生详情'
+				next()
+			}
+		},
+		{
+			path: '/beautifulDiary',
+			name: 'beautifulDiary',
+			component: () => import('./views/beautifulDiary.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '美丽日记'
+				next()
+			}
+		}, {
+			path: '/diaryDetails',
+			name: 'diaryDetails',
+			component: () => import('./views/diaryDetails.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '美丽日记详情'
+				next()
+			}
+		},
+		{
+			path: '/newAddress',
+			name: 'newAddress',
+			component: () => import('./views/newAddress.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '编辑收货地址'
+				next()
+			}
+		},
+		{
+			path: '/successfulPayment',
+			name: 'successfulPayment',
+			component: () => import('./views/successfulPayment.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '付款成功'
+				next()
+			}
+		},
+		{
+			path: '/successReserve',
+			name: 'successReserve',
+			component: () => import('./views/successReserve.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '预订成功'
+				next()
+			}
+		},
+		{
+			path: '/investigation',
+			name: 'investigation',
+			component: () => import('./views/investigation.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '满意度调查'
+				next()
+			}
+		},
+	]
 })
