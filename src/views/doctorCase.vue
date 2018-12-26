@@ -1,7 +1,13 @@
 <template>
 	<div>
-		<div class="topBigImg">
-			<img src="@/assets/images/example/yiqi.png" />
+		<div class="caseTop">
+			<p>全部</p>
+			<p>全部案例</p>
+			<p>全部案例</p>
+			<p>全部案例</p>
+			<p>全部案例</p>
+			<p>全部案例</p>
+			<div style="clear:both"></div>
 		</div>
 		<div class="mation">
 			<div class="mationTop">
@@ -39,11 +45,16 @@
 			return {
 
 			};
-		}
+		},
+		created: function() {
+			this.$store.commit('showBottomNav', {
+				isShow: false
+			})
+		},
 	}
 </script>
 
 <style lang="scss" scoped>
-	@import '@/assets/css/Index.scss';
-	@import '@/assets/css/beautifulDiary.scss';
+@import '@/assets/css/doctorCase.scss';
+@import '@/assets/css/Index.scss';
 </style>

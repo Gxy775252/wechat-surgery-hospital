@@ -23,7 +23,17 @@ export default new Router({
 				document.title = '预约'
 				next()
 			}
-		}, {
+		},
+		{
+			path: '/reserveDetail',
+			name: 'reserveDetail',
+			component: () => import('./views/reserveDetail.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '预约详情'
+				next()
+			}
+		},
+		{
 			path: '/shoppingMall',
 			name: 'shoppingMall',
 			component: () => import('./views/ShoppingMall.vue'),
@@ -63,12 +73,37 @@ export default new Router({
 				document.title = '注册'
 				next()
 			}
+		},
+		{
+			path: '/doctorList',
+			name: 'doctorList',
+			component: () => import('./views/doctorList.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '医生列表'
+				next()
+			}
 		}, {
 			path: '/docInfo',
 			name: 'docInfo',
 			component: () => import('./views/DocInfo.vue'),
 			beforeEnter: (to, from, next) => {
 				document.title = '医生详情'
+				next()
+			}
+		}, {
+			path: '/doctorCase',
+			name: 'doctorCase',
+			component: () => import('./views/doctorCase.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '医生案例'
+				next()
+			}
+		}, {
+			path: '/instrumentList',
+			name: 'instrumentList',
+			component: () => import('./views/instrumentList.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '仪器列表'
 				next()
 			}
 		},
@@ -99,6 +134,24 @@ export default new Router({
 			}
 		},
 		{
+			path: '/selectAddress',
+			name: 'selectAddress',
+			component: () => import('./views/selectAddress.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '选择收货地址'
+				next()
+			}
+		},
+		{
+			path: '/placeOrder',
+			name: 'placeOrder',
+			component: () => import('./views/placeOrder.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '提交订单'
+				next()
+			}
+		},
+		{
 			path: '/successfulPayment',
 			name: 'successfulPayment',
 			component: () => import('./views/successfulPayment.vue'),
@@ -124,6 +177,6 @@ export default new Router({
 				document.title = '满意度调查'
 				next()
 			}
-		},
+		}, 
 	]
 })

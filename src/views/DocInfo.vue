@@ -125,6 +125,7 @@ export default {
     this.$store.commit('showBottomNav', {
       isShow: false
     })
+		console.log(this.$route.params);
   }
 }
 </script>

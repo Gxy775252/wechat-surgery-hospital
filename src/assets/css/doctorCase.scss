@@ -1,0 +1,17 @@
+.caseTop{
+	width:100%;
+	>p{
+		float: left;
+		width: calc(10rem/2);
+		height: calc(3.06rem/2);
+		line-height: calc(3.06rem/2);
+		text-align: center;
+		background-color: #f4f4f4;
+		color:#666;
+		font-size: calc(1.46rem/2);
+		margin-left:calc(1.3rem/2);
+		margin-top: calc(2.53rem/2);
+		padding:0.1rem 0.2rem;
+		border-radius: 0.13rem;
+	}
+}

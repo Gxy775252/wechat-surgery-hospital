@@ -1,10 +1,11 @@
+<!-- 首页 -->
 <template>
 	<div>
 		<div class="TopContent">
 			<div class="logo">
 				<img src="@/assets/images/icon/logo.png"/>
 			</div>
-			<div class="search">
+			<div class="search" @click="goSearch()">
 				<img src="@/assets/images/icon/search.png"/>
 			</div>
 		</div>
@@ -33,7 +34,7 @@
 					<p>执医超过15年</p>
 					<p>中日友好医院整形外科主任医师</p>
 				</div>
-				<div class="bottomText" style="left:0.66rem;">
+				<div class="bottomText" style="left:0.66rem;" @click="goDoctorList()">
 					<p>查看更多医生</p>
 					<img src="@/assets/images/icon/rightColor.png" />
 				</div>
@@ -46,7 +47,7 @@
 					<p>汇聚60多部环球卓越医美仪器体验顶尖医美疗程</p>
 					<p></p>
 				</div>
-				<div class="bottomText" style="right:0.66rem;">
+				<div class="bottomText" style="right:0.66rem;"  @click="goInstrumentList()">
 					<img src="@/assets/images/icon/rightColor.png" style="transform:rotate(180deg);margin: 0 0.3rem 0 0;"/>
 					<p>查看更多仪器</p>
 				</div>
@@ -60,7 +61,7 @@
 				<img src="@/assets/images/icon/level.jpg"/>
 				<p>美丽日记</p>
 			</div>
-			<div class="diaryRight">
+			<div class="diaryRight" @click="gobeautifulDiary()">
 				<p>MORE</p>
 				<img src="@/assets/images/icon/rightGray.png"/>
 			</div>
@@ -132,23 +133,30 @@ Vue.use(Swipe)
 
 export default {
     name: 'index',
-    components: {
-        // HelloWorld
-    },
-    data: function() {
-        return {
-            isShowTaskWindow: true,
-            taskInfo: {},
-            num: 3
-        };
+    data() {
+        return {};
     },
     created: function() {
-			this.$store.commit('showBottomNav', {
-				isShow: true
-			})
-		},
-    mounted: function() {},
-    methods: {}
+        this.$store.commit('showBottomNav', {
+            isShow: true
+        });
+    },
+    methods: {
+        //         goDoctorList: function() {
+        // 			console.log('暂无搜索页面');
+        //             // 暂无搜索页面
+        //             // this.$router.push({ name: 'search'});
+        //         },
+        goDoctorList: function() {
+            this.$router.push({ name: 'doctorList' });
+        },
+        goInstrumentList: function() {
+            this.$router.push({ name: 'instrumentList' });
+        },
+        gobeautifulDiary: function() {
+            this.$router.push({ name: 'beautifulDiary' });
+        }
+    }
 };
 </script>
 

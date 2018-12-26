@@ -59,7 +59,7 @@
 		<div class="list">
 			<div class="listText">
 				<div class="listImg">
-					<img src="@/assets/images/example/listImgOne.png" />
+					<img src="@/assets/images/example/yiqi.png" />
 				</div>
 				<div class="listContent">
 					<p class="lctA">活力眼凝胶</p>

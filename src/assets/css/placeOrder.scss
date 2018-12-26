@@ -1,0 +1,194 @@
+.background{
+	background-color: #f7f7f7;
+	position:fixed;
+	top:0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+.addbox{
+	height:calc(11.33rem/2);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: #fff;
+	width: 100%;
+	.bigBox{
+		display: flex;
+		align-items: center;
+		width: 90%;
+	}
+}
+.addimg{
+	margin-left:calc(2rem/2);
+    width:calc(2.33rem/2);
+	height:calc(3.06rem/2);
+	img{
+		width: 100%;
+		height: 100%;
+	}
+}
+.addFont{
+	margin-left:calc(1.5rem/2);
+	width: 85%;
+	div{
+		display: flex;
+		justify-content: space-between;
+		.nameFont{
+			font-size:calc(1.73rem/2);
+			color: #333;
+		}
+	}
+	
+	.add{
+		font-size:calc(1.6rem/2);
+		color:#666;
+		margin-top: calc(0.66rem/2);
+	}
+}
+.buttonImg{
+	width:calc(1.06rem/2);
+	height:calc(2.06rem/2);
+	margin-right:calc(2rem/2);
+	img{
+		width: 100%;
+		height: 100%;
+	}
+}
+.comBox{
+	height:calc(12.66rem/2);
+	margin-top:calc(0.73rem/2);
+	width: 100%;
+	background-color: #fff;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+		.comImg{
+			margin-left:calc(2rem/2);
+			width:calc(8.66rem/2);
+			height: calc(8.66rem/2);
+		}
+		.specName{
+			height: calc(8.66rem/2);
+			width: 80%;
+			margin-left:calc(1.5rem/2);
+			.comName{
+				color: #333;
+				font-size: calc(1.6rem/2);
+			}
+			.spec{
+				color: #999;
+				font-size: calc(1.33rem/2);
+			}
+			>div{
+				margin-top:calc(0.6rem/2);
+				display: flex;
+				justify-content: space-between;
+				.money{
+					font-size:calc(1.86rem/2);
+					color: #008e83;
+				}
+				.number{
+					margin-right:calc(2rem/2);
+					font-size:calc(1.66rem/2);
+					height:calc(8.66rem/2);
+				}
+			}
+	}
+	
+}
+.payBox{
+	width: 100%;
+	margin-top:calc(0.73rem/2);
+	background-color: #fff;
+	.payFont{
+		height:calc(6.26rem/2);
+		line-height:calc(6.66rem/2);
+		margin-left:calc(2rem/2);
+		font-size:calc(1.73rem/2);
+	}
+}
+.payName{
+	margin:calc(0.26rem/2) 0rem;
+	background-color: #fff;
+	width: 100%;
+	padding-top:calc(1.33rem/2);
+	.payWeChat{
+		height:calc(6.26rem/2);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-left:calc(3.2rem/2);
+		.imgWeChat{
+			display: flex;
+			height:calc(6.26rem/2);
+			align-items: center;
+			>img{
+				height:calc(2.46rem/2);
+				width:calc(2.86rem/2);
+			}
+			p{
+				font-size:calc(1.6rem/2);
+				color: #333;
+				margin-left:calc(1.46rem/2);
+			}
+		}
+		.selectImg{
+			margin-right:calc(3.2rem/2);
+			img{
+				height:calc(3rem/2);
+				width: calc(3rem/2);
+			}
+		}
+		
+	}
+}
+.integralBox{
+	height:calc(8.53rem/2);
+	display: flex;
+	background-color: #fff;align-items:center ;
+	justify-content: space-between;
+	.integralFont{
+		margin-left:calc(3.2rem/2);
+		display: flex;
+		.uses{
+			font-size:calc(1.6rem/2);
+			color: #333;
+		}
+		.numberInt{
+			font-size:calc(1.2rem/2);
+			color: #333;
+		}
+	}
+	>img{
+		height:calc(3.13rem/2);
+		width:calc(5.93rem/2);
+		margin-right:calc(3.2rem/2);
+	}
+}
+.bottomBox{
+	height:calc(6.26rem/2);
+	display: flex;
+	align-items: center;
+	background-color: #fff;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	.bottomMoney{
+		width: 65%;
+		background-color: #fff;
+		margin-left:calc(2.2rem/2);
+		font-size:calc(1.93rem/2);
+		color:#008e83;
+	}
+	.bottomPay{
+		background-color:#008e83;
+		color: #fff;
+		font-size:calc(1.93rem/2);
+		width:35%;
+		height: 100%;
+		text-align: center;
+		line-height: calc(6.26rem/2);
+	}
+}

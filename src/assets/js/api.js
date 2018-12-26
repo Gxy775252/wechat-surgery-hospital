@@ -12,3 +12,9 @@ export const getAndSendSms = (options) => _apiPOST(`${API_ROOT}/wx/getAndSendSms
 
 // post获取数据
 export const postRegister = (options) => _apiPOST(`${API_ROOT}/wx/register`, options)
+
+// 获取医生列表信息 
+export const getDoctorList = (options) => _apiPOST(`${API_ROOT}/wx/goDoctorList`, options)
+
+// 获取仪器列表信息 
+export const getInstrumentList = (options) => _apiPOST(`${API_ROOT}/wx/goInstList`, options)
