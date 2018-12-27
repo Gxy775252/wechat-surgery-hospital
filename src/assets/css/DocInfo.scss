@@ -5,7 +5,6 @@
     >img{
       width: 100%;
       height: calc(31.33rem/2);
-      // background: #000;
       display: block;
     }
     .dortor_name{
@@ -60,21 +59,13 @@
   }
   .hospital{
     padding: 1rem;
-    // display: flex;
-    // align-items: center;
-    // justify-content: space-between;
     display: grid;
     grid-template-columns: 1.5fr 5fr 1fr;
     .hospital_img{
       width: 3.33rem;
       height: 3.33rem;
-      background: #000;
     }
     .hospital_info{
-      // margin-left: 1rem;
-      // display: flex;
-      // flex-wrap: nowrap;
-      // justify-content: space-between;
       .hospital_name{
         >p:first-child{
           font-size: .8rem;
@@ -96,9 +87,7 @@
       align-items: center;
       justify-content: center;
       >img{
-        width: 1.33rem;
-        height: 1.33rem;
-        background: #000;
+        width: 1rem;
       }
     }
   }
@@ -120,13 +109,11 @@
     }
   }
   .dortor_resume{
-    // padding: 1rem;
     margin: 1rem;
     border-left: 2px solid #008e83;
     >img{
       width: 4.93rem;
       height: 2rem;
-      // background: #000;
       margin-left: .67rem;
       margin-bottom: 1rem;
     }
@@ -169,7 +156,6 @@
     .certificate_img{
       width: 100%;
       height: calc(32.33rem/2);
-      background: #000;
       margin: .93rem 0;
     }
   }

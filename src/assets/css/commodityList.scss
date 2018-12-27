@@ -73,6 +73,10 @@
             margin: 0 calc(2rem / 2);
             margin-top: 0.33rem;
             font-weight: bold;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            overflow: hidden;
         }
         > p:nth-child(2) {
             font-size: 8.5px;
@@ -103,11 +107,11 @@
     }
 }
 .cart {
-    width: calc(6.53rem/2);
-    height: calc(6.53rem/2);
-	position: fixed;
-	right: 0.66rem;
-	bottom: 4rem;
+    width: calc(6.53rem / 2);
+    height: calc(6.53rem / 2);
+    position: fixed;
+    right: 0.66rem;
+    bottom: 4rem;
     > img {
         width: 100%;
         height: 100%;

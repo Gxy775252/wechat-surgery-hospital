@@ -43,14 +43,6 @@ export default new Router({
 			}
 		},
 		{
-			path: '/shoppingCart',
-			name: 'shoppingCart',
-			component: () => import('./views/shoppingCart.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '购物车'
-				next()
-			}
-		}, {
 			path: '/commodityList',
 			name: 'commodityList',
 			component: () => import('./views/commodityList.vue'),
@@ -58,12 +50,22 @@ export default new Router({
 				document.title = '商品列表'
 				next()
 			}
-		}, {
+		},
+		{
 			path: '/commodityDetail',
 			name: 'commodityDetail',
 			component: () => import('./views/commodityDetail.vue'),
 			beforeEnter: (to, from, next) => {
 				document.title = '商品详情'
+				next()
+			}
+		},
+		{
+			path: '/shoppingCart',
+			name: 'shoppingCart',
+			component: () => import('./views/shoppingCart.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '购物车'
 				next()
 			}
 		}, {

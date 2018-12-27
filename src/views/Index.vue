@@ -10,10 +10,13 @@
 			</div>
 		</div>
 		<div class="swiper">
-			<div class="swiperImg">
-				<wv-swipe :autoplay="4000" class="swiperImg">
+			<div>
+				<wv-swipe :autoplay="4000"class="swiperImg">
 					<wv-swipe-item v-for="item in swipeContent">
-						<img :src="item.cover" />
+						<img :src="item.cover" class="imgA"/>
+						<div v-if="item.isVideo==1" class="playImg">
+							<img src="@/assets/images/icon/playImg.png" />
+						</div>
 					</wv-swipe-item>
 				</wv-swipe>
 			</div>
@@ -25,6 +28,7 @@
 			<div class="doctorText">
 				<div class="centerText">
 					<img src="@/assets/css/indexDoctor.png" />
+					<!-- <img :src="configImg.homeDoctorPic" /> -->
 				</div>
 				<div class="bottomText" style="left:0.66rem;" @click="goDoctorList()">
 					<p>查看更多医生</p>
@@ -36,6 +40,7 @@
 			<div class="doctorText" style="border-left: 1px solid #008e83;border-right:0;margin-left: 6px;">
 				<div class="centerText" style="text-align: right;margin-right:0.66rem;">
 					<img src="@/assets/css/indexInstrument.png" />
+					<!-- <img :src="configImg.homeInstPic" /> -->
 				</div>
 				<div class="bottomText" style="right:0.66rem;" @click="goInstrumentList()">
 					<img src="@/assets/images/icon/rightColor.png" style="transform:rotate(180deg);margin: 0 0.3rem 0 0;" />
@@ -102,8 +107,8 @@
 		<div class="seeI">
 			<img src="@/assets/images/icon/seeI.png" />
 		</div>
-		<div class="briefImg" v-if="isPlay" @click="closeWindow()">
-			<Video-Play :videoUrl="videoUrl" @click="noClose()"></Video-Play>
+		<div class="briefImg" v-if="isPlay">
+			<Video-Play :videoUrl="videoUrl"></Video-Play>
 		</div>
 		<div style="height:6rem;"></div>
 	</div>
@@ -148,8 +153,8 @@ export default {
                 openid: this.globalData.openid
             }
         }).then(res => {
+            console.log('首页请求数据', res.data);
             if (res.data.flag) {
-                console.log(res.data);
                 this.configImg = res.data.config; //就那个看见自己上面的图，还有轮播下面的图；
                 this.swipeContent = res.data.listBanner; //轮播
                 this.selectList = res.data.listQa; //下拉框
@@ -163,11 +168,11 @@ export default {
         });
     },
     methods: {
-        //         goDoctorList: function() {
-        // 			console.log('暂无搜索页面');
-        //             // 暂无搜索页面
-        //             // this.$router.push({ name: 'search'});
-        //         },
+        goDoctorList: function() {
+            console.log('暂无搜索页面');
+            // 暂无搜索页面
+            // this.$router.push({ name: 'search'});
+        },
         goDoctorList: function() {
             //跳医生列表
             this.$router.push({
@@ -192,7 +197,7 @@ export default {
                 this.videoUrl = res.url;
                 this.isPlay = true;
             }
-        },
+        }
     }
 };
 </script>

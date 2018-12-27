@@ -1,14 +1,14 @@
 <template lang="html">
   <div class="content">
     <div class="header">
-      <img src="@/assets/images/example/doctor.png" alt="">
+      <img :src="doctorInfo.coverResource.cover" >
       <div class="dortor_name">
-        <p class="name">黄伟医生</p>
+        <p class="name">{{doctorInfo.name}}</p>
         <i></i>
-        <p class="info">整形医院五官精雕主任</p>
+        <p class="info">{{doctorInfo.title}}</p>
       </div>
       <div class="dortor_jieshao">
-        <p>多功能细胞与自体脂肪移植课题研究组成员中华医学学会医学美容协会</p>
+        <p>{{doctorInfo.brief}}</p>
         <div class="dortor_chengjiu">
           <div class="chengjiu_list">
             <p>278</p>
@@ -22,16 +22,16 @@
       </div>
     </div>
     <div class="hospital">
-      <img src="" alt="" class="hospital_img" />
+      <img :src="doctorInfo.headimg" alt="" class="hospital_img" />
       <div class="hospital_info">
         <div class="hospital_name">
-          <p>北京天辰嘉华医疗管理咨询有限公司</p>
-          <p>医疗美容整形医院</p>
+          <p>{{hospInfo.name}}</p>
+          <p>{{hospInfo.type}}</p>
         </div>
-        <p class="hospital_address">地址 | 北京市朝阳区安定路39号长新大厦401</p>
+        <p class="hospital_address">地址 | {{hospInfo.address}}</p>
       </div>
       <div class="hospital_tipe">
-        <img src="" alt="" />
+        <img src="@/assets/images/icon/horn.png" />
       </div>
     </div>
     <div class="dortor_title">
@@ -39,68 +39,69 @@
       <p>医生资料</p>
     </div>
     <div class="dortor_resume">
-      <img src="@/assets/images/icon/dortor_resume-icon.png" alt="" />
+      <img src="@/assets/images/icon/dortor_resume-icon.png"/>
       <div class="dortor_resume_list">
         <div class="dortor_resume_list_title">
           <i></i>
           <p>职业资格证书编号</p>
         </div>
-        <p>5645456456465456</p>
+        <p>{{listDqpcInfo[0].no || ""}}</p>
       </div>
       <div class="dortor_resume_list">
         <div class="dortor_resume_list_title">
           <i></i>
           <p>担任职务</p>
         </div>
-        <p>整形医院五官整形主任</p>
+        <p>{{doctorInfo.title}}</p>
       </div>
       <div class="dortor_resume_list">
         <div class="dortor_resume_list_title">
           <i></i>
           <p>擅长项目</p>
         </div>
-        <p>项目名称、项目名称</p>
+        <p v-for="item in listPrjInfo">
+					{{item.name}}
+				</p>
       </div>
       <div class="dortor_resume_list">
         <div class="dortor_resume_list_title">
           <i></i>
           <p>擅长仪器</p>
         </div>
-        <p>项目名称、项目名称</p>
+        <p v-for="item in listInstInfo">
+						{{item.name}}
+				</p>
       </div>
       <div class="dortor_resume_list">
         <div class="dortor_resume_list_title">
           <i></i>
           <p>医生简介</p>
         </div>
-        <p>啦啦啦啦啦阿拉啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦</p>
+        <p>
+					{{doctorInfo.brief}}
+				</p>
       </div>
       <div class="dortor_resume_list">
         <div class="dortor_resume_list_title">
           <i></i>
           <p>医生详情</p>
         </div>
-        <p>图文视频详情</p>
+        <p>
+					{{doctorInfo.content}}
+				</p>
       </div>
     </div>
     <div class="dortor_title">
       <i></i>
       <p>医生证件</p>
     </div>
-    <div class="dortor_certificate">
+    <div class="dortor_certificate" v-for="item in listDqpcInfo">
       <div class="certificate_title">
         <p>医生资格证书</p>
         <p>Doctor Qualification Certificate</p>
       </div>
       <div class="certificate_img">
-        <img src="" alt="">
-      </div>
-      <div class="certificate_title">
-        <p>医生资格证书</p>
-        <p>Doctor Qualification Certificate</p>
-      </div>
-      <div class="certificate_img">
-        <img src="" alt="">
+        <img :src="item.pic" alt="">
       </div>
     </div>
     <div class="page_bottom">
@@ -116,18 +117,46 @@
 </template>
 
 <script>
+import * as api from '@/assets/js/api';
 export default {
-  name: 'info',
-  components: {
-
-  },
-  created: function(){
-    this.$store.commit('showBottomNav', {
-      isShow: false
-    })
-		console.log(this.$route.params);
-  }
-}
+    name: 'DocInfo',
+    data() {
+        return {
+            doctorInfo: '', //医生信息
+            hospInfo: '', //医院信息
+            listPrjInfo: '', //擅长项目列表信息
+            listInstInfo: '', //擅长仪器列表信息
+            listDqpcInfo: '' //证书列表信息
+        };
+    },
+    components: {},
+    created: function() {
+        this.$store.commit('showBottomNav', {
+            isShow: false
+        });
+        api.getDoctorDetail({
+            data: {
+                openid: this.globalData.openid,
+                // id: this.$route.params.doctorId,
+                id: 1
+            }
+        }).then(res => {
+            if (res.data.flag) {
+                console.log('医生详情请求数据', res.data);
+                this.doctorInfo = res.data.doctor;
+                this.hospInfo = res.data.hosp;
+                this.listPrjInfo = res.data.listPrj;
+                this.listInstInfo = res.data.listInst;
+                this.listDqpcInfo = res.data.listDqpc;
+            } else {
+                Toast.text({
+                    duration: 1000,
+                    message: '请求失败'
+                });
+            }
+        });
+    }
+};
 </script>
 
 <style lang="scss" scoped>

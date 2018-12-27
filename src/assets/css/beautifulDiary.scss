@@ -1,14 +1,21 @@
-.topBigImg{
-	width: 100%;
-	height: calc(26.66rem/2);
-	>img{
-		width: 100%;
-		height: 100%;
-	}
+.over {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
 }
-.over{
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 2;
-	overflow: hidden;
+.diarySwiper {
+    width: 100%;
+    height: calc(26.66rem / 2);
+    .diarySwiperImg {
+        margin: auto;
+        width: 100%;
+        height: calc(26.66rem / 2);
+        position: relative;
+        .diaryImgA {
+            width: 100%;
+            height: 100%;
+            margin: auto;
+        }
+    }
 }

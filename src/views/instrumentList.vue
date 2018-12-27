@@ -4,7 +4,7 @@
 			<div class="swiperImg">
 				<wv-swipe :autoplay="4000" class="swiperImg">
 					<wv-swipe-item  v-for="item in swipeContent"> 
-						<img :src="item.cover" />
+						<img :src="item.cover" class="imgA"/>
 					</wv-swipe-item>
 				</wv-swipe>
 			</div>
@@ -40,6 +40,7 @@ import * as api from '@/assets/js/api';
 Vue.use(Swipe).use(SwipeItem);
 import VideoPlay from '@/components/bigWindowVideo';
 export default {
+    name: 'instrumentList',
     data() {
         return {
             dataList: '',
@@ -76,20 +77,20 @@ export default {
             }
         });
     },
-	methods:{
-		videoPlay: function(res) {
-			// 点击播放视频
-			console.log(res);
-// 			for (let i = 0; i < this.dataList.length; i++) {
-// 				if (this.dataList[i].id == res.id && res.coverResource.isVideo == 1) {
-// 					this.dataList[i].isPlay = true;
-// 					this.videoUrl = res.coverResource.url;
-// 				} else {
-// 					this.dataList[i].isPlay = false;
-// 				}
-// 			}
-		},
-	}
+    methods: {
+        videoPlay: function(res) {
+            // 点击播放视频
+            console.log(res);
+            // 			for (let i = 0; i < this.dataList.length; i++) {
+            // 				if (this.dataList[i].id == res.id && res.coverResource.isVideo == 1) {
+            // 					this.dataList[i].isPlay = true;
+            // 					this.videoUrl = res.coverResource.url;
+            // 				} else {
+            // 					this.dataList[i].isPlay = false;
+            // 				}
+            // 			}
+        }
+    }
 };
 </script>
 

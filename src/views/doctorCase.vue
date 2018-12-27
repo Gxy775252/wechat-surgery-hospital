@@ -1,34 +1,26 @@
 <template>
 	<div>
-		<div class="caseTop">
-			<p>全部</p>
-			<p>全部案例</p>
-			<p>全部案例</p>
-			<p>全部案例</p>
-			<p>全部案例</p>
-			<p>全部案例</p>
+		<div class="caseTop" v-for="item in listProjectInfo">
+			<p>{{item.projectName}}</p>
 			<div style="clear:both"></div>
 		</div>
-		<div class="mation">
+		<div class="mation" v-for="item in listCaseInfo">
 			<div class="mationTop">
 				<div>
-					<img src="@/assets/images/icon/shoppingCart.png" />
+					<img :src="item.headimg" />
 				</div>
 				<div>
-					<p>JuLia</p>
-					<p>11月 &nbsp; 12日</p>
+					<p>{{item.title}}</p>
+					<p>{{item.date10}}</p>
 				</div>
 			</div>
-			<div class="mationCenter">
+			<div class="mationCenter" v-for="item2 in item.listCover">
 				<div>
-					<img src="@/assets/images/example/doctore.png" />
-				</div>
-				<div>
-					<img src="@/assets/images/example/doctor.png" />
+					<img :src="item2.cover" />
 				</div>
 			</div>
 			<div class="mationBottom">
-				<p>【医美整形-ST全脸字体脂肪填充-第99天】&nbsp;大家好我又来更新日记啦，现在做完ST全脸脂肪填充已经恢复的很好了</p>
+				<p>{{item.brief}}</p>
 			</div>
 			<div class="mationBottom">
 				<p style="text-align:right;color:#434c53;">
@@ -40,18 +32,39 @@
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-
-			};
-		},
-		created: function() {
-			this.$store.commit('showBottomNav', {
-				isShow: false
-			})
-		},
-	}
+import * as api from '@/assets/js/api';
+export default {
+    data() {
+        return {
+            listProjectInfo: '', //项目列表
+            listCaseInfo: '' //案例列表
+        };
+    },
+    created: function() {
+        this.$store.commit('showBottomNav', {
+            isShow: false
+        });
+        api.getDoctorCase({
+            data: {
+                openid: this.globalData.openid,
+                doctorid: 1, //医生id,
+                projectid: 1 //项目id,
+            }
+        }).then(res => {
+            if (res.data.flag) {
+                console.log('医生案例列表请求数据', res.data);
+                this.listProjectInfo = res.data.listProject; //项目列表
+                this.listCaseInfo = res.data.listCase; //案例列表
+            } else {
+                Toast.text({
+                    duration: 1000,
+                    message: '请求失败'
+                });
+            }
+        });
+    },
+    methods: {}
+};
 </script>
 
 <style lang="scss" scoped>

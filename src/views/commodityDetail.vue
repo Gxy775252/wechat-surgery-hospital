@@ -1,27 +1,22 @@
 <!-- 商品详情 -->
 <template>
 	<div class="all">
-		<div class="topSwiper">
-			<div class="swiper">
-				<div class="swiperImg">
-					<wv-swipe  :autoplay="4000" class="swiperImg">
-						<wv-swipe-item>
-							<img src="@/assets/images/example/doctor.png" />	
-						</wv-swipe-item>
-						<wv-swipe-item>
-							<img src="@/assets/images/example/doctor.png" />	
-						</wv-swipe-item>
-						<wv-swipe-item>
-							<img src="@/assets/images/example/doctore.png" />	
-						</wv-swipe-item>
-					</wv-swipe>
-				</div>
+		<div class="swiper">
+			<div>
+				<wv-swipe :autoplay="4000"class="swiperImg">
+					<wv-swipe-item v-for="item in swipeContent">
+						<img :src="item.cover" class="imgA"/>
+						<div v-if="item.isVideo==1" class="playImg">
+							<img src="@/assets/images/icon/playImg.png" />
+						</div>
+					</wv-swipe-item>
+				</wv-swipe>
 			</div>
 		</div>
 		<div class="text">
-			<p>活力眼凝胶</p>
-			<p>香调浓郁，持久清爽，纯植物配方香调浓郁，持久清爽，纯植物配方</p>
-			<p>￥ 99</p>
+			<p>{{goodsinfo.name}}</p>
+			<p>{{goodsinfo.brief}}</p>
+			<p>￥ {{goodsinfo.price}}</p>
 		</div>
 		<div class="selector">
 			<div class="selectorDiv">
@@ -78,7 +73,7 @@
 				</div>
 			</div>
 			<div class="editor">
-				<div>图文详情介绍</div>
+				<div v-html="goodsinfo.content"></div>
 			</div>
 		</div>
 		<div>
@@ -144,14 +139,41 @@
 import Vue from 'vue';
 import { Swipe, SwipeItem } from 'we-vue';
 Vue.use(Swipe).use(SwipeItem);
+import * as api from '@/assets/js/api';
 export default {
     name: 'commodityDetail',
     data() {
-        return {};
+        return {
+            shopId: 0, //商品id
+            swipeContent: '', //轮播
+            listSizeinfo: '', //规格中的尺码
+            listCommentsinfo: '', //评论列表
+            goodsinfo: '' //商品内容
+        };
     },
     created: function() {
         this.$store.commit('showBottomNav', {
             isShow: false
+        });
+        this.shopId = this.$route.params.shopId;
+        api.getCommodityDetail({
+            data: {
+                openid: this.globalData.openid,
+                id: this.shopId
+            }
+        }).then(res => {
+            if (res.data.flag) {
+                console.log('商城首页内容', res.data);
+                this.swipeContent = res.data.listBanner; //轮播
+                this.listSizeinfo = res.data.listSize; //规格中的尺码
+                this.listCommentsinfo = res.data.listComments; //评论列表
+                this.goodsinfo = res.data.goods; //商品内容
+            } else {
+                Toast.text({
+                    duration: 1000,
+                    message: '请求失败'
+                });
+            }
         });
     }
 };

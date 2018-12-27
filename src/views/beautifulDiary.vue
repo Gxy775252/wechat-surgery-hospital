@@ -1,9 +1,14 @@
 <template>
 	<div>
-		<div class="topBigImg">
-			<img src="@/assets/images/example/yiqi.png" />
+		<div class="diarySwiper">
+			<div class="diarySwiperImg">
+				<wv-swipe :autoplay="4000" class="diarySwiperImg">
+					<wv-swipe-item  v-for="item in swipeContent"> 
+						<img :src="item.cover" class="diaryImgA" v-if="item.cover!=null"/>
+					</wv-swipe-item>
+				</wv-swipe>
+			</div>
 		</div>
-		
 		<div class="mation" v-for="item in dataList">
 			<div class="mationTop">
 				<div>
@@ -23,10 +28,10 @@
 				</div>
 				<div style="clear: both;"></div>
 			</div>
-			<div class="mationBottom">
+			<div class="mationBottom" @click="goDiaryDetail(item.id)">
 				<p>{{item.content}}</p>
 			</div>
-			<div class="mationBottom">
+			<div class="mationBottom" @click="goDiaryDetail(item.id)">
 				<p style="text-align:right;color:#434c53;">
 					{{item.brows}}人来过
 				</p>
@@ -35,6 +40,7 @@
 		<div class="briefImg" v-if="isPlay">
 			<Video-Play :videoUrl="videoUrl"></Video-Play>
 		</div>
+		<div style="height: 20px;"></div>
 	</div>
 </template>
 
@@ -42,10 +48,12 @@
 import * as api from '@/assets/js/api';
 import VideoPlay from '@/components/bigWindowVideo';
 export default {
+    name: 'beautifulDiary',
     data() {
         return {
             dataList: [],
-            isPlay: false
+            isPlay: false,
+            swipeContent: ''
         };
     },
     components: {
@@ -61,8 +69,14 @@ export default {
             }
         }).then(res => {
             if (res.data.flag) {
-                console.log(res.data.listDiary);
+                console.log(res.data);
                 this.dataList = res.data.listDiary;
+                this.swipeContent = res.data.listBanner;
+            } else {
+                Toast.text({
+                    duration: 1000,
+                    message: '请求失败'
+                });
             }
         });
     },
@@ -73,6 +87,10 @@ export default {
                 this.videoUrl = res.url;
                 this.isPlay = true;
             }
+        },
+        goDiaryDetail: function(res) {
+            // 进入美丽日记详情
+            this.$router.push({ name: 'diaryDetails', params: { diaryId: res } });
         }
     }
 };

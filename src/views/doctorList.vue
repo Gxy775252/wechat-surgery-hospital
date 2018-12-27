@@ -4,7 +4,7 @@
 			<div class="swiperImg">
 				<wv-swipe :autoplay="4000" class="swiperImg">
 					<wv-swipe-item  v-for="item in swipeContent"> 
-						<img :src="item.cover" />
+						<img :src="item.cover" class="imgA"/>
 					</wv-swipe-item>
 				</wv-swipe>
 			</div>
@@ -103,7 +103,6 @@ export default {
         },
         goDoctorDetail: function(id) {
             // 跳转医生详情并将当前点击的医生id传入
-            console.log('打印了-----', id);
             this.$router.push({ name: 'docInfo', params: { doctorId: id } });
         }
     }
@@ -112,5 +111,4 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/css/doctorList.scss';
-@import '@/assets/css/Index.scss';
 </style>
