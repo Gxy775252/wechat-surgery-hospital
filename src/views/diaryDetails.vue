@@ -50,6 +50,7 @@
 </template>
 
 <script>
+	import * as api from '@/assets/js/api';
 	export default {
 		data() {
 			return {
@@ -68,8 +69,21 @@
 							content:'【医美整形-ST全脸字体脂肪填充-第99天】大家好我有来更新日记啦，现在做完ST全脸字体脂肪填充已经恢复的很好了'
 						},
 						],
-				    }]
+				    }
+]
 			};
+		},
+		created:function(){
+			api.getdiaryDetails({
+				data:{
+					// openid:this.globalData.openid,
+					id:'1'
+				}
+			}).then(res=>{
+				if(res.data.flag){
+					console.log(res.data.listDiary);
+				}
+			})
 		}
 	}
 </script>

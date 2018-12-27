@@ -3,47 +3,82 @@
 		<div class="topBigImg">
 			<img src="@/assets/images/example/yiqi.png" />
 		</div>
-		<div class="mation">
+		
+		<div class="mation" v-for="item in dataList">
 			<div class="mationTop">
 				<div>
-					<img src="@/assets/images/icon/shoppingCart.png" />
+					<img :src="item.headimg" />
 				</div>
 				<div>
-					<p>JuLia</p>
-					<p>11月 &nbsp; 12日</p>
+					<p>{{item.vipName}}</p>
+					<p>{{item.date10}}</p>
 				</div>
 			</div>
 			<div class="mationCenter">
-				<div>
-					<img src="@/assets/images/example/doctore.png" />
+				<div v-for="item2 in item.listCover" @click="videoPlay(item2)">
+					<img :src="item2.cover" />
+					<div class="playImg" v-if="item2.isVideo==1">
+						<img src="@/assets/images/icon/playImg.png" />
+					</div>
 				</div>
-				<div>
-					<img src="@/assets/images/example/doctor.png" />
-				</div>
+				<div style="clear: both;"></div>
 			</div>
 			<div class="mationBottom">
-				<p>【医美整形-ST全脸字体脂肪填充-第99天】&nbsp;大家好我又来更新日记啦，现在做完ST全脸脂肪填充已经恢复的很好了</p>
+				<p>{{item.content}}</p>
 			</div>
 			<div class="mationBottom">
 				<p style="text-align:right;color:#434c53;">
-					1000人来过
+					{{item.brows}}人来过
 				</p>
 			</div>
+		</div>
+		<div class="briefImg" v-if="isPlay">
+			<Video-Play :videoUrl="videoUrl"></Video-Play>
 		</div>
 	</div>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-
-			};
-		}
-	}
+import * as api from '@/assets/js/api';
+import VideoPlay from '@/components/bigWindowVideo';
+export default {
+    data() {
+        return {
+            dataList: [],
+            isPlay: false
+        };
+    },
+    components: {
+        'Video-Play': VideoPlay
+    },
+    created: function() {
+        this.$store.commit('showBottomNav', {
+            isShow: false
+        });
+        api.getBeautifulDiary({
+            data: {
+                openid: this.globalData.openid
+            }
+        }).then(res => {
+            if (res.data.flag) {
+                console.log(res.data.listDiary);
+                this.dataList = res.data.listDiary;
+            }
+        });
+    },
+    methods: {
+        videoPlay: function(res) {
+            // 点击播放视频
+            if (res.isVideo == 1) {
+                this.videoUrl = res.url;
+                this.isPlay = true;
+            }
+        }
+    }
+};
 </script>
 
 <style lang="scss" scoped>
-	@import '@/assets/css/Index.scss';
-	@import '@/assets/css/beautifulDiary.scss';
+@import '@/assets/css/Index.scss';
+@import '@/assets/css/beautifulDiary.scss';
 </style>

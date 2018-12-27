@@ -14,19 +14,24 @@ export default {
         videoUrl: {
             type: String,
             required: true
+        },
+        autoplay: {
+            type: String,
+            required: true
+        },
+        controls: {
+            type: String,
+            required: true
         }
     },
     data() {
-        return {
-            autoplay: true,
-            controls: true
-        };
+        return {};
     },
     created: function() {
         this.$store.commit('showBottomNav', {
             isShow: false
         });
-    },
+    }
 };
 </script>
 

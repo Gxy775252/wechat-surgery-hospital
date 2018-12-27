@@ -16,14 +16,14 @@
 			</div>
 		</div>
 		<div class="doctorBrief" v-for="item in dataList" >
-			<div class="briefImg" @click="videoPlay(item)" v-show="!item.isPlay">
+			<div class="briefImg" @click="videoPlay(item)" v-if="!item.isPlay">
 				<img :src="item.coverResource.cover" />
 				<div class="playImg" v-if="item.coverResource.isVideo==1">
 					<img  src="@/assets/images/icon/playImg.png"/>
 				</div>
 			</div>
-			<div class="briefImg" v-show="item.isPlay">
-				<Video-Play :videoUrl="videoUrl"></Video-Play>
+			<div class="briefImg" v-if="item.isPlay">
+				<Video-Play :videoUrl="videoUrl" :autoplay="autoplay" :controls="controls"></Video-Play>
 			</div>
 			<div class="briefText" @click="goDoctorDetail(item.id)">
 				<div>
@@ -55,7 +55,9 @@ export default {
             dataList: '',
             swipeContent: '',
             configImg: '',
-            videoUrl: ''
+            videoUrl: '',
+            autoplay: 'autoplay',
+            controls: 'controls'
         };
     },
     components: {

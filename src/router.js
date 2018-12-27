@@ -41,6 +41,15 @@ export default new Router({
 				document.title = '商城首页'
 				next()
 			}
+		},
+		{
+			path: '/shoppingCart',
+			name: 'shoppingCart',
+			component: () => import('./views/shoppingCart.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '购物车'
+				next()
+			}
 		}, {
 			path: '/commodityList',
 			name: 'commodityList',
@@ -177,6 +186,6 @@ export default new Router({
 				document.title = '满意度调查'
 				next()
 			}
-		}, 
+		},
 	]
 })

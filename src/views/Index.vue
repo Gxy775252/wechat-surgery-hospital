@@ -3,23 +3,17 @@
 	<div>
 		<div class="TopContent">
 			<div class="logo">
-				<img src="@/assets/images/icon/logo.png"/>
+				<img src="@/assets/images/icon/logo.png" />
 			</div>
 			<div class="search" @click="goSearch()">
-				<img src="@/assets/images/icon/search.png"/>
+				<img src="@/assets/images/icon/search.png" />
 			</div>
 		</div>
 		<div class="swiper">
 			<div class="swiperImg">
-				<wv-swipe  :autoplay="4000" class="swiperImg">
-					<wv-swipe-item>
-						<img src="@/assets/images/example/doctor.png" />	
-					</wv-swipe-item>
-					<wv-swipe-item>
-						<img src="@/assets/images/example/doctor.png" />	
-					</wv-swipe-item>
-					<wv-swipe-item>
-						<img src="@/assets/images/example/doctore.png" />	
+				<wv-swipe :autoplay="4000" class="swiperImg">
+					<wv-swipe-item v-for="item in swipeContent">
+						<img :src="item.cover" />
 					</wv-swipe-item>
 				</wv-swipe>
 			</div>
@@ -30,9 +24,7 @@
 			</div>
 			<div class="doctorText">
 				<div class="centerText">
-					<p>DOCTOR &nbsp; 医生</p>
-					<p>执医超过15年</p>
-					<p>中日友好医院整形外科主任医师</p>
+					<img src="@/assets/css/indexDoctor.png" />
 				</div>
 				<div class="bottomText" style="left:0.66rem;" @click="goDoctorList()">
 					<p>查看更多医生</p>
@@ -43,12 +35,10 @@
 		<div class="doctor">
 			<div class="doctorText" style="border-left: 1px solid #008e83;border-right:0;margin-left: 6px;">
 				<div class="centerText" style="text-align: right;margin-right:0.66rem;">
-					<p>INSTRUMENT &nbsp; 仪器</p>
-					<p>汇聚60多部环球卓越医美仪器体验顶尖医美疗程</p>
-					<p></p>
+					<img src="@/assets/css/indexInstrument.png" />
 				</div>
-				<div class="bottomText" style="right:0.66rem;"  @click="goInstrumentList()">
-					<img src="@/assets/images/icon/rightColor.png" style="transform:rotate(180deg);margin: 0 0.3rem 0 0;"/>
+				<div class="bottomText" style="right:0.66rem;" @click="goInstrumentList()">
+					<img src="@/assets/images/icon/rightColor.png" style="transform:rotate(180deg);margin: 0 0.3rem 0 0;" />
 					<p>查看更多仪器</p>
 				</div>
 			</div>
@@ -58,34 +48,35 @@
 		</div>
 		<div class="diary">
 			<div class="diaryLeft">
-				<img src="@/assets/images/icon/level.jpg"/>
+				<img src="@/assets/images/icon/level.jpg" />
 				<p>美丽日记</p>
 			</div>
 			<div class="diaryRight" @click="gobeautifulDiary()">
 				<p>MORE</p>
-				<img src="@/assets/images/icon/rightGray.png"/>
+				<img src="@/assets/images/icon/rightGray.png" />
 			</div>
 		</div>
-		<div class="mation">
+		<div class="mation" v-for="item in diaryLisy">
 			<div class="mationTop">
 				<div>
-					<img src="@/assets/images/icon/shoppingCart.png" />
+					<img :src="item.headimg" />
 				</div>
 				<div>
-					<p>JuLia</p>
+					<p>{{item.vipName}}</p>
 					<p>11月 &nbsp; 12日</p>
 				</div>
 			</div>
 			<div class="mationCenter">
-				<div>
-					<img src="@/assets/images/example/doctore.png" />
+				<div v-for="item2 in item.listResource" @click="videoPlay(item2)">
+					<img :src="item2.cover" />
+					<div class="playImg" v-if="item2.isVideo==1">
+						<img src="@/assets/images/icon/playImg.png" />
+					</div>
 				</div>
-				<div>
-					<img src="@/assets/images/example/doctor.png" />
-				</div>
+				<div style="clear: both;"></div>
 			</div>
 			<div class="mationBottom">
-				<p>【医美整形-ST全脸字体脂肪填充-第99天】&nbsp;大家好我又来更新日记啦，现在做完ST全脸脂肪填充已经恢复的很好了</p>
+				<p>{{item.content}}</p>
 			</div>
 			<div class="mationBottom">
 				<p style="text-align:right;color:#434c53;">
@@ -95,23 +86,24 @@
 		</div>
 		<div class="select">
 			<div style="padding:1.7rem 0;">
-				<img src="@/assets/images/icon/level.jpg" class="line"/>
+				<img src="@/assets/images/icon/level.jpg" class="line" />
 				<p>皮肤分析</p>
-				<img src="@/assets/images/icon/level.jpg" class="line"/>
+				<img src="@/assets/images/icon/level.jpg" class="line" />
 			</div>
 			<div>
-				<select class="options">
-					<option>色斑</option>
-					<option>雀斑</option>
-					<option>红血丝</option>
+				<select class="options" v-for="item in selectList">
+					<option :id="item.id">{{item.title}}</option>
 				</select>
 			</div>
 		</div>
 		<div class="mationImg">
-			<img src="@/assets/images/icon/mationImg.png" />
+			<img :src="configImg.indexPic" />
 		</div>
 		<div class="seeI">
 			<img src="@/assets/images/icon/seeI.png" />
+		</div>
+		<div class="briefImg" v-if="isPlay" @click="closeWindow()">
+			<Video-Play :videoUrl="videoUrl" @click="noClose()"></Video-Play>
 		</div>
 		<div style="height:6rem;"></div>
 	</div>
@@ -125,6 +117,7 @@ import { Swipe, SwipeItem, Flex, FlexItem } from 'we-vue';
 import { Authorization, parseUrl } from '@/assets/js/utils';
 import wx from 'weixin-js-sdk';
 import * as api from '@/assets/js/api';
+import VideoPlay from '@/components/bigWindowVideo';
 
 Vue.use(Swipe)
     .use(SwipeItem)
@@ -134,11 +127,39 @@ Vue.use(Swipe)
 export default {
     name: 'index',
     data() {
-        return {};
+        return {
+            isPlay: false,
+            swipeContent: '',
+            configImg: '',
+            selectList: '',
+            diaryLisy: ''
+        };
+    },
+    components: {
+        'Video-Play': VideoPlay
     },
     created: function() {
         this.$store.commit('showBottomNav', {
             isShow: true
+        });
+
+        api.getIndex({
+            data: {
+                openid: this.globalData.openid
+            }
+        }).then(res => {
+            if (res.data.flag) {
+                console.log(res.data);
+                this.configImg = res.data.config; //就那个看见自己上面的图，还有轮播下面的图；
+                this.swipeContent = res.data.listBanner; //轮播
+                this.selectList = res.data.listQa; //下拉框
+                this.diaryLisy = res.data.listDiary; //美丽日记内容
+            } else {
+                Toast.text({
+                    duration: 1000,
+                    message: '请求失败'
+                });
+            }
         });
     },
     methods: {
@@ -148,14 +169,30 @@ export default {
         //             // this.$router.push({ name: 'search'});
         //         },
         goDoctorList: function() {
-            this.$router.push({ name: 'doctorList' });
+            //跳医生列表
+            this.$router.push({
+                name: 'doctorList'
+            });
         },
         goInstrumentList: function() {
-            this.$router.push({ name: 'instrumentList' });
+            // 跳仪器列表
+            this.$router.push({
+                name: 'instrumentList'
+            });
         },
         gobeautifulDiary: function() {
-            this.$router.push({ name: 'beautifulDiary' });
-        }
+            // 跳美丽日记
+            this.$router.push({
+                name: 'beautifulDiary'
+            });
+        },
+        videoPlay: function(res) {
+            // 点击播放视频
+            if (res.isVideo == 1) {
+                this.videoUrl = res.url;
+                this.isPlay = true;
+            }
+        },
     }
 };
 </script>

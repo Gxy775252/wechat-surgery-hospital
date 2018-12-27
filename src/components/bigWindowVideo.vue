@@ -26,7 +26,7 @@ export default {
         this.$store.commit('showBottomNav', {
             isShow: false
         });
-    }
+    },
 };
 </script>
 <style lang="scss" scoped>
