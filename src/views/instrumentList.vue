@@ -3,7 +3,7 @@
 		<div class="swiper">
 			<div class="swiperImg">
 				<wv-swipe :autoplay="4000" class="swiperImg">
-					<wv-swipe-item  v-for="item in swipeContent"> 
+					<wv-swipe-item  v-for="item in swipeContent" :key="item.id"> 
 						<img :src="item.cover" class="imgA"/>
 					</wv-swipe-item>
 				</wv-swipe>
@@ -16,7 +16,7 @@
 			</div>
 		</div>
 		<div class="bigBox">
-			<div v-for="item in dataList" class="contentBox">
+			<div v-for="item in dataList" :key="item.id" class="contentBox">
 				<div class="listImg" @click="videoPlay(item)">
 					<img :src="item.coverResource.cover" />
 				</div>

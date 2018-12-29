@@ -6,7 +6,7 @@
 		</div>
 		<div class="box" v-if="dataList.length!=0">
 			<p class="edit">编辑</p>
-			<div class="contentBox" v-for="(item,index) in dataList">
+			<div class="contentBox" v-for="(item,index) in dataList" :key="item.id">
 				<div class="fontImg">
 					<div class="check" @click="check(index)">
 						<img v-if="!item.check" src="../assets/images/icon/sele.png" />

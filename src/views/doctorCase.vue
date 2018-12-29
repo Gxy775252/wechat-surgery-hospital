@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="caseTop" v-for="item in listProjectInfo">
+		<div class="caseTop" v-for="item in listProjectInfo" :key="item.id">
 			<p>{{item.projectName}}</p>
 			<div style="clear:both"></div>
 		</div>
@@ -14,7 +14,7 @@
 					<p>{{item.date10}}</p>
 				</div>
 			</div>
-			<div class="mationCenter" v-for="item2 in item.listCover">
+			<div class="mationCenter" v-for="item2 in item.listCover" :key="item2">
 				<div>
 					<img :src="item2.cover" />
 				</div>

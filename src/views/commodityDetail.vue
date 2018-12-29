@@ -4,7 +4,7 @@
 		<div class="swiper">
 			<div>
 				<wv-swipe :autoplay="4000"class="swiperImg">
-					<wv-swipe-item v-for="item in swipeContent">
+					<wv-swipe-item v-for="item in swipeContent" :key="item.id">
 						<img :src="item.cover" class="imgA"/>
 						<div v-if="item.isVideo==1" class="playImg">
 							<img src="@/assets/images/icon/playImg.png" />

@@ -6,7 +6,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    showBottomNav: true
+    showBottomNav: true,
+		shoppingImgNull: require('@/assets/images/icon/cartNull.png'),
   },
   getters: {},
   mutations: {

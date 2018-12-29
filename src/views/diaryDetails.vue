@@ -52,14 +52,14 @@
 		<div class="box">
 			<div class="diaryList">
 				<p class="yearFont">2018年</p>
-				<div class="monthBox" v-for="item in listDiaryInfo">
+				<div class="monthBox" v-for="item in listDiaryInfo" :key="item.id">
 					<div class="month">
 						<div class="monthImg"><img src="@/assets/images/icon/level.jpg"></div>
 						<p>{{item.date10}}</p>
 					</div>
 					<div class="listContent">
 						<div class="contentBox">
-							<div v-for="item2 in item.listResource">
+							<div v-for="item2 in item.listResource" :key="item2">
 								<!-- <img :src="item2.cover"> -->
 								<img src="@/assets/images/example/doctor.png" />
 							</div>

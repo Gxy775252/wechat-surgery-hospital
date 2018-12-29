@@ -28,7 +28,7 @@
 			<div class="payFont">支付方式</div>
 		</div>
 		<div class="payName">
-			<div class="payWeChat" v-for="item in dataPay" @click="selectPay(item.id)">
+			<div class="payWeChat" v-for="item in dataPay" :key="item.id" @click="selectPay(item.id)">
 				<div class="imgWeChat">
 					<img :src="item.img" />
 					<p>{{item.payFont}}</p>

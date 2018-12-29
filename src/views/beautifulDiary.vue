@@ -9,7 +9,7 @@
 				</wv-swipe>
 			</div>
 		</div>
-		<div class="mation" v-for="item in dataList">
+		<div class="mation" v-for="item in dataList" :key="item.id">
 			<div class="mationTop">
 				<div>
 					<img :src="item.headimg" />
@@ -20,7 +20,7 @@
 				</div>
 			</div>
 			<div class="mationCenter">
-				<div v-for="item2 in item.listCover" @click="videoPlay(item2)">
+				<div v-for="item2 in item.listCover" :key="item2" @click="videoPlay(item2)">
 					<img :src="item2.cover" />
 					<div class="playImg" v-if="item2.isVideo==1">
 						<img src="@/assets/images/icon/playImg.png" />

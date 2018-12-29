@@ -12,7 +12,7 @@
 		<div class="swiper">
 			<div>
 				<wv-swipe :autoplay="4000"class="swiperImg">
-					<wv-swipe-item v-for="item in swipeContent">
+					<wv-swipe-item v-for="item in swipeContent" :key="item.id">
 						<img :src="item.cover" class="imgA"/>
 						<div v-if="item.isVideo==1" class="playImg">
 							<img src="@/assets/images/icon/playImg.png" />
@@ -61,7 +61,7 @@
 				<img src="@/assets/images/icon/rightGray.png" />
 			</div>
 		</div>
-		<div class="mation" v-for="item in diaryLisy">
+		<div class="mation" v-for="item in diaryLisy" :key="item.id">
 			<div class="mationTop">
 				<div>
 					<img :src="item.headimg" />
@@ -72,8 +72,8 @@
 				</div>
 			</div>
 			<div class="mationCenter">
-				<div v-for="item2 in item.listResource" @click="videoPlay(item2)">
-					<img :src="item2.cover" />
+				<div v-for="item2 in item.listResource" :key="item2.id" @click="videoPlay(item2)">
+					<img :src="item2.cover || shoppingImgNull" />
 					<div class="playImg" v-if="item2.isVideo==1">
 						<img src="@/assets/images/icon/playImg.png" />
 					</div>
@@ -96,7 +96,7 @@
 				<img src="@/assets/images/icon/level.jpg" class="line" />
 			</div>
 			<div>
-				<select class="options" v-for="item in selectList">
+				<select class="options" v-for="item in selectList" :key="item.id">
 					<option :id="item.id">{{item.title}}</option>
 				</select>
 			</div>
@@ -137,7 +137,8 @@ export default {
             swipeContent: '',
             configImg: '',
             selectList: '',
-            diaryLisy: ''
+            diaryLisy: '',
+			shoppingImgNull:this.$store.state.shoppingImgNull,
         };
     },
     components: {

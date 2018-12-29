@@ -59,7 +59,7 @@
           <i></i>
           <p>擅长项目</p>
         </div>
-        <p v-for="item in listPrjInfo">
+        <p v-for="item in listPrjInfo" :key="item.id">
 					{{item.name}}
 				</p>
       </div>
@@ -68,7 +68,7 @@
           <i></i>
           <p>擅长仪器</p>
         </div>
-        <p v-for="item in listInstInfo">
+        <p v-for="item in listInstInfo" :key="item.id">
 						{{item.name}}
 				</p>
       </div>
@@ -95,7 +95,7 @@
       <i></i>
       <p>医生证件</p>
     </div>
-    <div class="dortor_certificate" v-for="item in listDqpcInfo">
+    <div class="dortor_certificate" v-for="item in listDqpcInfo" :key="item.id">
       <div class="certificate_title">
         <p>医生资格证书</p>
         <p>Doctor Qualification Certificate</p>

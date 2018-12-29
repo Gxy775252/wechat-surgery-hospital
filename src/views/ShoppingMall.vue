@@ -10,12 +10,12 @@
 		</div>
 		<div class="navList" >
 			<p @click="select_P(0)" :class="selectId==0?'selection':''">全部</p>
-			<p v-for="item in listClassifyInfo" :class="item.id==selectId?'selection':''" @click="select_P(item.id)">{{item.name}}</p>
+			<p v-for="item in listClassifyInfo" :key="item.id" :class="item.id==selectId?'selection':''" @click="select_P(item.id)">{{item.name}}</p>
 		</div>
 		<div class="swiper">
 			<div>
 				<wv-swipe :autoplay="4000" class="swiperImg">
-					<wv-swipe-item v-for="item in listBannerInfo">
+					<wv-swipe-item v-for="item in listBannerInfo" :key="item.id">
 						<img :src="item.cover" class="imgA"/>
 						<!-- <div v-if="item.isVideo==1" class="playImg">
 							<img src="@/assets/images/icon/playImg.png" />
@@ -49,7 +49,7 @@
 			</div>
 		</div>
 		<div class="list">
-			<div class="listText" v-for="item in listHotInfo">
+			<div class="listText" v-for="item in listHotInfo" :key="item.id">
 				<div class="listImg">
 					<img src="@/assets/images/example/yiqi.png" />
 				</div>
