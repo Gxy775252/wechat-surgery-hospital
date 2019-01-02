@@ -82,37 +82,37 @@
 <script>
 import * as api from '@/assets/js/api';
 export default {
-    data() {
-        return {
-            detailInfo: '', //日记详情
-            listResourceInfo: '', //本日记资源
-            listDiaryInfo: '' //本项目日记列表
-        };
-    },
-    created: function() {
-        this.$store.commit('showBottomNav', {
-            isShow: false
-        });
-        api.getdiaryDetails({
-            data: {
-                openid: this.globalData.openid,
-                // id: this.$route.params,
-                id: 1
-            }
-        }).then(res => {
-            if (res.data.flag) {
-                console.log('美丽日记详情数据', res.data);
-                this.detailInfo = res.data.detail; //日记详情
-                this.listResourceInfo = res.data.listResource; //本日记资源
-                this.listDiaryInfo = res.data.listDiary; //本项目日记列表
-            } else {
-                Toast.text({
-                    duration: 1000,
-                    message: '请求失败'
-                });
-            }
-        });
-    }
+	data() {
+		return {
+			detailInfo: '', //日记详情
+			listResourceInfo: '', //本日记资源
+			listDiaryInfo: '' //本项目日记列表
+		};
+	},
+	created: function() {
+		this.$store.commit('showBottomNav', {
+			isShow: false
+		});
+		api.getdiaryDetails({
+			data: {
+				openid: this.globalData.openid,
+				// id: this.$route.params,
+				id: 1
+			}
+		}).then(res => {
+			if (res.data.flag) {
+				console.log('美丽日记详情数据', res.data);
+				this.detailInfo = res.data.detail; //日记详情
+				this.listResourceInfo = res.data.listResource; //本日记资源
+				this.listDiaryInfo = res.data.listDiary; //本项目日记列表
+			} else {
+				Toast.text({
+					duration: 1000,
+					message: '请求失败'
+				});
+			}
+		});
+	}
 };
 </script>
 

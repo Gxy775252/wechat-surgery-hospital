@@ -132,6 +132,41 @@
 			<img src="@/assets/images/icon/cart.png" />
 		</div>
 		<div style="height: 6rem;"></div>
+		<!-- 规格弹层内容 -->
+		<!-- <div class="selectModel">
+			<div class="modelInside">
+				<div class="modelTop">
+					<div class="modelTop-left">
+						<img src="@/assets/images/example/yiqi.png" />
+					</div>
+					<div class="modelTop-center">
+						<p>￥ 99</p>
+						<p>请选择规格</p>
+					</div>
+					<div class="modelTop-close">
+						<img src="@/assets/images/icon/guanbi.png" />
+					</div>
+				</div>
+				<div class="size">
+					<p>规格</p>
+					<div class="size-Select">
+						<p>20ml</p>
+					</div>
+				</div>
+				<div class="stock">
+					<p>库存</p>
+					<p>有</p>
+				</div>
+				<div class="sum">
+					<p>
+						购买数量
+					</p>
+				</div>
+				<button class="success">确定</button> 
+				<button class="error">该商品无货</button>
+			</div>
+		</div>-->
+		<!-- 规格弹层内容 END-->
 	</div>
 </template>
 
@@ -141,41 +176,41 @@ import { Swipe, SwipeItem } from 'we-vue';
 Vue.use(Swipe).use(SwipeItem);
 import * as api from '@/assets/js/api';
 export default {
-    name: 'commodityDetail',
-    data() {
-        return {
-            shopId: 0, //商品id
-            swipeContent: '', //轮播
-            listSizeinfo: '', //规格中的尺码
-            listCommentsinfo: '', //评论列表
-            goodsinfo: '' //商品内容
-        };
-    },
-    created: function() {
-        this.$store.commit('showBottomNav', {
-            isShow: false
-        });
-        this.shopId = this.$route.params.shopId;
-        api.getCommodityDetail({
-            data: {
-                openid: this.globalData.openid,
-                id: this.shopId
-            }
-        }).then(res => {
-            if (res.data.flag) {
-                console.log('商城首页内容', res.data);
-                this.swipeContent = res.data.listBanner; //轮播
-                this.listSizeinfo = res.data.listSize; //规格中的尺码
-                this.listCommentsinfo = res.data.listComments; //评论列表
-                this.goodsinfo = res.data.goods; //商品内容
-            } else {
-                Toast.text({
-                    duration: 1000,
-                    message: '请求失败'
-                });
-            }
-        });
-    }
+	name: 'commodityDetail',
+	data() {
+		return {
+			shopId: 0, //商品id
+			swipeContent: '', //轮播
+			listSizeinfo: '', //规格中的尺码
+			listCommentsinfo: '', //评论列表
+			goodsinfo: '' //商品内容
+		};
+	},
+	created: function() {
+		this.$store.commit('showBottomNav', {
+			isShow: false
+		});
+		this.shopId = this.$route.params.shopId;
+		api.getCommodityDetail({
+			data: {
+				openid: this.globalData.openid,
+				id: this.shopId
+			}
+		}).then(res => {
+			if (res.data.flag) {
+				console.log('商城首页内容', res.data);
+				this.swipeContent = res.data.listBanner; //轮播
+				this.listSizeinfo = res.data.listSize; //规格中的尺码
+				this.listCommentsinfo = res.data.listComments; //评论列表
+				this.goodsinfo = res.data.goods; //商品内容
+			} else {
+				Toast.text({
+					duration: 1000,
+					message: '请求失败'
+				});
+			}
+		});
+	}
 };
 </script>
 
