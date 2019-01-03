@@ -47,3 +47,6 @@ export const getCommodityList = (options) => _apiPOST(`${API_ROOT}/wx/goClassify
 
 // 获取商品列表页信息
 export const getCommodityDetail = (options) => _apiPOST(`${API_ROOT}/wx/goGoodsDetail`, options)
+
+// 获取我的页面信息
+export const getVipCentor = (options) => _apiPOST(`${API_ROOT}/wx/goVipCentor`, options)

@@ -189,5 +189,14 @@ export default new Router({
 				next()
 			}
 		},
+		{
+			path: '/skinAnalysis',
+			name: 'skinAnalysis',
+			component: () => import('./views/skinAnalysis.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '皮肤分析'
+				next()
+			}
+		},
 	]
 })
