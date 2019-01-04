@@ -1,86 +1,125 @@
+.all {
+	width: 100%;
+	height: 100%;
+	background: #f7f7f7;
+}
+.playImg {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.3);
+	z-index: 10;
+	top: 0;
+	left: 0;
+	display: flex;
+	align-items: center;
+	> img {
+		margin: auto;
+		width: calc(5.33rem / 2);
+		height: calc(5.33rem / 2);
+	}
+}
 .swiper {
-    width: 100%;
-    height: calc(26.66rem / 2);
-    .swiperImg {
-        margin: auto;
-        width: 100%;
-        height: calc(26.66rem / 2);
-        position: relative;
-        .imgA {
-            width: 100%;
-            height: 100%;
-            margin: auto;
-        }
-    }
+	width: 100%;
+	height: calc(34.8rem / 2);
+	background: #fafafa;
+	padding: calc(1.33rem / 2) 0;
+	.swiperImg {
+		margin: auto;
+		width: calc(47.6rem / 2);
+		height: calc(31.33rem / 2);
+		position: relative;
+		.imgA {
+			width: 100%;
+			height: 100%;
+			margin: auto;
+		}
+	}
 }
-.doctorTitle {
-    height: calc(11.33rem / 2);
-    display: flex;
-    align-items: center;
-    text-align: center;
-    > div {
-        max-height: 90%;
-        max-width: 70%;
-        margin: auto;
-        > img {
-            max-width: 100%;
-            max-height: 100%;
-        }
-    }
+.doctorList {
+	margin: calc(2rem / 2) auto;
+	width: 100%;
+	background: #fff;
+	.box {
+		width: calc(47.6rem / 2);
+		margin: auto;
+		.boxTop {
+			display: flex;
+			align-items: center;
+			position: relative;
+			.headImg {
+				width: calc(6.53rem / 2);
+				height: calc(6.53rem / 2);
+				border-radius: 100%;
+				overflow: hidden;
+				margin: calc(3.33rem / 2) calc(2.46rem / 2);
+				> img {
+					width: 100%;
+					height: 100%;
+				}
+			}
+			.headName {
+				> p:first-child {
+					color: #008e83;
+					font-size: calc(1.6rem / 2);
+				}
+				> p:last-child {
+					color: #777;
+					font-size: calc(1.2rem / 2);
+					width: 16rem;
+					display: -webkit-box;
+					-webkit-box-orient: vertical;
+					-webkit-line-clamp: 1;
+					overflow: hidden;
+				}
+			}
+			.headXian {
+				position: absolute;
+				bottom: 1rem;
+				left: calc(11.46rem / 2);
+			}
+			.docInfo {
+				margin: 0 calc(2.46rem / 2);
+				width: calc(6.53rem / 2);
+				> img {
+					width: 100%;
+					height: 100%;
+				}
+			}
+			.docName {
+				font-size: calc(1.33rem / 2);
+				color: #333;
+				width: 16rem;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 2;
+				overflow: hidden;
+			}
+		}
+		.boxBottom {
+			height: calc(26.66rem / 2);
+			width: calc(47.6rem / 2);
+			margin: calc(3.33rem / 2) auto;
+			padding-bottom: calc(3.33rem / 2);
+			> img {
+				width: 100%;
+				height: 100%;
+			}
+		}
+	}
 }
-.doctorBrief {
-    width: 100%;
-    .briefImg {
-        width: calc(47.6rem / 2);
-        height: calc(26.66rem / 2);
-        margin: auto;
-        position: relative;
-        > img {
-            width: 100%;
-            height: 100%;
-        }
-        .playImg {
-            position: absolute;
-            width: calc(47.6rem / 2);
-            height: calc(26.66rem / 2);
-            background-color: rgba(0, 0, 0, 0.4);
-            z-index: 1;
-            top: 0;
-            left: 0;
-            display: flex;
-            align-items: center;
-            > img {
-                margin: auto;
-            }
-        }
-    }
-    .briefText {
-        width: 85%;
-        margin: auto;
-        padding-top: calc(2.66rem / 2);
-        padding-bottom: calc(4.33rem / 2);
-        > div {
-            color: #333;
-            display: flex;
-            align-items: center;
-            > p:nth-child(1) {
-                font-size: 1.07rem;
-                font-weight: bold;
-            }
-            > p:nth-child(2) {
-                display: block;
-                width: 1px;
-                height: 15px;
-                background: #008e83;
-                margin: 0 0.67rem;
-            }
-            > p:nth-child(3) {
-                font-size: 0.67rem;
-            }
-        }
-        > p {
-            font-size: calc(1.33rem / 2);
-            color: #777;
-        }
-    }
-}
+// .doctorTitle {
+// 	height: calc(11.33rem / 2);
+// 	display: flex;
+// 	align-items: center;
+// 	text-align: center;
+// 	> div {
+// 		max-height: 90%;
+// 		max-width: 70%;
+// 		margin: auto;
+// 		> img {
+// 			max-width: 100%;
+// 			max-height: 100%;
+// 		}
+// 	}
+// }

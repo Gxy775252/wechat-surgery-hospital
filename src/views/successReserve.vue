@@ -5,8 +5,8 @@
 				<img src="@/assets/images/icon/successReserve.png" />
 			</div>
 			<p class="successTitle">预约成功!</p>
-
 		</div>
+		<div class="xian"></div>
 		<div class="ReserveInform">
 			<div class="InformTop">
 				您已预约

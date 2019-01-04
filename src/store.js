@@ -5,17 +5,18 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
-    showBottomNav: true,
+	state: {
+		showBottomNav: true,
 		shoppingImgNull: require('@/assets/images/icon/cartNull.png'),
-  },
-  getters: {},
-  mutations: {
-    showBottomNav(state, type){
-      state.showBottomNav = type.isShow
-    }
-  },
-  actions: {
+		doctorImgNull: require('@/assets/images/example/doctor.png'),
+	},
+	getters: {},
+	mutations: {
+		showBottomNav(state, type) {
+			state.showBottomNav = type.isShow
+		}
+	},
+	actions: {
 
-  }
+	}
 })

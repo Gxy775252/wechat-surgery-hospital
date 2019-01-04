@@ -3,7 +3,7 @@
 		<div style="height: 3.33rem;"></div>
 		<div class="logo">
 			<div class="surgery">
-				<img src="@/assets/images/icon/zhucelogo.png" />
+				<img src="@/assets/images/icon/logo.png" />
 			</div>
 			<div class="close">
 				<img src="@/assets/images/icon/guanbi.png" />

@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="content">
     <div class="header">
-      <img :src="doctorInfo.coverResource.cover" >
+      <img :src="doctorImgNull" >
       <div class="dortor_name">
         <p class="name">{{doctorInfo.name}}</p>
         <i></i>
@@ -14,7 +14,7 @@
             <p>278</p>
             <p>预约</p>
           </div>
-          <div class="chengjiu_list">
+          <div class="chengjiu_list" @click="goDoctorCase">
             <p>493</p>
             <p>案例</p>
           </div>
@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="hospital">
-      <img :src="doctorInfo.headimg" alt="" class="hospital_img" />
+      <img :src="doctorInfo.headimg || doctorImgNull" alt="" class="hospital_img" />
       <div class="hospital_info">
         <div class="hospital_name">
           <p>{{hospInfo.name}}</p>
@@ -45,7 +45,7 @@
           <i></i>
           <p>职业资格证书编号</p>
         </div>
-        <p>{{listDqpcInfo[0].no || ""}}</p>
+        <!-- <p>{{listDqpcInfo[0].no || ""}}</p> -->
       </div>
       <div class="dortor_resume_list">
         <div class="dortor_resume_list_title">
@@ -119,43 +119,50 @@
 <script>
 import * as api from '@/assets/js/api';
 export default {
-    name: 'DocInfo',
-    data() {
-        return {
-            doctorInfo: '', //医生信息
-            hospInfo: '', //医院信息
-            listPrjInfo: '', //擅长项目列表信息
-            listInstInfo: '', //擅长仪器列表信息
-            listDqpcInfo: '' //证书列表信息
-        };
-    },
-    components: {},
-    created: function() {
-        this.$store.commit('showBottomNav', {
-            isShow: false
-        });
-        api.getDoctorDetail({
-            data: {
-                openid: this.globalData.openid,
-                // id: this.$route.params.doctorId,
-                id: 1
-            }
-        }).then(res => {
-            if (res.data.flag) {
-                console.log('医生详情请求数据', res.data);
-                this.doctorInfo = res.data.doctor;
-                this.hospInfo = res.data.hosp;
-                this.listPrjInfo = res.data.listPrj;
-                this.listInstInfo = res.data.listInst;
-                this.listDqpcInfo = res.data.listDqpc;
-            } else {
-                Toast.text({
-                    duration: 1000,
-                    message: '请求失败'
-                });
-            }
-        });
-    }
+	name: 'DocInfo',
+	data() {
+		return {
+			doctorInfo: '', //医生信息
+			hospInfo: '', //医院信息
+			listPrjInfo: '', //擅长项目列表信息
+			listInstInfo: '', //擅长仪器列表信息
+			listDqpcInfo: '', //证书列表信息
+			doctorImgNull: this.$store.state.doctorImgNull
+		};
+	},
+	components: {},
+	created: function() {
+		this.$store.commit('showBottomNav', {
+			isShow: false
+		});
+		api.getDoctorDetail({
+			data: {
+				openid: this.globalData.openid,
+				id: this.$route.params.doctorId,
+			}
+		}).then(res => {
+			if (res.data.flag) {
+				console.log('医生详情请求数据', res.data);
+				this.doctorInfo = res.data.doctor;
+				this.hospInfo = res.data.hosp;
+				this.listPrjInfo = res.data.listPrj;
+				this.listInstInfo = res.data.listInst;
+				this.listDqpcInfo = res.data.listDqpc;
+			} else {
+				Toast.text({
+					duration: 1000,
+					message: '请求失败'
+				});
+			}
+		});
+	},
+	methods: {
+		goDoctorCase: function() {
+			this.$router.push({
+				name: 'doctorCase'
+			});
+		}
+	}
 };
 </script>
 

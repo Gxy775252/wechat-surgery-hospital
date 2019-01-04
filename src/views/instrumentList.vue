@@ -1,32 +1,34 @@
 <template>
-	<div>
+	<div class="all">
 		<div class="swiper">
 			<div class="swiperImg">
 				<wv-swipe :autoplay="4000" class="swiperImg">
-					<wv-swipe-item  v-for="item in swipeContent" :key="item.id"> 
-						<img :src="item.cover" class="imgA"/>
+					<wv-swipe-item v-for="(item,key,index) in swipeContent" :key="key"> 
+						<img :src="item.cover || doctorImgNull" class="imgA"/>
+						<div v-if="item.isVideo==1" class="playImg">
+							<img src="@/assets/images/icon/playImg.png" />
+						</div>
 					</wv-swipe-item>
 				</wv-swipe>
 			</div>
 		</div>
-		<div class="doctorTitle">
+<!-- 		<div class="doctorTitle">
 			<div>
-				<!-- <img :src="configImg" /> -->
+				<img :src="configImg" />
 				<img src="@/assets/images/example/instrumentTextImg.png" />
 			</div>
-		</div>
-		<div class="bigBox">
-			<div v-for="item in dataList" :key="item.id" class="contentBox">
-				<div class="listImg" @click="videoPlay(item)">
-					<img :src="item.coverResource.cover" />
+		</div> -->
+		<div class="listAll">
+			<div class="insList">
+				<div class="insImg">
+					<img :src="doctorImgNull" />
 				</div>
-				<div class="listContent">
-					<div>
-						<div class="listFont">{{item.name}}</div>
-						<div class="listConten">{{item.brief}}</div>
-					</div>
+				<div class="insInfo">
+					<p>美容仪器</p>
+					<p>欢子u卓越的医疗美容仪器顶尖医学专家</p>
 				</div>
 			</div>
+			<div style="clear: both;"></div>
 		</div>
 	</div>
 </template>
@@ -45,7 +47,8 @@ export default {
         return {
             dataList: '',
             swipeContent: '',
-            configImg: ''
+            configImg: '',
+			doctorImgNull: this.$store.state.doctorImgNull
         };
     },
     components: {
@@ -62,7 +65,7 @@ export default {
             }
         }).then(res => {
             if (res.data.flag) {
-                console.log(res.data);
+                console.log("美丽日记",res.data);
                 for (let i = 0; i < res.data.listInst.length; i++) {
                     res.data.listInst[i].isPlay = false;
                 }

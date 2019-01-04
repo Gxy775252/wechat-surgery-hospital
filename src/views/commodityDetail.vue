@@ -131,6 +131,9 @@
 		<div class="cart">
 			<img src="@/assets/images/icon/cart.png" />
 		</div>
+		<div class="seeI">
+			<img src="@/assets/images/icon/seeI.png" />
+		</div>
 		<div style="height: 6rem;"></div>
 		<!-- 规格弹层内容 -->
 		<!-- <div class="selectModel">

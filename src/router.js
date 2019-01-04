@@ -76,7 +76,26 @@ export default new Router({
 				document.title = '我的'
 				next()
 			}
-		}, {
+		},
+		{
+			path: '/mineInfo',
+			name: 'mineInfo',
+			component: () => import('./views/mineInfo.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '我的信息'
+				next()
+			}
+		},
+		{
+			path: '/mineDiary',
+			name: 'mineDiary',
+			component: () => import('./views/mineDiary.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '我的美丽日记'
+				next()
+			}
+		},
+		{
 			path: '/register',
 			name: 'register',
 			component: () => import('./views/Register.vue'),

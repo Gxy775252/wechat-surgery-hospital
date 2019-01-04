@@ -11,9 +11,9 @@
 		</div>
 		<div class="swiper">
 			<div>
-				<wv-swipe :autoplay="4000"class="swiperImg">
-					<wv-swipe-item v-for="item in swipeContent" :key="item.id">
-						<img :src="item.cover" class="imgA"/>
+				<wv-swipe :autoplay="4000" class="swiperImg">
+					<wv-swipe-item v-for="(item, key, index) in swipeContent" :key="key">
+						<img :src="item.cover || doctorImgNull" class="imgA"/>
 						<div v-if="item.isVideo==1" class="playImg">
 							<img src="@/assets/images/icon/playImg.png" />
 						</div>
@@ -61,7 +61,7 @@
 				<img src="@/assets/images/icon/rightGray.png" />
 			</div>
 		</div>
-		<div class="mation" v-for="item in diaryLisy" :key="item.id">
+		<div class="mation" v-for="(item,key,index) in diaryLisy" :key="key">
 			<div class="mationTop">
 				<div>
 					<img :src="item.headimg" />
@@ -72,19 +72,19 @@
 				</div>
 			</div>
 			<div class="mationCenter">
-				<div v-for="item2 in item.listResource" :key="item2.id" @click="videoPlay(item2)">
-					<img :src="item2.cover || shoppingImgNull" />
+				<div v-for="(item2,key,index) in item.listResource" :key="key" @click="videoPlay(item2)">
+					<img :src="item2.cover || doctorImgNull" />
 					<div class="playImg" v-if="item2.isVideo==1">
 						<img src="@/assets/images/icon/playImg.png" />
 					</div>
 				</div>
-				<div style="clear: both;"></div>
 			</div>
-			<div class="mationBottom">
-				<p>{{item.content}}</p>
+			<div class="mationCon">
+				<p><span>[医美整形-ST全脸字体脂肪填充-第99天]</span>大家好我又来更新日记了，现在做完现在做完现在做完现在做完现在做完ST全脸脂肪填充已经恢复很好了，</p>
 			</div>
+			<div class="xian"></div>
 			<div class="mationBottom">
-				<p style="text-align:right;color:#434c53;">
+				<p>
 					1000人来过
 				</p>
 			</div>
@@ -125,81 +125,82 @@ import * as api from '@/assets/js/api';
 import VideoPlay from '@/components/bigWindowVideo';
 
 Vue.use(Swipe)
-    .use(SwipeItem)
-    .use(Flex)
-    .use(FlexItem);
+	.use(SwipeItem)
+	.use(Flex)
+	.use(FlexItem);
 
 export default {
-    name: 'index',
-    data() {
-        return {
-            isPlay: false,
-            swipeContent: '',
-            configImg: '',
-            selectList: '',
-            diaryLisy: '',
-			shoppingImgNull:this.$store.state.shoppingImgNull,
-        };
-    },
-    components: {
-        'Video-Play': VideoPlay
-    },
-    created: function() {
-        this.$store.commit('showBottomNav', {
-            isShow: true
-        });
+	name: 'index',
+	data() {
+		return {
+			isPlay: false,
+			swipeContent: '',
+			configImg: '',
+			selectList: '',
+			diaryLisy: '',
+			shoppingImgNull: this.$store.state.shoppingImgNull,
+			doctorImgNull: this.$store.state.doctorImgNull
+		};
+	},
+	components: {
+		'Video-Play': VideoPlay
+	},
+	created: function() {
+		this.$store.commit('showBottomNav', {
+			isShow: true
+		});
 
-        api.getIndex({
-            data: {
-                openid: this.globalData.openid
-            }
-        }).then(res => {
-            console.log('首页请求数据', res.data);
-            if (res.data.flag) {
-                this.configImg = res.data.config; //就那个看见自己上面的图，还有轮播下面的图；
-                this.swipeContent = res.data.listBanner; //轮播
-                this.selectList = res.data.listQa; //下拉框
-                this.diaryLisy = res.data.listDiary; //美丽日记内容
-            } else {
-                Toast.text({
-                    duration: 1000,
-                    message: '请求失败'
-                });
-            }
-        });
-    },
-    methods: {
-        goDoctorList: function() {
-            console.log('暂无搜索页面');
-            // 暂无搜索页面
-            // this.$router.push({ name: 'search'});
-        },
-        goDoctorList: function() {
-            //跳医生列表
-            this.$router.push({
-                name: 'doctorList'
-            });
-        },
-        goInstrumentList: function() {
-            // 跳仪器列表
-            this.$router.push({
-                name: 'instrumentList'
-            });
-        },
-        gobeautifulDiary: function() {
-            // 跳美丽日记
-            this.$router.push({
-                name: 'beautifulDiary'
-            });
-        },
-        videoPlay: function(res) {
-            // 点击播放视频
-            if (res.isVideo == 1) {
-                this.videoUrl = res.url;
-                this.isPlay = true;
-            }
-        }
-    }
+		api.getIndex({
+			data: {
+				openid: this.globalData.openid
+			}
+		}).then(res => {
+			console.log('首页请求数据', res.data);
+			if (res.data.flag) {
+				this.configImg = res.data.config; //就那个看见自己上面的图，还有轮播下面的图；
+				this.swipeContent = res.data.listBanner; //轮播
+				this.selectList = res.data.listQa; //下拉框
+				this.diaryLisy = res.data.listDiary; //美丽日记内容
+			} else {
+				Toast.text({
+					duration: 1000,
+					message: '请求失败'
+				});
+			}
+		});
+	},
+	methods: {
+		goDoctorList: function() {
+			console.log('暂无搜索页面');
+			// 暂无搜索页面
+			// this.$router.push({ name: 'search'});
+		},
+		goDoctorList: function() {
+			//跳医生列表
+			this.$router.push({
+				name: 'doctorList'
+			});
+		},
+		goInstrumentList: function() {
+			// 跳仪器列表
+			this.$router.push({
+				name: 'instrumentList'
+			});
+		},
+		gobeautifulDiary: function() {
+			// 跳美丽日记
+			this.$router.push({
+				name: 'beautifulDiary'
+			});
+		},
+		videoPlay: function(res) {
+			// 点击播放视频
+			if (res.isVideo == 1) {
+				this.videoUrl = res.url;
+				this.isPlay = true;
+			}
+		}
+	}
 };
 </script>
 

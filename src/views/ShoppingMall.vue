@@ -65,6 +65,9 @@
 				</div>
 			</div>
 		</div>
+		<div class="seeI">
+			<img src="@/assets/images/icon/seeI.png" />
+		</div>
 		<div style="height:6rem;background-color:#f7f7f7;"></div>
 	</div>
 </template>
@@ -75,47 +78,47 @@ import { Swipe, SwipeItem } from 'we-vue';
 import * as api from '@/assets/js/api';
 Vue.use(Swipe).use(SwipeItem);
 export default {
-    data() {
-        return {
-            listBannerInfo: '', //轮播
-            listClassifyInfo: '', //分类列表
-            listHotInfo: '', //热门商品
-            selectId: 0 //分类选中 0=全部
-        };
-    },
-    created: function() {
-        this.$store.commit('showBottomNav', {
-            isShow: true
-        });
-        api.getShoppingMall({
-            data: {
-                openid: this.globalData.openid,
-                classifyid: 0 //0，表示全部
-            }
-        }).then(res => {
-            if (res.data.flag) {
-                console.log('商城首页内容', res.data);
-                this.listBannerInfo = res.data.listBanner; //轮播内容
-                this.listClassifyInfo = res.data.listClassify; //分类列表
-                this.listHotInfo = res.data.listHot; //热门商品
-            } else {
-                Toast.text({
-                    duration: 1000,
-                    message: '请求失败'
-                });
-            }
-        });
-    },
-    methods: {
-        select_P: function(res) {
-            // 跳转商品列表并将当前点击的分类id传入
-            this.$router.push({ name: 'commodityList', params: { shopId: res } });
-        },
-        goCommodityDetail: function(res) {
-            // 跳转商品详情并将当前点击的商品id传入
-            this.$router.push({ name: 'commodityDetail', params: { shopId: res } });
-        }
-    }
+	data() {
+		return {
+			listBannerInfo: '', //轮播
+			listClassifyInfo: '', //分类列表
+			listHotInfo: '', //热门商品
+			selectId: 0 //分类选中 0=全部
+		};
+	},
+	created: function() {
+		this.$store.commit('showBottomNav', {
+			isShow: true
+		});
+		api.getShoppingMall({
+			data: {
+				openid: this.globalData.openid,
+				classifyid: 0 //0，表示全部
+			}
+		}).then(res => {
+			if (res.data.flag) {
+				console.log('商城首页内容', res.data);
+				this.listBannerInfo = res.data.listBanner; //轮播内容
+				this.listClassifyInfo = res.data.listClassify; //分类列表
+				this.listHotInfo = res.data.listHot; //热门商品
+			} else {
+				Toast.text({
+					duration: 1000,
+					message: '请求失败'
+				});
+			}
+		});
+	},
+	methods: {
+		select_P: function(res) {
+			// 跳转商品列表并将当前点击的分类id传入
+			this.$router.push({ name: 'commodityList', params: { shopId: res } });
+		},
+		goCommodityDetail: function(res) {
+			// 跳转商品详情并将当前点击的商品id传入
+			this.$router.push({ name: 'commodityDetail', params: { shopId: res } });
+		}
+	}
 };
 </script>
 
