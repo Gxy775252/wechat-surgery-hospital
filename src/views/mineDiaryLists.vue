@@ -2,51 +2,21 @@
 	<div class="all">
 		<div class="diaryList">
 			<div class="list">
-				<p>皮肤检测</p>
+				<p>日期</p>
 				<div class="list-right">
-					<p>去检测皮肤</p>
+					<p>选择日期</p>
 					<div class="right-div">
 						<img src="@/assets/images/icon/mineHore.png" />
 					</div>
 				</div>
 			</div>
 			<div class="list">
-				<p>您的肤质</p>
+				<p>项目名称</p>
 				<div class="list-right">
-					<p>请选择您的肤质</p>
-					<div class="right-div">
+					<input placeholder="填写项目名称" />
+					<div class="right-div ">
 						<img src="@/assets/images/icon/mineHore.png" />
 					</div>
-				</div>
-			</div>
-			<div class="list">
-				<p>是否做过整容项目</p>
-				<div class="select">
-					<div class="select-on">
-						<div>
-							<img src="@/assets/images/icon/sele.png" />
-						</div>
-						<p>是</p>
-					</div>
-					<div class="select-on">
-						<div>
-							<img src="@/assets/images/icon/sele.png" />
-						</div>
-						<p>否</p>
-					</div>
-				</div>
-			</div>
-			<div class="checkbox">
-				<div class="checkbox-title">做过的整容项目<p>（勾选您做过的整容项目，可多选）</p>
-				</div>
-				<div class="checkbox-con">
-					<div class="content">
-						<div>
-							<img src="@/assets/images/icon/checkbox.png" />
-						</div>
-						<p>抽脂瘦大腿</p>
-					</div>
-					<div style="clear: both;"></div>
 				</div>
 			</div>
 			<div class="question">
@@ -67,7 +37,8 @@
 			<div style="height: 6rem;"></div>
 		</div>
 		<div class="buttonA">
-			<button>提交</button>
+			<!-- <button>提交</button> -->
+			<button>编辑</button>
 		</div>
 	</div>
 </template>
@@ -94,5 +65,6 @@
 </script>
 
 <style lang="scss" scoped>
+	@import '@/assets/css/mineDiaryLists.scss';
 	@import '@/assets/css/mineDiary.scss';
 </style>

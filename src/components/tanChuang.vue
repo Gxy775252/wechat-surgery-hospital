@@ -38,7 +38,7 @@ export default {
     align-items: center;
     .modelWhite {
         width: calc(33.33rem / 2);
-        height: calc(38.86rem / 2);
+        height: calc(35rem / 2);
         margin: auto;
         background: #fff;
         border-radius: 0.26rem;
@@ -52,7 +52,7 @@ export default {
             position: absolute;
             left: 50%;
             margin-left: -31%;
-			bottom:1.8rem;
+			bottom:1.3rem;
         }
     }
 }

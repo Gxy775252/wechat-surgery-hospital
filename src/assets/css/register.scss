@@ -86,7 +86,7 @@
 .slotImg {
 	width: calc(10.6rem / 2);
 	height: calc(10.73rem / 2);
-	margin: 2rem auto;
+	margin: 1.5rem auto;
 	> img {
 		width: 100%;
 		height: 100%;
@@ -97,12 +97,10 @@
 	text-align: center;
 	font-size: calc(2.13rem / 2);
 	color: #333;
-	margin-top: 1rem;
 }
 .slotDiv {
 	color: #008a7e;
 	font-size: calc(1.46rem / 2);
-	margin-top: 1rem;
 	> p {
 		text-align: center;
 	}

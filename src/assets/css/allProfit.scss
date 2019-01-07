@@ -1,0 +1,41 @@
+.all{
+	width: 100%;
+	height: 100%;
+	background: #f7f7f7;
+	padding-bottom:5%;
+}
+.top{
+	padding: calc(2rem/2) calc(2.66rem/2);
+	>p:first-child{
+		font-size:calc(1.86rem/2);
+		color:#333;
+	}
+	>p:last-child{
+		font-size:calc(1.33rem/2);
+		color:#999;
+	}
+}
+.dayList{
+	width:calc(47.6rem/2);
+	margin: auto;
+	margin-top:calc(1.33rem / 2);
+	display: flex;
+	padding: calc(1.40rem / 2) 0;
+	font-size:  calc(1.66rem / 2);
+	background: #fff;
+	border-radius: 4px;
+	&-date{
+		width: 80%;
+		font-size:  calc(1.66rem / 2);
+		color: #333;
+		margin-left:calc(1.33rem/2);
+	}
+	&-num{
+		width: 19%;
+		color: #333;
+		font-size:  calc(1.66rem / 2);
+		text-align: right;
+		margin-right:calc(1.33rem/2);
+	}
+	
+}

@@ -57,9 +57,10 @@
 			<div class="lineImg"><img src="../assets/images/icon/level.jpg"></div>
 			<p>美丽日记</p>
 		</div>
-		<div class="box">
+		<div>
 			<div class="diaryList">
 				<p class="yearFont">2018年</p>
+				<p class="yearFontA">Beautiful Diary</p>
 				<div class="monthBox" v-for="(item,key,index) in listDiaryInfo" :key="key">
 					<div class="month">
 						<div class="monthImg"><img src="@/assets/images/icon/level.jpg"></div>

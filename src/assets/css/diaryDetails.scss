@@ -103,10 +103,14 @@ body {
 	margin: calc(3rem / 2) 0 calc(3rem / 2) calc(3rem / 2);
 	border-left: calc(0.25rem / 2) solid #008e83;
 	.yearFont {
-		color: #999;
-		font-size: calc(1.8rem / 2);
+		color: #008e83;
+		font-size: calc(1.2rem/ 2) ;
 		margin-left: calc(1.4rem / 2);
-		font-weight: bold;
+	}
+	.yearFontA{
+		color: #666;
+		font-size:calc(1.06rem/2);
+		margin-left: calc(1.4rem / 2);
 	}
 	.month {
 		margin-top: calc(0.6rem / 2);
@@ -226,7 +230,6 @@ body {
 		}
 	}
 	.listFont {
-		width: calc(45rem / 2);
 		margin: calc(1.8rem / 2) auto;
 		font-size: calc(1.6rem / 2);
 		color: #333;
