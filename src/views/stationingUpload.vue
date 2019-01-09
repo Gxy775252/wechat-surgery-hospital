@@ -1,5 +1,14 @@
 <template>
-	<div class="all">
+	<div>
+		<div class="head">
+			<div class="headimg">
+				<img src="../assets/images/example/doctor.png" />
+			</div>
+			<div class="headText">
+				<p>用户姓名</p>
+				<p>做过的项目：抽脂瘦大腿，打水光针</p>
+			</div>
+		</div>
 		<div class="diaryList">
 			<div class="list">
 				<p>日期</p>
@@ -13,8 +22,8 @@
 			<div class="list">
 				<p>项目名称</p>
 				<div class="list-right">
-					<input placeholder="填写项目名称" />
-					<div class="right-div ">
+					<p>选择用户做过的项目（选择订单）</p>
+					<div class="right-div">
 						<img src="@/assets/images/icon/mineHore.png" />
 					</div>
 				</div>
@@ -37,34 +46,32 @@
 			<div style="height: 6rem;"></div>
 		</div>
 		<div class="buttonA">
-			<!-- <button>提交</button> -->
-			<button>编辑</button>
+			<button>提交</button>
 		</div>
 	</div>
 </template>
 
 <script>
-	import Vue from 'vue';
-	import * as api from '@/assets/js/api';
-	import {
-		Textarea
-	} from 'we-vue';
-	Vue.use(Textarea);
-	export default {
-		data() {
-			return {
-				doctorImgNull: this.$store.state.doctorImgNull
-			};
-		},
-		created: function() {
-			this.$store.commit('showBottomNav', {
-				isShow: false
-			});
-		}
-	};
+import Vue from 'vue';
+import * as api from '@/assets/js/api';
+import { Textarea } from 'we-vue';
+Vue.use(Textarea);
+export default {
+	data() {
+		return {
+			birthday: '选择日期',
+			doctorImgNull: this.$store.state.doctorImgNull
+		};
+	},
+	created: function() {
+		this.$store.commit('showBottomNav', {
+			isShow: false
+		});
+	}
+};
 </script>
 
 <style lang="scss" scoped>
-	@import '@/assets/css/mineDiaryLists.scss';
-	@import '@/assets/css/mineDiary.scss';
+@import '@/assets/css/stationingUpload.scss';
+@import '@/assets/css/mineDiary.scss';
 </style>

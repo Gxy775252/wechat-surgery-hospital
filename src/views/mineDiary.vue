@@ -73,26 +73,24 @@
 </template>
 
 <script>
-	import Vue from 'vue';
-	import * as api from '@/assets/js/api';
-	import {
-		Textarea
-	} from 'we-vue';
-	Vue.use(Textarea);
-	export default {
-		data() {
-			return {
-				doctorImgNull: this.$store.state.doctorImgNull
-			};
-		},
-		created: function() {
-			this.$store.commit('showBottomNav', {
-				isShow: false
-			});
-		}
-	};
+import Vue from 'vue';
+import * as api from '@/assets/js/api';
+import { Textarea } from 'we-vue';
+Vue.use(Textarea);
+export default {
+	data() {
+		return {
+			doctorImgNull: this.$store.state.doctorImgNull
+		};
+	},
+	created: function() {
+		this.$store.commit('showBottomNav', {
+			isShow: false
+		});
+	}
+};
 </script>
 
 <style lang="scss" scoped>
-	@import '@/assets/css/mineDiary.scss';
+@import '@/assets/css/mineDiary.scss';
 </style>

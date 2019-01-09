@@ -77,15 +77,7 @@ export default new Router({
 				next()
 			}
 		},
-		{
-			path: '/mineInfo',
-			name: 'mineInfo',
-			component: () => import('./views/mineInfo.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '我的信息'
-				next()
-			}
-		},
+
 		{
 			path: '/mineDiary',
 			name: 'mineDiary',
@@ -95,15 +87,7 @@ export default new Router({
 				next()
 			}
 		},
-		{
-			path: '/mineNewPeople',
-			name: 'mineNewPeople',
-			component: () => import('./views/mineNewPeople.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '我的拉新'
-				next()
-			}
-		},
+
 		{
 			path: '/newQRCode',
 			name: 'newQRCode',
@@ -119,24 +103,6 @@ export default new Router({
 			component: () => import('./views/mineCollector.vue'),
 			beforeEnter: (to, from, next) => {
 				document.title = '我的收藏'
-				next()
-			}
-		},
-		{
-			path: '/mineDiaryList',
-			name: 'mineDiaryList',
-			component: () => import('./views/mineDiaryList.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '我的美丽日记'
-				next()
-			}
-		},
-		{
-			path: '/mineDiaryLists',
-			name: 'mineDiaryLists',
-			component: () => import('./views/mineDiaryLists.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '我的美丽日记'
 				next()
 			}
 		},
@@ -394,6 +360,125 @@ export default new Router({
 			component: () => import('./views/skinAnalysis.vue'),
 			beforeEnter: (to, from, next) => {
 				document.title = '皮肤分析'
+				next()
+			}
+		},
+		// 个人中心
+		{
+			path: '/mineNewPeople',
+			name: 'mineNewPeople',
+			component: () => import('./views/mineNewPeople.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '我的拉新'
+				next()
+			}
+		},
+		{
+			path: '/mineInfo',
+			name: 'mineInfo',
+			component: () => import('./views/mineInfo.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '我的信息'
+				next()
+			}
+		},
+		{
+			path: '/mineDiaryList',
+			name: 'mineDiaryList',
+			component: () => import('./views/mineDiaryList.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '我的美丽日记'
+				next()
+			}
+		},
+		{
+			path: '/mineDiaryLists',
+			name: 'mineDiaryLists',
+			component: () => import('./views/mineDiaryLists.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '我的美丽日记'
+				next()
+			}
+		},
+		// 驻场医生内容
+		{
+			path: '/activation',
+			name: 'activation',
+			component: () => import('./views/activation.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '激活'
+				next()
+			}
+		},
+		{
+			path: '/stationingDoctorPersonalCenter',
+			name: 'stationingDoctorPersonalCenter',
+			component: () => import('./views/stationingDoctorPersonalCenter.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '个人中心'
+				next()
+			}
+		},
+		{
+			path: '/stationingDoctorOrder',
+			name: 'stationingDoctorOrder',
+			component: () => import('./views/stationingDoctorOrder.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '预约订单'
+				next()
+			}
+		},
+		{
+			path: '/stationingDoctorOrderDetail',
+			name: 'stationingDoctorOrderDetail',
+			component: () => import('./views/stationingDoctorOrderDetail.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '预约订单详情'
+				next()
+			}
+		},
+		{
+			path: '/stationingMyUser',
+			name: 'stationingMyUser',
+			component: () => import('./views/stationingMyUser.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '我的用户'
+				next()
+			}
+		},
+		{
+			path: '/stationingUpload',
+			name: 'stationingUpload',
+			component: () => import('./views/stationingUpload.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '上传美丽日记'
+				next()
+			}
+		},
+		{
+			path: '/stationingUploads',
+			name: 'stationingUploads',
+			component: () => import('./views/stationingUploads.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '上传美丽日记'
+				next()
+			}
+		},
+		{
+			path: '/seeBeautyDiary',
+			name: 'seeBeautyDiary',
+			component: () => import('./views/seeBeautyDiary.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '查看美丽日记'
+				next()
+			}
+		},
+		{
+			path: '/stationingBeautyDiaryDetail',
+			name: 'stationingBeautyDiaryDetail',
+			component: () => import('./views/stationingBeautyDiaryDetail.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '美丽日记详情'
 				next()
 			}
 		},

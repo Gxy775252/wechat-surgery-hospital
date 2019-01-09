@@ -1,0 +1,15 @@
+.list{
+	>p{
+		color:#ccc !important;
+	}
+}
+.list-right{
+	>p{
+		position: absolute !important;
+		right:calc(4.2rem / 2) !important;
+		color: #333 !important;
+	}
+}
+.checkbox-title{
+	color:#ccc !important;
+}

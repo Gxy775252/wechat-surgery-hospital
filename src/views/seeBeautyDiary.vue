@@ -1,5 +1,14 @@
 <template>
 	<div>
+		<div class="head">
+			<div class="headimg">
+				<img src="../assets/images/example/doctor.png" />
+			</div>
+			<div class="headText">
+				<p>用户姓名</p>
+				<p>做过的项目：抽脂瘦大腿，打水光针</p>
+			</div>
+		</div>
 		<div class="box">
 			<div class="diaryList">
 				<p class="yearFont">2018年</p>
@@ -10,16 +19,14 @@
 						<p>10月10日</p>
 						<div class="function">
 							<div class="function-list">
-								<div class="bianji">
-									<img src="../assets/images/icon/bianji.png" />
-								</div>
-								<p>编辑</p>
+								<div class="bianji"></div>
+								<p></p>
 							</div>
 							<div class="function-list">
 								<div class="chakan">
 									<img src="../assets/images/icon/public.png" />
 								</div>
-								<p>编辑</p>
+								<p style="color: #008e83;">删除</p>
 							</div>
 						</div>
 					</div>
@@ -43,7 +50,7 @@
 
 		<div style="height: 6rem;"></div>
 		<div class="buttonA">
-			<button>新建</button>
+			<button>上传美丽日记</button>
 		</div>
 	</div>
 </template>
@@ -64,4 +71,5 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/css/mineDiaryList.scss';
+@import '@/assets/css/seeBeautyDiary.scss';
 </style>
