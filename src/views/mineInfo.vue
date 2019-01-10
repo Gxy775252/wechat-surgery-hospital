@@ -67,14 +67,14 @@
 			</div>
 		</div>
 		<!-- 日期选择器 -->
-		<!-- 	<wv-datetime-picker
+			<wv-datetime-picker
 			ref="picker"
 			type="date"
 			v-model="dateTime" 
 			@confirm="onConfirm"  
 			:start-date="new Date('1970/01/01 00:00')" 
 			:end-date="new Date()">
-		</wv-datetime-picker> -->
+		</wv-datetime-picker>
 		<!-- 日期选择器 END-->
 		<div class="buttonA">
 			<button>保存</button>

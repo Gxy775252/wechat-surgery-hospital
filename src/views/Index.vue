@@ -27,8 +27,7 @@
 			</div>
 			<div class="doctorText">
 				<div class="centerText">
-					<img src="@/assets/css/indexDoctor.png" />
-					<!-- <img :src="configImg.homeDoctorPic" /> -->
+					<img :src="configImg.homeDoctorPic" />
 				</div>
 				<div class="bottomText" style="left:0.66rem;" @click="goDoctorList()">
 					<p>查看更多医生</p>
@@ -39,8 +38,7 @@
 		<div class="doctor">
 			<div class="doctorText" style="border-left: 1px solid #008e83;border-right:0;margin-left: 6px;">
 				<div class="centerText" style="text-align: right;margin-right:0.66rem;">
-					<img src="@/assets/css/indexInstrument.png" />
-					<!-- <img :src="configImg.homeInstPic" /> -->
+					<img :src="configImg.homeInstPic" />
 				</div>
 				<div class="bottomText" style="right:0.66rem;" @click="goInstrumentList()">
 					<img src="@/assets/images/icon/rightColor.png" style="transform:rotate(180deg);margin: 0 0.3rem 0 0;" />
@@ -105,10 +103,10 @@
 			<img :src="configImg.indexPic" />
 		</div>
 		<div class="seeI">
-			<img src="@/assets/images/icon/seeI.png" />
+			<img src="@/assets/images/icon/kanjian.png" />
 		</div>
 		<div class="briefImg" v-if="isPlay">
-			<Video-Play :videoUrl="videoUrl"></Video-Play>
+			<Video-Play :videoUrl="videoUrl" v-on:surt="surtChild" :isNone="isPlay"></Video-Play>
 		</div>
 		<div style="height:6rem;"></div>
 	</div>
@@ -138,12 +136,11 @@ export default {
 			configImg: '',
 			selectList: '',
 			diaryLisy: '',
-			shoppingImgNull: this.$store.state.shoppingImgNull,
 			doctorImgNull: this.$store.state.doctorImgNull
 		};
 	},
 	components: {
-		'Video-Play': VideoPlay
+		VideoPlay
 	},
 	created: function() {
 		this.$store.commit('showBottomNav', {
@@ -194,11 +191,17 @@ export default {
 			});
 		},
 		videoPlay: function(res) {
+			console.log('点击播放视频', res);
 			// 点击播放视频
 			if (res.isVideo == 1) {
 				this.videoUrl = res.url;
 				this.isPlay = true;
+				this.isNone = true;
 			}
+		},
+		surtChild: function(data) {
+			this.isPlay = false;
+			this.isNone = false;
 		}
 	}
 };

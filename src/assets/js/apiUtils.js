@@ -17,9 +17,9 @@ const requestType = (type, url, options = {}) => {
   let instance = axios.create();
 
   function callAPI (resolve, reject) {
-    console.log('请求API-=-=-=-',options)
+    console.log('请求API-=-=-=-',options.data)
     instance.request(options).then(res => {
-      console.log(res,'data')
+      // console.log(res,'data')
       resolve(res)
     })
   }

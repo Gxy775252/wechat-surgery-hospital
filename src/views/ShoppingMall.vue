@@ -11,15 +11,16 @@
 		<div class="navList" >
 			<p @click="select_P(0)" :class="selectId==0?'selection':''">全部</p>
 			<p v-for="item in listClassifyInfo" :key="item.id" :class="item.id==selectId?'selection':''" @click="select_P(item.id)">{{item.name}}</p>
+			<p style="width:0.5px;"></p>
 		</div>
 		<div class="swiper">
 			<div>
 				<wv-swipe :autoplay="4000" class="swiperImg">
-					<wv-swipe-item v-for="item in listBannerInfo" :key="item.id">
-						<img :src="item.cover" class="imgA"/>
-						<!-- <div v-if="item.isVideo==1" class="playImg">
+					<wv-swipe-item v-for="(item, key, index) in listBannerInfo" :key="key">
+						<img :src="item.cover || ImgNull" class="imgA"/>
+						<div v-if="item.isVideo==1" class="playImg">
 							<img src="@/assets/images/icon/playImg.png" />
-						</div> -->
+						</div>
 					</wv-swipe-item>
 				</wv-swipe>
 			</div>
@@ -66,9 +67,9 @@
 			</div>
 		</div>
 		<div class="seeI">
-			<img src="@/assets/images/icon/seeI.png" />
+			<img src="@/assets/images/icon/kanjian.png" />
 		</div>
-		<div style="height:6rem;background-color:#f7f7f7;"></div>
+		<div style="height:3rem;"></div>
 	</div>
 </template>
 
@@ -83,7 +84,8 @@ export default {
 			listBannerInfo: '', //轮播
 			listClassifyInfo: '', //分类列表
 			listHotInfo: '', //热门商品
-			selectId: 0 //分类选中 0=全部
+			selectId: 0, //分类选中 0=全部
+			ImgNull: this.$store.state.ImgNull
 		};
 	},
 	created: function() {

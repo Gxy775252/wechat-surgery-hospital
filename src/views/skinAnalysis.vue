@@ -26,7 +26,7 @@
 		</div>
 		<div style="width:100;background-color: #f7f7f7;height:calc(4.66rem/2);"></div>
 		<div class="seeI">
-			<img src="@/assets/images/icon/seeI.png" />
+			<img src="@/assets/images/icon/kanjian.png" />
 		</div>
 		    <div class="bottom_btn">
 		  <button type="button" name="button">在线预约</button>

@@ -4,6 +4,7 @@
 			<!-- class="selection" 选中时的样式 -->
 			<p @click="select_P(0)" :class="selectId==0?'selection':''">全部</p>
 			<p v-for="item in listClassifyInfo" :key="item.id" :class="item.id==selectId?'selection':''" @click="select_P(item.id)">{{item.name}}</p>
+			<p style="width: 0.5px;"></p>
 		</div>
 		<div class="orderBy">
 			<div @click="clickByPrice()">
@@ -42,7 +43,6 @@
 		<div class="cart">
 			<img src="@/assets/images/icon/cart.png" />
 		</div>
-		<div style="height:90px;"></div>
 	</div>
 </template>
 
@@ -87,6 +87,7 @@ export default {
         select_P: function(res) {
             // 跳转商品列表并将当前点击的分类id传入
             this.selectId = res;
+			console.log(this.selectId );
             api.getCommodityDetail({
                 data: {
                     openid: this.globalData.openid,

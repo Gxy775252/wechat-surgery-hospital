@@ -176,7 +176,7 @@
 	align-items: center;
 	> div {
 		width: calc(16.66rem / 2);
-		height: 100%;
+		height: calc(6.26rem / 2);
 		text-align: center;
 		line-height: calc(6.26rem / 2);
 		color: #fff;
@@ -188,23 +188,20 @@
 			position: relative;
 			color: #333;
 			font-size: calc(1.06rem / 2);
-			> div {
-				position: absolute;
-				top: 0.5rem;
-				left: 50%;
-				margin-left: -13%;
-				width: calc(2rem / 2);
-				height: calc(2rem / 2);
+			.imgA {
+				width: calc(2.06rem / 2);
+				height: calc(2.06rem / 2);
+				margin: auto;
+				margin-top: 10px;
 				> img {
 					width: 100%;
 					height: 100%;
 				}
 			}
 			> p {
-				position: absolute;
-				top: 0.66rem;
-				left: 50%;
-				margin-left: -15%;
+				font-size: calc(1.06rem / 2);
+				text-align: center;
+				margin-top: -13px;
 			}
 		}
 	}
@@ -270,12 +267,12 @@
 				width: calc(1.46rem / 2);
 				height: calc(1.46rem / 2);
 				position: absolute;
-				top:0;
+				top: 0;
 				right: 2rem;
 				> img {
 					width: 100%;
 					height: 100%;
-					padding:0.66rem;
+					padding: 0.66rem;
 				}
 			}
 		}
@@ -320,11 +317,35 @@
 		}
 		.sum {
 			width: 100%;
-			margin-top: calc(3.13rem / 2);
+			margin-top: calc(3rem / 2);
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
 			> p {
 				margin-left: calc(2.2rem / 2);
 				font-size: calc(1.73rem / 2);
 				color: #333;
+			}
+			.buttonMoney {
+				margin-right: calc(2rem / 2);
+				div {
+					display: flex;
+					button {
+						height: calc(2.9rem / 2);
+						width: calc(2.9rem / 2);
+						background-color: #f7f7f7;
+					}
+					> p {
+						height: calc(2.9rem / 2);
+						width: calc(2.9rem / 2);
+						text-align: center;
+						line-height: calc(2.9rem / 2);
+						font-size: calc(1.5rem / 2);
+						color: #333;
+						background-color: #f7f7f7;
+						margin: 0 calc(0.3rem / 2);
+					}
+				}
 			}
 		}
 		.success {
@@ -345,6 +366,26 @@
 			width: 100%;
 			border: 0;
 		}
+	}
+}
+.bottomA {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	border: 0;
+	height: calc(6.26rem / 2);
+	display: flex;
+	> button {
+		width: 50%;
+		height: 100%;
+		font-size: calc(1.8rem / 2);
+		color: #fff;
+	}
+	> button:first-child {
+		background-color: #828d93;
+	}
+	> button:last-child {
+		background-color: #008e83;
 	}
 }
 .seeI {

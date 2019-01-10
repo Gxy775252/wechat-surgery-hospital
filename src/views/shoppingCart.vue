@@ -44,113 +44,131 @@
 </template>
 
 <script>
-	export default {
-		name: 'shoppingCart',
-		data() {
-			return {
-				dataList: [{
-						id: 1,
-						name: '活力眼凝胶',
-						money: 100,
-						number: '1',
-						standard: '200ml',
-						img: require('../assets/images/example/listImgOne.png'),
-						check: false
-					},
-					{
-						id: 2,
-						name: '活力眼凝胶',
-						money: 100,
-						number: '1',
-						standard: '200ml',
-						img: require('../assets/images/example/listImgOne.png'),
-						check: false
-					},
-					{
-						id: 3,
-						name: '活力眼凝胶',
-						money: 100,
-						number: '1',
-						standard: '200ml',
-						img: require('../assets/images/example/listImgOne.png'),
-						check: false
-					}
-				],
-				num:0,
-				allSelect:false
-			};
-		},
-		watch: {
-			// 监听数据是否变化，
-			dataList: { //深度监听，可监听到对象、数组的变化
-				handler(val, oldVal) {
-					var money=0;
-					var iArray=[];
-        for(var i=0;i<this.dataList.length;i++){
-					if(this.dataList[i].check==true){
-						iArray.push(i);
-						money+=(this.dataList[i].money*this.dataList[i].number);
-					}
-				}
-				if(this.dataList.length!=0){
-					if(iArray.length==this.dataList.length){
-						this.allSelect=true;
-					}else{
-						this.allSelect=false;
-					}
-					this.num=money;
-				}
+import Vue from 'vue';
+import { Toast } from 'we-vue';
+import wx from 'weixin-js-sdk';
+import * as api from '@/assets/js/api';
+export default {
+	name: 'shoppingCart',
+	data() {
+		return {
+			dataList: [
+				{
+					id: 1,
+					name: '活力眼凝胶',
+					money: 100,
+					number: '1',
+					standard: '200ml',
+					img: require('../assets/images/example/listImgOne.png'),
+					check: false
 				},
-				deep: true
-			}
-
-		},
-
-		created: function() {
-			this.$store.commit('showBottomNav', {
-				isShow: false
-			})
-		},
-		methods: {
-			// 复选框
-			check(e) {
-				if (this.dataList[e].check == false) {
-					this.dataList[e].check = true;
-				} else {
-					this.dataList[e].check = false;
+				{
+					id: 2,
+					name: '活力眼凝胶',
+					money: 100,
+					number: '1',
+					standard: '200ml',
+					img: require('../assets/images/example/listImgOne.png'),
+					check: false
+				},
+				{
+					id: 3,
+					name: '活力眼凝胶',
+					money: 100,
+					number: '1',
+					standard: '200ml',
+					img: require('../assets/images/example/listImgOne.png'),
+					check: false
+				}
+			],
+			num: 0,
+			allSelect: false
+		};
+	},
+	watch: {
+		// 监听数据是否变化，
+		dataList: {
+			//深度监听，可监听到对象、数组的变化
+			handler(val, oldVal) {
+				var money = 0;
+				var iArray = [];
+				for (var i = 0; i < this.dataList.length; i++) {
+					if (this.dataList[i].check == true) {
+						iArray.push(i);
+						money += this.dataList[i].money * this.dataList[i].number;
+					}
+				}
+				if (this.dataList.length != 0) {
+					if (iArray.length == this.dataList.length) {
+						this.allSelect = true;
+					} else {
+						this.allSelect = false;
+					}
+					this.num = money;
 				}
 			},
-			// 全选
-			allcheck(){
-				if(this.allSelect==false){
-					for(var i=0;i<this.dataList.length;i++){
-						this.dataList[i].check=true;
-						this.allSelect=true;
-					}
-					}else{
-						for(var i=0;i<this.dataList.length;i++){
-							this.dataList[i].check=false;
-							this.allSelect=false;
-						}
-					}
-			},
-			// 减号
-			reduce(e){
-				if(this.dataList[e].number==1){
-					// console.log('删除')
-					this.dataList.splice(e, 1);
-				}else{
-					this.dataList[e].number--;
-				}
-			},
-			// 加号
-			plus(e){
-				this.dataList[e].number++;
+			deep: true
+		}
+	},
+
+	created: function() {
+		this.$store.commit('showBottomNav', {
+			isShow: false
+		});
+		api.getMyCart({
+			data: {
+				openid: this.globalData.openid
 			}
+		}).then(res => {
+			if (res.data.flag) {
+				console.log('购物车数据', res.data);
+			} else {
+				Toast.text({
+					duration: 1000,
+					message: '发送失败'
+				});
+			}
+		});
+	},
+	methods: {
+		// 复选框
+		check(e) {
+			if (this.dataList[e].check == false) {
+				this.dataList[e].check = true;
+			} else {
+				this.dataList[e].check = false;
+			}
+		},
+		// 全选
+		allcheck() {
+			if (this.allSelect == false) {
+				for (var i = 0; i < this.dataList.length; i++) {
+					this.dataList[i].check = true;
+					this.allSelect = true;
+				}
+			} else {
+				for (var i = 0; i < this.dataList.length; i++) {
+					this.dataList[i].check = false;
+					this.allSelect = false;
+				}
+			}
+		},
+		// 减号
+		reduce(e) {
+			if (this.dataList[e].number == 1) {
+				this.dataList.splice(e, 1);
+			} else {
+				this.dataList[e].number--;
+			}
+		},
+		// 加号
+		plus(e) {
+			this.dataList[e].number++;
 		}
 	}
+};
 </script>
 
 <style scoped="scoped" lang="scss">
-	@import '@/assets/css/shoppingCart.scss';
+@import '@/assets/css/shoppingCart.scss';
 </style>

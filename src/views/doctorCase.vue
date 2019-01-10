@@ -49,7 +49,7 @@ export default {
 			data: {
 				openid: this.globalData.openid,
 				doctorid: 1, //医生id,
-				projectid: 1 //项目id,
+				projectid: 0 //项目id,
 			}
 		}).then(res => {
 			if (res.data.flag) {

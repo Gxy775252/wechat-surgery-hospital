@@ -7,7 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 	state: {
 		showBottomNav: true,
-		shoppingImgNull: require('@/assets/images/icon/cartNull.png'),
+		ImgNull: require('@/assets/images/icon/cartNull.png'),
 		doctorImgNull: require('@/assets/images/example/doctor.png'),
 	},
 	getters: {},

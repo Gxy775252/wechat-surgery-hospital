@@ -4,7 +4,7 @@
 			<div class="swiperImg">
 				<wv-swipe :autoplay="4000" class="swiperImg">
 					<wv-swipe-item v-for="(item,key,index) in swipeContent" :key="key"> 
-						<img :src="item.cover || doctorImgNull" class="imgA"/>
+						<img :src="item.cover || ImgNull" class="imgA"/>
 						<div v-if="item.isVideo==1" class="playImg">
 							<img src="@/assets/images/icon/playImg.png" />
 						</div>
@@ -19,10 +19,10 @@
 			</div>
 		</div> -->
 		<div class="doctorList" v-for="(item,key,index) in dataList" :key="key">
-			<div class="box" @click="goDoctorDetail(item.id)">
-				<div class="boxTop">
+			<div class="box">
+				<div class="boxTop" @click="goDoctorDetail(item.id)">
 					<div class="headImg">
-						<img :src="doctorImgNull" />
+						<img :src="ImgNull" />
 					</div>
 					<div class="headName">
 						<p>{{item.name}}/DrQi</p>
@@ -32,14 +32,17 @@
 						<img src="@/assets/images/icon/level.jpg" />
 					</div>
 				</div>
-				<div class="boxTop">
+				<div class="boxTop" @click="goDoctorDetail(item.id)">
 					<div class="docInfo">
 						<img src="@/assets/images/icon/docInfo.png" />
 					</div>
 					<div class="docName" v-html="item.brief"></div>
 				</div>
 				<div class="boxBottom">
-					<img :src="doctorImgNull" />
+					<img :src="item.coverResource.cover || ImgNull" />
+					<div v-if="item.coverResource.isVideo==1" class="playImg">
+						<img src="@/assets/images/icon/playImg.png" />
+					</div>
 				</div>
 			</div>
 		</div>
@@ -49,11 +52,8 @@
 <script>
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
-import VideoPlay from '@/components/videoPlay';
 import Vue from 'vue';
 import { Swipe, SwipeItem } from 'we-vue';
-import { Authorization, parseUrl, showBottomNav } from '@/assets/js/utils';
-import wx from 'weixin-js-sdk';
 import * as api from '@/assets/js/api';
 Vue.use(Swipe).use(SwipeItem);
 export default {
@@ -66,11 +66,8 @@ export default {
 			videoUrl: '',
 			autoplay: 'autoplay',
 			controls: 'controls',
-			doctorImgNull: this.$store.state.doctorImgNull
+			ImgNull: this.$store.state.ImgNull
 		};
-	},
-	components: {
-		'Video-Play': VideoPlay
 	},
 	created: function() {
 		this.$store.commit('showBottomNav', {
@@ -98,17 +95,17 @@ export default {
 		});
 	},
 	methods: {
-// 		videoPlay: function(res) {
-// 			// 点击播放视频
-// 			for (let i = 0; i < this.dataList.length; i++) {
-// 				if (this.dataList[i].id == res.id && res.coverResource.isVideo == 1) {
-// 					this.dataList[i].isPlay = true;
-// 					this.videoUrl = res.coverResource.url;
-// 				} else {
-// 					this.dataList[i].isPlay = false;
-// 				}
-// 			}
-// 		},
+		// 		videoPlay: function(res) {
+		// 			// 点击播放视频
+		// 			for (let i = 0; i < this.dataList.length; i++) {
+		// 				if (this.dataList[i].id == res.id && res.coverResource.isVideo == 1) {
+		// 					this.dataList[i].isPlay = true;
+		// 					this.videoUrl = res.coverResource.url;
+		// 				} else {
+		// 					this.dataList[i].isPlay = false;
+		// 				}
+		// 			}
+		// 		},
 		goDoctorDetail: function(id) {
 			// 跳转医生详情并将当前点击的医生id传入
 			this.$router.push({ name: 'docInfo', params: { doctorId: id } });

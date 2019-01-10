@@ -33,7 +33,6 @@
 		},
 		methods:{
 			stars:function(index){
-				console.log(index);
 				for(var i=0;i<this.imgs.length;i++){
 					if(i<=index){
 						this.imgs[i].colorUrl=this.green;

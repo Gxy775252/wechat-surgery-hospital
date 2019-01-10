@@ -104,10 +104,9 @@
         <img :src="item.pic" alt="">
       </div>
     </div>
-    <div class="page_bottom">
-      <p>看见自己</p>
-      <p>Discover yourself</p>
-    </div>
+		<div class="seeI">
+			<img src="@/assets/images/icon/kanjian.png" />
+		</div>
     <div class="bottom_btn">
       <button type="button" name="button">在线预约</button>
       <button type="button" name="button">在线咨询</button>

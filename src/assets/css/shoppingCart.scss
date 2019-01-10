@@ -1,159 +1,159 @@
-.background{
-	background-color:#f7f7f7;
+.background {
+	background-color: #f7f7f7;
 	position: fixed;
-	top:0;
+	top: 0;
 	bottom: 0;
 	left: 0;
 	right: 0;
 	overflow-y: auto;
 }
-.cartNull{
-	background-color:#f7f7f7;
+.cartNull {
+	background-color: #f7f7f7;
 	text-align: center;
-	margin-top:calc(23rem/2);
-	img{
-		width: calc(13.2rem/2);
-		height: calc(16rem/2);
+	margin-top: calc(23rem / 2);
+	img {
+		width: calc(13.2rem / 2);
+		height: calc(16rem / 2);
 		margin: auto;
 	}
-	p{
-		font-size:calc(1.5rem/2);
+	p {
+		font-size: calc(1.5rem / 2);
 		color: #aaa;
 		text-align: center;
-		margin-top:calc(2.3rem/2);
+		margin-top: calc(2.3rem / 2);
 	}
 }
-.box{
+.box {
 	width: 100%;
-	.edit{
-	    width: calc(47.6rem/2);
-		height:calc(5.1rem/2);
-		line-height:calc(5.1rem/2);
-		text-align:right;
-		font-size:calc(1.7rem/2);
+	.edit {
+		width: calc(47.6rem / 2);
+		height: calc(5.1rem / 2);
+		line-height: calc(5.1rem / 2);
+		text-align: right;
+		font-size: calc(1.7rem / 2);
 		color: #008e83;
-		margin:calc(1rem/2) auto 0rem auto;
+		margin: calc(1rem / 2) auto 0rem auto;
 	}
-	.contentBox{
-		width: calc(47.6rem/2);
-		height: calc(12.1rem/2);
-		margin:0rem auto calc(1rem/2) auto;
+	.contentBox {
+		width: calc(47.6rem / 2);
+		height: calc(12.1rem / 2);
+		margin: 0rem auto calc(1rem / 2) auto;
 		background-color: #fff;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		.fontImg{
+		.fontImg {
 			display: flex;
 			align-items: center;
-			img{
-				width:calc(7.8rem/2);
-				height:calc(7.8rem/2) ;
+			img {
+				width: calc(7.8rem / 2);
+				height: calc(7.8rem / 2);
+			}
+			.nameStandard {
+				margin-left: calc(1.6rem / 2);
+				// margin-top:calc(0.6rem/2);
+				.nameFont {
+					font-size: calc(1.5rem / 2);
+					color: #333;
 				}
-				.nameStandard{
-					margin-left:calc(1.6rem/2);
-					// margin-top:calc(0.6rem/2);
-					.nameFont{
-						font-size:calc(1.5rem/2);
-						color:#333;
-					}
-				}
+			}
 		}
-		.check{
-			margin-left:calc(2rem/2);
-			margin-right:calc(1.3rem/2);
-			width:calc(3rem/2);
-			height:calc(3rem/2);
-			>img{
+		.check {
+			margin-left: calc(2rem / 2);
+			margin-right: calc(1.3rem / 2);
+			width: calc(2rem / 2);
+			height: calc(2rem / 2);
+			> img {
 				height: 100%;
 				width: 100%;
 			}
 		}
-		.standard{
+		.standard {
 			background-color: #f7f7f7;
-			padding:0 calc(1rem/2);
-			height:calc(2.4rem/2);
+			padding: 0 calc(1rem / 2);
+			height: calc(2.4rem / 2);
 			text-align: center;
-			line-height:calc(2.4rem/2);
-			font-size: calc(1rem/2);
+			line-height: calc(2.4rem / 2);
+			font-size: calc(1rem / 2);
 			border-radius: 10%;
 			color: #666;
-			margin-top:calc(0.6rem/2);
+			margin-top: calc(0.6rem / 2);
 		}
-		.buttonMoney{
-			margin-right: calc(2rem/2);
-			>p{
-		      font-size: calc(1.5rem/2);
-			  color:#333;
-			  text-align: right;
+		.buttonMoney {
+			margin-right: calc(2rem / 2);
+			> p {
+				font-size: calc(1.5rem / 2);
+				color: #333;
+				text-align: right;
 			}
-			div{
-				margin-top:calc(1.3rem/2);
+			div {
+				margin-top: calc(1.3rem / 2);
 				display: flex;
-				button{
-					height:calc(2.9rem/2);
-					width: calc(2.9rem/2);
+				button {
+					height: calc(2.9rem / 2);
+					width: calc(2.9rem / 2);
 					background-color: #f7f7f7;
 				}
-				>p{
-					height:calc(2.9rem/2);
-					width: calc(2.9rem/2);
+				> p {
+					height: calc(2.9rem / 2);
+					width: calc(2.9rem / 2);
 					text-align: center;
-					line-height:calc(2.9rem/2);
-					font-size: calc(1.5rem/2);
-					color:#333;
+					line-height: calc(2.9rem / 2);
+					font-size: calc(1.5rem / 2);
+					color: #333;
 					background-color: #f7f7f7;
-					margin: 0 calc(0.3rem/2);
+					margin: 0 calc(0.3rem / 2);
 				}
 			}
 		}
 	}
-	}
-.bottomBox{
-	position:fixed;
+}
+.bottomBox {
+	position: fixed;
 	bottom: 0;
 	left: 0;
 	right: 0;
 	display: flex;
 	background-color: #fff;
-	height:calc(6.2rem/2);
+	height: calc(6.2rem / 2);
 	align-items: center;
 	justify-content: space-between;
-	.moneyBox{
+	.moneyBox {
 		display: flex;
 		width: 60%;
-		padding-left:calc(2rem/2);
-		height:calc(3rem/2);
+		padding-left: calc(2rem / 2);
+		height: calc(3rem / 2);
 		align-items: center;
-		.allcheck{
-			margin-right:calc(1rem/2);
-			width:calc(3rem/2);
-			height:calc(3rem/2);
-			>img{
+		.allcheck {
+			margin-right: calc(1rem / 2);
+			width: calc(2rem / 2);
+			height: calc(2rem / 2);
+			> img {
 				height: 100%;
 				width: 100%;
 			}
 		}
-	  .checkAll{
-			color:#333;
-			font-size:calc(1.8rem/2);
+		.checkAll {
+			color: #333;
+			font-size: calc(1.8rem / 2);
 		}
-		.numFont{
-			color:#008e83;
-			font-size: calc(1.4rem/2);
-			margin-left:calc(1.6rem/2);
+		.numFont {
+			color: #008e83;
+			font-size: calc(1.4rem / 2);
+			margin-left: calc(1.6rem / 2);
 		}
-		.allMoney{
-			color:#008e83;
-			font-size:calc(1.8rem/2);
+		.allMoney {
+			color: #008e83;
+			font-size: calc(1.8rem / 2);
 		}
 	}
-	.payGo{
-		font-size:calc(1.8rem/2);
+	.payGo {
+		font-size: calc(1.8rem / 2);
 		color: #fff;
 		background-color: #008e83;
 		text-align: center;
-		height: calc(6.2rem/2);
+		height: calc(6.2rem / 2);
 		width: 35%;
-		line-height:calc(6.2rem/2);
+		line-height: calc(6.2rem / 2);
 	}
 }

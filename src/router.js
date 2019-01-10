@@ -8,14 +8,6 @@ export default new Router({
 	// mode: 'history',
 	base: process.env.BASE_URL,
 	routes: [{
-			path: '/',
-			name: 'index',
-			component: () => import('./views/Index.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '医美'
-				next()
-			}
-		}, {
 			path: '/reserve',
 			name: 'reserve',
 			component: () => import('./views/Reserve.vue'),
@@ -34,41 +26,6 @@ export default new Router({
 			}
 		},
 		{
-			path: '/shoppingMall',
-			name: 'shoppingMall',
-			component: () => import('./views/ShoppingMall.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '商城首页'
-				next()
-			}
-		},
-		{
-			path: '/commodityList',
-			name: 'commodityList',
-			component: () => import('./views/commodityList.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '商品列表'
-				next()
-			}
-		},
-		{
-			path: '/commodityDetail',
-			name: 'commodityDetail',
-			component: () => import('./views/commodityDetail.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '商品详情'
-				next()
-			}
-		},
-		{
-			path: '/shoppingCart',
-			name: 'shoppingCart',
-			component: () => import('./views/shoppingCart.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '购物车'
-				next()
-			}
-		}, {
 			path: '/mine',
 			name: 'mine',
 			component: () => import('./views/Mine.vue'),
@@ -251,30 +208,6 @@ export default new Router({
 			}
 		},
 		{
-			path: '/doctorList',
-			name: 'doctorList',
-			component: () => import('./views/doctorList.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '医生列表'
-				next()
-			}
-		}, {
-			path: '/docInfo',
-			name: 'docInfo',
-			component: () => import('./views/DocInfo.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '医生详情'
-				next()
-			}
-		}, {
-			path: '/doctorCase',
-			name: 'doctorCase',
-			component: () => import('./views/doctorCase.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '医生案例'
-				next()
-			}
-		}, {
 			path: '/instrumentList',
 			name: 'instrumentList',
 			component: () => import('./views/instrumentList.vue'),
@@ -482,5 +415,79 @@ export default new Router({
 				next()
 			}
 		},
+		/**首页相关**/
+		{
+			path: '/',
+			name: 'index',
+			component: () => import('./views/Index.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '医美'
+				next()
+			}
+		},
+		{
+			path: '/doctorList',
+			name: 'doctorList',
+			component: () => import('./views/doctorList.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '医生列表'
+				next()
+			}
+		}, {
+			path: '/docInfo',
+			name: 'docInfo',
+			component: () => import('./views/DocInfo.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '医生详情'
+				next()
+			}
+		}, {
+			path: '/doctorCase',
+			name: 'doctorCase',
+			component: () => import('./views/doctorCase.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '医生案例'
+				next()
+			}
+		},
+		/**首页相关 END**/
+		/**商城相关**/
+		{
+			path: '/shoppingMall',
+			name: 'shoppingMall',
+			component: () => import('./views/ShoppingMall.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '商城首页'
+				next()
+			}
+		},
+		{
+			path: '/commodityList',
+			name: 'commodityList',
+			component: () => import('./views/commodityList.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '商品列表'
+				next()
+			}
+		},
+		{
+			path: '/commodityDetail',
+			name: 'commodityDetail',
+			component: () => import('./views/commodityDetail.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '商品详情'
+				next()
+			}
+		},
+		{
+			path: '/shoppingCart',
+			name: 'shoppingCart',
+			component: () => import('./views/shoppingCart.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '购物车'
+				next()
+			}
+		},
+		/**商城相关 END**/
 	]
 })
