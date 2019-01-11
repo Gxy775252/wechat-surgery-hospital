@@ -1,17 +1,17 @@
 <template>
 	<div class="all">
-		<div class="addressLst">
-			<div class="listLeft">
+		<div class="addressLst" v-for="(item,key,index) in listAddressInfo" :key='key'>
+			<div class="listLeft" @click="clickAddress(item.id)">
 				<div>
-					<p>王小梦</p>
-					<p>15126488999</p>
+					<p>{{item.postName}}</p>
+					<p>{{item.postPhone}}</p>
 				</div>
-				<p>北京市朝阳区安定路39号长新大厦401</p>
+				<p>{{item.postAddress}}</p>
 			</div>
 			<div class="listRight">
 				<p></p>
-				<p>编辑</p>
-				<p>删除</p>
+				<p @click="edit(item.id)">编辑</p>
+				<p @click="delAddress(item.id)">删除</p>
 			</div>
 		</div>
 		<div class="bottomButton">
@@ -21,18 +21,86 @@
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-
-			};
+import { Toast, Dialog } from 'we-vue';
+import * as api from '@/assets/js/api';
+export default {
+	data() {
+		return {
+			listAddressInfo: ''
+		};
+	},
+	created: function() {
+		this.$store.commit('showBottomNav', {
+			isShow: false
+		});
+		api.getVipAddressList({
+			data: {
+				openid: this.globalData.openid
+			}
+		}).then(res => {
+			if (res.data.flag) {
+				console.log('地址列表', res.data);
+				this.listAddressInfo = res.data.listAddress; //地址列表
+			} else {
+				Toast.text({
+					duration: 1000,
+					message: res.data.msg
+				});
+			}
+		});
+	},
+	methods: {
+		clickAddress: function(res) {
+			// 选择地址
+			console.log(res);
+			api.setVipAddressid({
+				data: {
+					openid: this.globalData.openid,
+					addressid: res
+				}
+			}).then(res => {
+				if (res.data.flag) {
+					console.log('选择地址', res.data);
+					// 待修改 选择完地址后要干嘛
+				} else {
+					Toast.text({
+						duration: 1000,
+						message: res.data.msg
+					});
+				}
+			});
 		},
-		created: function() {
-			this.$store.commit('showBottomNav', {
-				isShow: false
+		edit: function(res) {
+			// 编辑
+			this.$router.push({ name: 'newAddress', params: { editid: true } });
+		},
+		delAddress: function(res) {
+			// 删除地址信息
+			Dialog.confirm({
+				title: '确认删除吗？',
+				skin: 'ios',
+				showCancelButton: true
 			})
+				.then(() => {
+					api.deleteVipAddressid({
+						data: {
+							openid: this.globalData.openid,
+							addressid: res
+						}
+					}).then(res => {
+						if (res.data.flag) {
+						} else {
+							Toast.text({
+								duration: 1000,
+								message: res.data.msg
+							});
+						}
+					});
+				})
+				.catch(() => {});
 		}
 	}
+};
 </script>
 
 <style lang="scss" scoped>

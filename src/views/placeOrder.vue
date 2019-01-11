@@ -1,23 +1,73 @@
 <template>
-	<div class="background">
+<!-- 	<div class="background">
 		<div class="addbox">
 			<div class="bigBox">
-				<div class="addimg"><img src="../assets/images/icon/add.png"></div>
 				<div class="addFont">
 					<div>
-						<p class="nameFont">收件人：丁冰</p>
-						<p class="nameFont">电话：13333333333</p>
+						<p class="nameFont">收件人：{{addressInfo.postName}}</p>
+						<p class="nameFont">电话：{{addressInfo.postPhone}}</p>
 					</div>
-					<p class="add">收件地址：北京朝阳区安立路长新大厦401</p>
+					<p class="add">收件地址：{{addressInfo.postAddress}}</p>
+				</div>
+			</div>
+			<div class="buttonImg"><img src="../assets/images/icon/rightGray.png"></div>
+		</div>
+		<div class="comBox" v-for="(ite,key,index) in listDetailInfo" :key='key'>
+			<img :src="item.coverResource.cover || ImgNull" class="comImg">
+			<div class="specName">
+				<p class="comName">{{item.goodsName}}</p>
+				<p class="spec">规格：{{item.sizeName}}</p>
+				<div>
+					<p class="money">￥{{item.price}}</p>
+					<div class="number">x{{item.number}}</div>
+				</div>
+			</div>
+		</div>
+		<div class="payBox">
+			<div class="payFont">支付方式</div>
+		</div>
+		<div class="payName">
+			<div class="payWeChat" v-for="item in dataPay" :key="item.id" @click="selectPay(item.id)">
+				<div class="imgWeChat">
+					<img :src="item.img" />
+					<p>{{item.payFont}}</p>
+				</div>
+				<div class="selectImg">
+					<img v-if="!item.isshow" src="../assets/images/icon/sele.png" />
+					<img v-if="item.isshow" src="../assets/images/icon/select.png" />
+			     </div>
+			</div>
+		</div>
+		<div class="integralBox">
+			<div class="integralFont">
+				<p class="uses">使用积分</p>
+				<p class="numberInt">（{{scoreBalInfo}}积分共抵扣{{maxScoreInfo}}元）</p>
+			</div>
+			<img :src="shutOpent" @click="shutClick"/>
+		</div>
+		<div class="bottomBox">
+			<div class="bottomMoney">￥{{cashBalInfo}}</div>
+			<div class="bottomPay">去支付</div>
+		</div>
+	</div> -->
+	<div class="background">
+		<div class="addbox" @click="goSelectAddress()">
+			<div class="bigBox">
+				<div class="addFont">
+					<div>
+						<p class="nameFont">收件人：撒打发的说法</p>
+						<p class="nameFont">电话：撒打发的说法</p>
+					</div>
+					<p class="add">收件地址：撒打发的说法</p>
 				</div>
 			</div>
 			<div class="buttonImg"><img src="../assets/images/icon/rightGray.png"></div>
 		</div>
 		<div class="comBox">
-			<img src="../assets/images/example/yiqi.png" class="comImg">
+			<img :src="ImgNull" class="comImg">
 			<div class="specName">
-				<p class="comName">活力眼凝胶</p>
-				<p class="spec">规格：20ml</p>
+				<p class="comName">谁u的撒回复</p>
+				<p class="spec">规格：的撒回复</p>
 				<div>
 					<p class="money">￥299</p>
 					<div class="number">x1</div>
@@ -42,55 +92,100 @@
 		<div class="integralBox">
 			<div class="integralFont">
 				<p class="uses">使用积分</p>
-				<p class="numberInt">（1000积分共抵扣10元）</p>
+				<p class="numberInt">（1000积分共抵扣0000元）</p>
 			</div>
 			<img :src="shutOpent" @click="shutClick"/>
 		</div>
 		<div class="bottomBox">
-			<div class="bottomMoney">￥299</div>
+			<div class="bottomMoney">￥000000</div>
 			<div class="bottomPay">去支付</div>
 		</div>
 	</div>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-               shutOpent:require('../assets/images/icon/shut.png'),
-			   dataPay:[
-				  {id:1,img:require('../assets/images/icon/wechat.png'),payFont:'微信支付',isshow:false},
-				   {id:2,img:require('../assets/images/icon/wallet.png'),payFont:'余额支付',isshow:true}
-			   ]
-			};
-		},
-		created: function() {
-			this.$store.commit('showBottomNav', {
-				isShow: false
-			})
-		},
-		methods:{
-			shutClick(){
-				if(this.shutOpent==require('../assets/images/icon/shut.png')){
-					this.shutOpent=require('../assets/images/icon/open.png')
-				}else{
-					this.shutOpent=require('../assets/images/icon/shut.png')
+import { Toast } from 'we-vue';
+import * as api from '@/assets/js/api';
+export default {
+	data() {
+		return {
+			cashBalInfo: '', //现金金额
+			scoreBalInfo: '', //积分余额
+			maxScoreInfo: '', //最大抵扣积分
+			orderInfo: '', //订单信息
+			addressInfo: '', //默认地址信息
+			listDetailInfo: '', //商品列表
+			shutOpent: require('../assets/images/icon/shut.png'),
+			dataPay: [
+				{
+					id: 1,
+					img: require('../assets/images/icon/wechat.png'),
+					payFont: '微信支付',
+					isshow: false
+				},
+				{
+					id: 2,
+					img: require('../assets/images/icon/wallet.png'),
+					payFont: '余额支付',
+					isshow: true
 				}
-			},
-			selectPay(id){
-				for(var i=0; i<this.dataPay.length;i++){
-					if(id==this.dataPay[i].id){
-						this.dataPay[i].isshow=true;
-					}else{
-						this.dataPay[i].isshow=false;
-					}
-				}
-			   
+			],
+			ImgNull: this.$store.state.ImgNull
+		};
+	},
+	created: function() {
+		this.$store.commit('showBottomNav', {
+			isShow: false
+		});
+		this.orderId = this.$route.params.orderId;
+		// 订单确认页面
+		api.getConfirmOrder({
+			data: {
+				openid: this.globalData.openid
+				// id: this.shopId,
 			}
+		}).then(res => {
+			if (res.data.flag) {
+				console.log('订单确认', res.data);
+				this.cashBalInfo = res.data.cashBal; //现金金额
+				this.scoreBalInfo = res.data.scoreBal; //积分余额
+				this.maxScoreInfo = res.data.maxScore; //最大抵扣积分
+				this.orderInfo = res.data.order; //订单信息
+				this.addressInfo = res.data.address; //默认地址信息
+				this.listDetailInfo = res.data.listDetail; //商品列表
+			} else {
+				Toast.text({
+					duration: 1000,
+					message: res.data.msg
+				});
+			}
+		});
+	},
+	methods: {
+		shutClick:function() {
+			if (this.shutOpent == require('../assets/images/icon/shut.png')) {
+				this.shutOpent = require('../assets/images/icon/open.png');
+			} else {
+				this.shutOpent = require('../assets/images/icon/shut.png');
+			}
+		},
+		selectPay:function(id) {
+			for (var i = 0; i < this.dataPay.length; i++) {
+				if (id == this.dataPay[i].id) {
+					this.dataPay[i].isshow = true;
+				} else {
+					this.dataPay[i].isshow = false;
+				}
+			}
+		},
+		goSelectAddress:function(){
+			// 选择地址
+			this.$router.push({ name: 'selectAddress'});
 		}
 	}
+};
 </script>
 
 <style scoped="scoped" lang="scss">
-	@import '@/assets/css/placeOrder.scss';
+@import '@/assets/css/placeOrder.scss';
 </style>

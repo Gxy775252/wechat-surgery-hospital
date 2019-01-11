@@ -8,6 +8,7 @@ import config from './assets/js/config'
 import 'babel-polyfill'
 import wx from 'weixin-js-sdk'
 import * as API from '@/assets/js/api'
+import VideoPlayer from 'vue-video-player'
 
 // API.postAPI({data: {
 //   method: 'wechat_config',
@@ -24,7 +25,7 @@ import * as API from '@/assets/js/api'
 //     jsApiList: [] // 必填，需要使用的JS接口列表
 //   });
 // })
-Vue.use(Tabbar).use(TabbarItem).use(Badge).use(config).use(wx);
+Vue.use(Tabbar).use(TabbarItem).use(Badge).use(config).use(wx).use(VideoPlayer);
 Vue.config.productionTip = false
 Vue.config.debug = true
 

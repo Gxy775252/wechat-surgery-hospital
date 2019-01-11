@@ -1,0 +1,99 @@
+.AllList {
+	margin-bottom: calc(2rem / 2);
+}
+.diary {
+	width: 100%;
+	height: calc(3.86rem / 2);
+	background-color: #f7f7f7;
+	display: flex;
+	align-items: center;
+	color: #000;
+	> div {
+		display: flex;
+		align-items: center;
+	}
+	.diaryLeft {
+		font-size: calc(2rem / 2);
+		> img {
+			width: calc(1.4rem / 2);
+			height: calc(0.26rem / 2);
+			margin: 0 0.66rem;
+		}
+	}
+	.diaryRight {
+		font-size: calc(1.33rem / 2);
+		> img {
+			width: 0.26rem;
+			height: 0.5rem;
+			margin: 0rem 1rem 0 0.3rem;
+		}
+	}
+}
+.evaluate {
+	background-color: #ffffff;
+	width: 100%;
+	margin-bottom: calc(2rem/2);
+	.evalTop {
+		padding: 1.33rem 0.66rem;
+		margin: auto;
+		display: flex;
+		align-items: center;
+		position: relative;
+		.topInfor {
+			display: flex;
+			align-items: center;
+			> div:nth-child(1) {
+				width: calc(3.33rem / 2);
+				height: calc(3.33rem / 2);
+				border-radius: 100%;
+				padding: 0 0.66rem 0 0.4rem;
+				> img {
+					width: 100%;
+					height: 100%;
+				}
+			}
+			.CDsecod {
+				> p:nth-child(1) {
+					font-size: calc(1.33rem / 2);
+					color: #333;
+				}
+				> p:nth-child(2) {
+					font-size: calc(1.06rem / 2);
+					color: #999;
+				}
+			}
+		}
+		.topStars {
+			position: absolute;
+			right: 0.9rem;
+			display: flex;
+			align-items: center;
+			> div {
+				width: calc(2rem / 2);
+				height: calc(2rem / 2);
+				margin: 0 0.2rem;
+				> img {
+					width: 100%;
+					height: 100%;
+				}
+			}
+		}
+	}
+	.evaluateContent {
+		width: 91%;
+		margin: auto;
+		margin-bottom: 1.33rem;
+		font-size: calc(1.6rem / 2);
+		color: #333;
+	}
+	.evaluateSee {
+		font-size: calc(1.33rem / 2);
+		color: #666;
+		height: calc(5.93rem / 2);
+		border-top: 1px solid #f7f7f7;
+		> p {
+			margin-left: calc(3.6rem / 2);
+			line-height: calc(5.93rem / 2);
+		}
+	}
+}

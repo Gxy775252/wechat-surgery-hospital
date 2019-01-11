@@ -71,6 +71,30 @@ export const getAllComments = (options) => _apiPOST(`${API_ROOT}/wx/getAllCommen
 // 添加收藏商品
 export const getFavorGoods = (options) => _apiPOST(`${API_ROOT}/wx/favorGoods`, options)
 
+// 将商品添加到购物车
+export const addCart = (options) => _apiPOST(`${API_ROOT}/wx/joinCart`, options)
+
+// 立即购买
+export const submitGoodsOrder = (options) => _apiPOST(`${API_ROOT}/wx/genGoodsOrder`, options)
+
+// 订单确认页面
+export const getConfirmOrder = (options) => _apiPOST(`${API_ROOT}/wx/goConfirmOrder`, options)
+
+// 获取地址列表页面setVipAddressid
+export const getVipAddressList = (options) => _apiPOST(`${API_ROOT}/wx/getVipAddressList`, options)
+
+// 选择地址
+export const setVipAddressid = (options) => _apiPOST(`${API_ROOT}/wx/setVipAddressid`, options)
+
+// 编辑地址详情
+export const getVipAddressDetail = (options) => _apiPOST(`${API_ROOT}/wx/getVipAddressDetail`, options)
+
+// 删除地址
+export const deleteVipAddressid = (options) => _apiPOST(`${API_ROOT}/wx/deleteVipAddressid`, options)
+
+
+
+
 // 获取我的购物车信息
 export const getMyCart = (options) => _apiPOST(`${API_ROOT}/wx/getMyCart`, options)
 
