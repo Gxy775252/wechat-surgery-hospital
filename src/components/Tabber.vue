@@ -72,12 +72,25 @@ export default {
 		};
 	},
 	beforeCreate: function() {
-		let pathname = window.location.pathname.substr(1);
-		this.pathName = pathname != '' ? pathname : 'index';
+    let _this = this
+    function getPathName(urlName){
+      return new Promise((resolve, reject) => {
+        let pathname = urlName.substr(1)
+        let name = pathname != '' ? pathname : 'index'
+        resolve(name)
+      })
+    }
+    setTimeout(() => {
+      getPathName(_this.$route.path).then(res => {
+        if(res != ''){
+          let pageIndex = this.tabList.findIndex(json => json.pathName == res);
+          this.tabList[pageIndex].isActive = true
+        }
+      })
+    }, 500)
 	},
 	created: function() {
-		let pageIndex = this.tabList.findIndex(json => json.pathName == this.pathName);
-		this.tabList[pageIndex].isActive = true;
+
 	},
 	methods: {
 		clickSwitchTab: function(num) {
