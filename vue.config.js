@@ -1,6 +1,6 @@
 module.exports = {
 	// 基本路径
-	baseUrl: './',
+	baseUrl: '/',
 	// 输出文件目录
 	outputDir: 'dist',
 	// eslint-loader 是否在保存的时候检查
@@ -42,8 +42,8 @@ module.exports = {
 		open: true,
 		host: '0.0.0.0',
 		port: 8080,
-		https: false,
-		hotOnly: false,
+		https: true,
+		hotOnly: true,
 		inline: true, //热更新
 		proxy: null, // 设置代理
 		before: app => {}

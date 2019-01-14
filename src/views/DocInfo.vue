@@ -1,7 +1,19 @@
+<!-- 医生详情 -->
 <template lang="html">
   <div class="content">
     <div class="header">
-      <img :src="doctorImgNull" >
+     <!-- <div class="swiper">
+      	<div class="swiperImg">
+      		<wv-swipe :autoplay="4000" class="swiperImg">
+      			<wv-swipe-item v-for="(item,key,index) in swipeContent" :key="key">
+      				<img :src="item.cover || ImgNull" class="imgA" />
+      				<div v-if="item.isVideo==1" class="playImg">
+      					<img src="@/assets/images/icon/playImg.png" />
+      				</div>
+      			</wv-swipe-item>
+      		</wv-swipe>
+      	</div>
+      </div> -->
       <div class="dortor_name">
         <p class="name">{{doctorInfo.name}}</p>
         <i></i>
@@ -22,7 +34,7 @@
       </div>
     </div>
     <div class="hospital">
-      <img :src="doctorInfo.headimg || doctorImgNull" alt="" class="hospital_img" />
+      <img :src="doctorInfo.headimg || ImgNull" alt="" class="hospital_img" />
       <div class="hospital_info">
         <div class="hospital_name">
           <p>{{hospInfo.name}}</p>
@@ -101,7 +113,7 @@
         <p>Doctor Qualification Certificate</p>
       </div>
       <div class="certificate_img">
-        <img :src="item.pic" alt="">
+        <img :src="item.pic||ImgNull" alt="">
       </div>
     </div>
 		<div class="seeI">
@@ -117,6 +129,7 @@
 
 <script>
 import * as api from '@/assets/js/api';
+import * as session from '@/assets/js/session';
 export default {
 	name: 'DocInfo',
 	data() {
@@ -126,10 +139,9 @@ export default {
 			listPrjInfo: '', //擅长项目列表信息
 			listInstInfo: '', //擅长仪器列表信息
 			listDqpcInfo: '', //证书列表信息
-			doctorImgNull: this.$store.state.doctorImgNull
+			ImgNull: this.$store.state.ImgNull
 		};
 	},
-	components: {},
 	created: function() {
 		this.$store.commit('showBottomNav', {
 			isShow: false
@@ -137,9 +149,10 @@ export default {
 		api.getDoctorDetail({
 			data: {
 				openid: this.globalData.openid,
-				id: this.$route.params.doctorId,
+				id: session.Lstorage.getItem('doctorId')
 			}
 		}).then(res => {
+			// 待修改  此页面报500 暂未做任何处理
 			if (res.data.flag) {
 				console.log('医生详情请求数据', res.data);
 				this.doctorInfo = res.data.doctor;
@@ -150,13 +163,15 @@ export default {
 			} else {
 				Toast.text({
 					duration: 1000,
-					message: '请求失败'
+					message: res.data.msg
 				});
 			}
 		});
 	},
 	methods: {
 		goDoctorCase: function() {
+			// 跳转医生案例页面并将医生id缓存
+			session.Lstorage.setItem('caseId', session.Lstorage.getItem('doctorId'));
 			this.$router.push({
 				name: 'doctorCase'
 			});
@@ -167,4 +182,5 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/css/DocInfo.scss';
+@import '@/assets/css/doctorList.scss';
 </style>

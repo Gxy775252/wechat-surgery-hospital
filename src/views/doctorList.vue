@@ -1,9 +1,10 @@
+<!-- 医生列表 -->
 <template>
 	<div class="all">
 		<div class="swiper">
 			<div class="swiperImg">
 				<wv-swipe :autoplay="4000" class="swiperImg">
-					<wv-swipe-item v-for="(item,key,index) in swipeContent" :key="key"> 
+					<wv-swipe-item v-for="(item,key,index) in swipeContent" :key="key" v-if="swipeContent.length!=0"> 
 						<img :src="item.cover || ImgNull" class="imgA"/>
 						<div v-if="item.isVideo==1" class="playImg">
 							<img src="@/assets/images/icon/playImg.png" />
@@ -12,12 +13,6 @@
 				</wv-swipe>
 			</div>
 		</div>
-	<!--<div class="doctorTitle">
-			<div>
-				<img :src="configImg" />
-				<img src="@/assets/images/example/doctorTextImg.png" />
-			</div>
-		</div> -->
 		<div class="doctorList" v-for="(item,key,index) in dataList" :key="key">
 			<div class="box">
 				<div class="boxTop" @click="goDoctorDetail(item.id)">
@@ -38,8 +33,8 @@
 					</div>
 					<div class="docName" v-html="item.brief"></div>
 				</div>
-				<div class="boxBottom">
-					<img :src="item.coverResource.cover || ImgNull" />
+				<div class="boxBottom" v-if="item.coverResource!=null">
+					<img :src="item.coverResource.cover || ImgNull"/>
 					<div v-if="item.coverResource.isVideo==1" class="playImg">
 						<img src="@/assets/images/icon/playImg.png" />
 					</div>
@@ -55,6 +50,7 @@
 import Vue from 'vue';
 import { Swipe, SwipeItem } from 'we-vue';
 import * as api from '@/assets/js/api';
+import * as session from '@/assets/js/session';
 Vue.use(Swipe).use(SwipeItem);
 export default {
 	name: 'doctorList',
@@ -89,26 +85,17 @@ export default {
 			} else {
 				Toast.text({
 					duration: 1000,
-					message: '请求失败'
+					message: res.data.msg
 				});
 			}
 		});
 	},
 	methods: {
-		// 		videoPlay: function(res) {
-		// 			// 点击播放视频
-		// 			for (let i = 0; i < this.dataList.length; i++) {
-		// 				if (this.dataList[i].id == res.id && res.coverResource.isVideo == 1) {
-		// 					this.dataList[i].isPlay = true;
-		// 					this.videoUrl = res.coverResource.url;
-		// 				} else {
-		// 					this.dataList[i].isPlay = false;
-		// 				}
-		// 			}
-		// 		},
+		// 待修改 还未处理视频播放功能
 		goDoctorDetail: function(id) {
-			// 跳转医生详情并将当前点击的医生id传入
-			this.$router.push({ name: 'docInfo', params: { doctorId: id } });
+			// 跳转医生详情并将当前点击的医生id缓存
+			session.Lstorage.setItem('doctorId', id);
+			this.$router.push({ name: 'docInfo' });
 		}
 	}
 };

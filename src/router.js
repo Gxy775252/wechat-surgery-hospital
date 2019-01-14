@@ -5,7 +5,6 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 export default new Router({
-	// mode: 'history',
 	base: process.env.BASE_URL,
 	routes: [
 		/**首页相关**/
@@ -55,6 +54,15 @@ export default new Router({
 			}
 		},
 		{
+			path: '/instrumentDetail',
+			name: 'instrumentDetail',
+			component: () => import('./views/instrumentDetail.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '仪器详情'
+				next()
+			}
+		},
+		{
 			path: '/beautifulDiary',
 			name: 'beautifulDiary',
 			component: () => import('./views/beautifulDiary.vue'),
@@ -79,7 +87,7 @@ export default new Router({
 			beforeEnter: (to, from, next) => {
 				document.title = '皮肤分析'
 				next()
-			}
+			},
 		},
 		/**首页相关 END**/
 

@@ -1,14 +1,15 @@
+<!-- 医生案例 -->
 <template>
 	<div class="all">
 		<div class="caseTop">
-			<p class="colorActive">全部</p>
-			<p v-for="(item,key,index) in listProjectInfo" :key="key">{{item.projectName}}</p>
+			<p @click="selectProject(0)" :class="0==proId?'colorActive':''">全部</p>
+			<p v-for="(item,key,index) in listProjectInfo" :key="key" @click="selectProject(item.projectid)" :class="item.projectid==proId?'colorActive':''">{{item.prjName}}</p>
 			<div style="clear:both"></div>
 		</div>
 		<div class="caseList" v-for="(item,key,index) in listCaseInfo" :key='key'>
 			<div class="mationTop">
 				<div>
-					<img :src="item.headimg || doctorImgNull" />
+					<img :src="item.headimg || ImgNull" />
 				</div>
 				<div>
 					<p>{{item.title}}</p>
@@ -16,14 +17,17 @@
 				</div>
 			</div>
 			<div class="caseCen">
-				<img :src="doctorImgNull" />
+				<img :src="ImgNull" />
+				<!-- 待修改 需要修改成内容图片 -->
 			</div>
 			<div class="mationCon">
+				<!-- 待修改 缺少项目名称和天数 -->
 				<p><span>[医美整形-ST全脸字体脂肪填充-第99天]</span>{{item.brief}}</p>
 			</div>
 			<div class="xian"></div>
 			<div class="mationBottom">
 				<p>
+					<!-- 缺少浏览量 -->
 					1000人来过
 				</p>
 			</div>
@@ -33,12 +37,15 @@
 
 <script>
 import * as api from '@/assets/js/api';
+import * as session from '@/assets/js/session';
 export default {
+	name: 'doctorCase',
 	data() {
 		return {
+			proId: '', //项目列表选中id
 			listProjectInfo: '', //项目列表
 			listCaseInfo: '', //案例列表
-			doctorImgNull: this.$store.state.doctorImgNull
+			ImgNull: this.$store.state.ImgNull
 		};
 	},
 	created: function() {
@@ -48,8 +55,8 @@ export default {
 		api.getDoctorCase({
 			data: {
 				openid: this.globalData.openid,
-				doctorid: 1, //医生id,
-				projectid: 0 //项目id,
+				doctorid: session.Lstorage.getItem('caseId'), //医生id,
+				projectid: 0 //项目id 0=全部,
 			}
 		}).then(res => {
 			if (res.data.flag) {
@@ -59,12 +66,36 @@ export default {
 			} else {
 				Toast.text({
 					duration: 1000,
-					message: '请求失败'
+					message: res.data.msg
 				});
 			}
 		});
 	},
-	methods: {}
+	methods: {
+		// 选择项目
+		selectProject: function(res) {
+			console.log(res);
+			this.proId = res;
+			api.getDoctorCase({
+				data: {
+					openid: this.globalData.openid,
+					doctorid: session.Lstorage.getItem('caseId'), //医生id,
+					projectid: res,
+				}
+			}).then(res => {
+				if (res.data.flag) {
+					console.log('医生案例列表请求数据', res.data);
+					this.listProjectInfo = res.data.listProject; //项目列表
+					this.listCaseInfo = res.data.listCase; //案例列表
+				} else {
+					Toast.text({
+						duration: 1000,
+						message: res.data.msg
+					});
+				}
+			});
+		}
+	}
 };
 </script>
 

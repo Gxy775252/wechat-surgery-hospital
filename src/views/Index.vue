@@ -13,7 +13,7 @@
 			<div>
 				<wv-swipe :autoplay="4000" class="swiperImg">
 					<wv-swipe-item v-for="(item, key, index) in swipeContent" :key="key">
-						<img :src="item.cover || doctorImgNull" class="imgA" />
+						<img :src="item.cover || ImgNull" class="imgA" />
 						<div v-if="item.isVideo==1" class="playImg">
 							<img src="@/assets/images/icon/playImg.png" />
 						</div>
@@ -23,11 +23,11 @@
 		</div>
 		<div class="doctor">
 			<div class="doctorImg">
-				<img src="@/assets/images/example/doctor.png" />
+				<img :src="ImgNull" />
 			</div>
 			<div class="doctorText">
 				<div class="centerText">
-					<img :src="configImg.homeDoctorPic" />
+					<img :src="configImg.homeDoctorPic || ImgNull"/>
 				</div>
 				<div class="bottomText" style="left:0.66rem;" @click="goDoctorList()">
 					<p>查看更多医生</p>
@@ -46,10 +46,10 @@
 				</div>
 			</div>
 			<div class="doctorImg">
-				<img src="@/assets/images/example/doctor.png" />
+				<img :src="ImgNull" />
 			</div>
 		</div>
-		<div class="diary">
+		<div class="diary" style="width:100%;">
 			<div class="diaryLeft">
 				<img src="@/assets/images/icon/level.jpg" />
 				<p>美丽日记</p>
@@ -70,13 +70,14 @@
 				</div>
 			</div>
 			<div class="mationCenter">
-				<div v-for="(item2,key,index) in item.listResource" :key="key" @click="videoPlay(item2)">
-					<img :src="item2.cover || doctorImgNull" />
+				<div v-for="(item2,key,index) in item.listResource" :key="key">
+					<img :src="item2.cover || ImgNull" />
 					<div class="playImg" v-if="item2.isVideo==1">
 						<img src="@/assets/images/icon/playImg.png" />
 					</div>
 				</div>
 			</div>
+			<!-- 待修改  美丽日记需要跳转 -->
 			<div class="mationCon">
 				<p><span>[医美整形-ST全脸字体脂肪填充-第99天]</span>大家好我又来更新日记了，现在做完现在做完现在做完现在做完现在做完ST全脸脂肪填充已经恢复很好了，</p>
 			</div>
@@ -93,11 +94,13 @@
 				<p>皮肤分析</p>
 				<img src="@/assets/images/icon/level.jpg" class="line" />
 			</div>
-			<div>
-				<select class="options" v-for="(item,key,index) in selectList" :key="key" @change="selectChange(optionId)" v-model="optionId">
-					<option :value="-1">请选择</option>
-					<option :value="item.id">{{item.title}}</option>
-				</select>
+			<div class="options" @click="prickPro()">
+				<div class="listCon"  :class="listConA">
+					{{stores | pickerValueFilter}}
+				</div>
+				<div class="listImg">
+					<img src="@/assets/images/icon/mineHore.png" />
+				</div>
 			</div>
 		</div>
 		<div class="mationImg">
@@ -106,126 +109,118 @@
 		<div class="seeI">
 			<img src="@/assets/images/icon/kanjian.png" />
 		</div>
-		<div class="briefImg" v-if="isPlay">
+		<!-- 待修改 视频播放功能 -->
+		<!-- <div class="briefImg" v-if="isPlay">
 			<Video-Play :videoUrl="videoUrl" v-on:surt="surtChild" :isNone="isPlay"></Video-Play>
-		</div>
-		<div style="height:6rem;"></div>
+		</div> -->
+		<div style="height:3rem;"></div>
+		<!-- 选择肤质 -->
+		<wv-picker :visible.sync="fruitPickerShow" :columns="fruitColumns" value-key="title" @confirm="confirmPerson" />
 	</div>
 </template>
 
 <script>
-	// @ is an alias to /src
-	// import HelloWorld from '@/components/HelloWorld.vue'
-	import Vue from 'vue';
-	import {
-		Swipe,
-		SwipeItem,
-		Flex,
-		FlexItem
-	} from 'we-vue';
-	import {
-		Authorization,
-		parseUrl
-	} from '@/assets/js/utils';
-	import wx from 'weixin-js-sdk';
-	import * as api from '@/assets/js/api';
-	import VideoPlay from '@/components/bigWindowVideo';
+// @ is an alias to /src
+// import HelloWorld from '@/components/HelloWorld.vue'
+import Vue from 'vue';
+import { Swipe, SwipeItem, Flex, FlexItem, Picker, Toast } from 'we-vue';
+import { Authorization, parseUrl } from '@/assets/js/utils';
+import wx from 'weixin-js-sdk';
+import * as api from '@/assets/js/api';
+import * as session from '@/assets/js/session';
 
-	Vue.use(Swipe)
-		.use(SwipeItem)
-		.use(Flex)
-		.use(FlexItem);
+Vue.use(Swipe)
+	.use(SwipeItem)
+	.use(Flex)
+	.use(FlexItem)
+	.use(Picker);
 
-	export default {
-		name: 'index',
-		data() {
-			return {
-				isPlay: false,
-				swipeContent: '',
-				configImg: '',
-				selectList: '',
-				diaryLisy: '',
-				optionId: -1,
-				doctorImgNull: this.$store.state.doctorImgNull
-			};
-		},
-		components: {
-			VideoPlay
-		},
-		created: function() {
-			this.$store.commit('showBottomNav', {
-				isShow: true
+export default {
+	name: 'index',
+	data() {
+		return {
+			isPlay: false,
+			swipeContent: '',
+			configImg: '',
+			diaryLisy: '',
+			optionId: -1,
+			ImgNull: this.$store.state.ImgNull,
+			stores: [{ title: '请选择' }], //您的肤质
+			listConA: '', //改变颜色
+			fruitPickerShow: false,
+			fruitColumns: [{ values: [] }]
+		};
+	},
+
+	created: function() {
+		this.$store.commit('showBottomNav', {
+			isShow: true
+		});
+
+		api.getIndex({
+			data: {
+				openid: this.globalData.openid
+			}
+		}).then(res => {
+			console.log('首页请求数据', res.data);
+			if (res.data.flag) {
+				this.configImg = res.data.config; //就那个看见自己上面的图，还有轮播下面的图；
+				this.swipeContent = res.data.listBanner; //轮播
+				this.fruitColumns[0].values = res.data.listQa; //下拉框
+				this.diaryLisy = res.data.listDiary; //美丽日记内容
+			} else {
+				Toast.text({
+					duration: 1000,
+					message: res.data.msg
+				});
+			}
+		});
+	},
+	methods: {
+		goDoctorList: function() {
+			//跳医生列表
+			this.$router.push({
+				name: 'doctorList'
 			});
-
-			api.getIndex({
-				data: {
-					openid: this.globalData.openid
-				}
-			}).then(res => {
-				console.log('首页请求数据', res.data);
-				if (res.data.flag) {
-					this.configImg = res.data.config; //就那个看见自己上面的图，还有轮播下面的图；
-					this.swipeContent = res.data.listBanner; //轮播
-					this.selectList = res.data.listQa; //下拉框
-					this.diaryLisy = res.data.listDiary; //美丽日记内容
-				} else {
-					Toast.text({
-						duration: 1000,
-						message: '请求失败'
-					});
-				}
+		},
+		goInstrumentList: function() {
+			// 跳仪器列表
+			this.$router.push({
+				name: 'instrumentList'
 			});
 		},
-		methods: {
-			selectChange: function(res) {
-				console.log('咋回事啊', res);
-				this.$router.push({
-					name: 'skinAnalysis',
-					params: {
-						selectId: res
-					}
-				});
-			},
-			goDoctorList: function() {
-				console.log('暂无搜索页面');
-				// 暂无搜索页面
-				// this.$router.push({ name: 'search'});
-			},
-			goDoctorList: function() {
-				//跳医生列表
-				this.$router.push({
-					name: 'doctorList'
-				});
-			},
-			goInstrumentList: function() {
-				// 跳仪器列表
-				this.$router.push({
-					name: 'instrumentList'
-				});
-			},
-			gobeautifulDiary: function() {
-				// 跳美丽日记
-				this.$router.push({
-					name: 'beautifulDiary'
-				});
-			},
-			videoPlay: function(res) {
-				console.log('点击播放视频', res);
-				// 点击播放视频
-				if (res.isVideo == 1) {
-					this.videoUrl = res.url;
-					this.isPlay = true;
-					this.isNone = true;
-				}
-			},
-			surtChild: function(data) {
-				this.isPlay = false;
-				this.isNone = false;
+		gobeautifulDiary: function() {
+			// 跳美丽日记
+			this.$router.push({
+				name: 'beautifulDiary'
+			});
+		},
+		// 选择皮肤分析
+		prickPro: function() {
+			this.fruitPickerShow = true;
+		},
+		confirmPerson: function(picker) {
+			this.stores = picker.getValues()[0];
+			this.listConA = 'listConA';
+			session.Lstorage.setItem('selectId', picker.getValues()[0].id);
+			// 跳转到皮肤页面
+			this.$router.push({
+				name: 'skinAnalysis'
+			});
+		}
+	},
+	filters: {
+		pickerValueFilter(val) {
+			if (val.constructor == Array) {
+				return '请选择';
+			} else {
+				return val.title.toString();
 			}
 		}
-	};
+	}
+};
 </script>
 
 <style lang="scss" scoped>
-	@import '@/assets/css/Index.scss';
+@import '@/assets/css/Index.scss';
 </style>

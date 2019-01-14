@@ -60,7 +60,7 @@
 		<div class="Allselect" style="padding: calc(3rem / 2) 0;">
 			<div class="Allselect-top">
 				<!-- active -->
-				<div class="list" v-for="(item,key,index) in listDateInfo" :key='key' @click="clickList(item.id)" :class="">
+				<div class="list" v-for="(item,key,index) in listDateInfo" :key='key' @click="clickList(item.id)" >
 					<p>今日</p>
 					<p>12-19</p>
 				</div>
