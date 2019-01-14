@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="box">
+		<div class="box" >
 			<div class="diaryList">
 				<p class="yearFont">2018年</p>
 				<p class="yearFontA">Beautiful Diary</p>
@@ -13,13 +13,13 @@
 								<div class="bianji">
 									<img src="../assets/images/icon/bianji.png" />
 								</div>
-								<p>编辑</p>
+								<p class="isColor">编辑</p>
 							</div>
 							<div class="function-list">
 								<div class="chakan">
 									<img src="../assets/images/icon/public.png" />
 								</div>
-								<p>编辑</p>
+								<p class="isColor">公开</p>
 							</div>
 						</div>
 					</div>
@@ -41,7 +41,7 @@
 		</div>
 
 
-		<div style="height: 6rem;"></div>
+		<div style="height: 3rem;"></div>
 		<div class="buttonA">
 			<button>新建</button>
 		</div>
@@ -49,19 +49,37 @@
 </template>
 
 <script>
-import * as api from '@/assets/js/api';
-export default {
-	data() {
-		return {};
-	},
-	created: function() {
-		this.$store.commit('showBottomNav', {
-			isShow: false
-		});
-	}
-};
+	import * as api from '@/assets/js/api';
+	export default {
+		data() {
+			return {
+				listDiaryInfo: '', //日记列表
+			};
+		},
+		created: function() {
+			this.$store.commit('showBottomNav', {
+				isShow: false
+			});
+			api.getVipDiaryList({
+				data: {
+					openid: this.globalData.openid
+				}
+			}).then(res => {
+				if (res.data.flag) {
+					// 待修改 数据格式需要询问
+					console.log('我的日记列表', res.data);
+					this.listDiaryInfo = res.data.listDiary;
+				} else {
+					Toast.text({
+						duration: 1000,
+						message: res.data.msg
+					});
+				}
+			});
+		}
+	};
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/css/mineDiaryList.scss';
+	@import '@/assets/css/mineDiaryList.scss';
 </style>

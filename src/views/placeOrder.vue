@@ -1,5 +1,5 @@
 <template>
-<!-- 	<div class="background">
+	<!-- 	<div class="background">
 		<div class="addbox">
 			<div class="bigBox">
 				<div class="addFont">
@@ -86,7 +86,7 @@
 				<div class="selectImg">
 					<img v-if="!item.isshow" src="../assets/images/icon/sele.png" />
 					<img v-if="item.isshow" src="../assets/images/icon/select.png" />
-			     </div>
+				</div>
 			</div>
 		</div>
 		<div class="integralBox">
@@ -94,98 +94,113 @@
 				<p class="uses">使用积分</p>
 				<p class="numberInt">（1000积分共抵扣0000元）</p>
 			</div>
-			<img :src="shutOpent" @click="shutClick"/>
+			<img :src="shutOpent" @click="shutClick" />
 		</div>
 		<div class="bottomBox">
 			<div class="bottomMoney">￥000000</div>
-			<div class="bottomPay">去支付</div>
+			<div class="bottomPay" @click="submitMoney">去支付</div>
 		</div>
 	</div>
 </template>
 
 <script>
-import { Toast } from 'we-vue';
-import * as api from '@/assets/js/api';
-export default {
-	data() {
-		return {
-			cashBalInfo: '', //现金金额
-			scoreBalInfo: '', //积分余额
-			maxScoreInfo: '', //最大抵扣积分
-			orderInfo: '', //订单信息
-			addressInfo: '', //默认地址信息
-			listDetailInfo: '', //商品列表
-			shutOpent: require('../assets/images/icon/shut.png'),
-			dataPay: [
-				{
-					id: 1,
-					img: require('../assets/images/icon/wechat.png'),
-					payFont: '微信支付',
-					isshow: false
-				},
-				{
-					id: 2,
-					img: require('../assets/images/icon/wallet.png'),
-					payFont: '余额支付',
-					isshow: true
+	import {
+		Toast
+	} from 'we-vue';
+	import * as api from '@/assets/js/api';
+	export default {
+		data() {
+			return {
+				cashBalInfo: '', //现金金额
+				scoreBalInfo: '', //积分余额
+				maxScoreInfo: '', //最大抵扣积分
+				orderInfo: '', //订单信息
+				addressInfo: '', //默认地址信息
+				listDetailInfo: '', //商品列表
+				shutOpent: require('../assets/images/icon/shut.png'),
+				shutOpentId: 1, //1=不使用积分2=使用积分
+				dataPayId: 1, //1=微信支付2=余额支付
+				dataPay: [{
+						id: 1,
+						img: require('../assets/images/icon/wechat.png'),
+						payFont: '微信支付',
+						isshow: true
+					},
+					{
+						id: 2,
+						img: require('../assets/images/icon/wallet.png'),
+						payFont: '余额支付',
+						isshow: false
+					}
+				],
+				ImgNull: this.$store.state.ImgNull
+			};
+		},
+		created: function() {
+			this.$store.commit('showBottomNav', {
+				isShow: false
+			});
+			this.orderId = this.$route.params.orderId;
+			// 订单确认页面
+			api.getConfirmOrder({
+				data: {
+					openid: this.globalData.openid
+					// id: this.shopId,
+					// 待修改  没见到有参数
 				}
-			],
-			ImgNull: this.$store.state.ImgNull
-		};
-	},
-	created: function() {
-		this.$store.commit('showBottomNav', {
-			isShow: false
-		});
-		this.orderId = this.$route.params.orderId;
-		// 订单确认页面
-		api.getConfirmOrder({
-			data: {
-				openid: this.globalData.openid
-				// id: this.shopId,
-			}
-		}).then(res => {
-			if (res.data.flag) {
-				console.log('订单确认', res.data);
-				this.cashBalInfo = res.data.cashBal; //现金金额
-				this.scoreBalInfo = res.data.scoreBal; //积分余额
-				this.maxScoreInfo = res.data.maxScore; //最大抵扣积分
-				this.orderInfo = res.data.order; //订单信息
-				this.addressInfo = res.data.address; //默认地址信息
-				this.listDetailInfo = res.data.listDetail; //商品列表
-			} else {
-				Toast.text({
-					duration: 1000,
-					message: res.data.msg
+			}).then(res => {
+				if (res.data.flag) {
+					console.log('订单确认', res.data);
+					this.cashBalInfo = res.data.cashBal; //现金金额
+					this.scoreBalInfo = res.data.scoreBal; //积分余额
+					this.maxScoreInfo = res.data.maxScore; //最大抵扣积分
+					this.orderInfo = res.data.order; //订单信息
+					this.addressInfo = res.data.address; //默认地址信息
+					this.listDetailInfo = res.data.listDetail; //商品列表
+				} else {
+					Toast.text({
+						duration: 1000,
+						message: res.data.msg
+					});
+				}
+			});
+		},
+		methods: {
+			submitMoney: function() {
+				// 去支付
+				console.log(this.dataPayId, '1=微信支付2=余额支付');
+				console.log(this.shutOpentId,'1=不适用积分');
+			},
+
+			shutClick: function() {
+				if (this.shutOpent == require('../assets/images/icon/shut.png')) {
+					this.shutOpent = require('../assets/images/icon/open.png');
+					this.shutOpentId = 2;
+				} else {
+					this.shutOpent = require('../assets/images/icon/shut.png');
+					this.shutOpentId = 1;
+				}
+			},
+			selectPay: function(id) {
+				this.dataPayId = id;
+				for (var i = 0; i < this.dataPay.length; i++) {
+					if (id == this.dataPay[i].id) {
+						this.dataPay[i].isshow = true;
+					} else {
+						this.dataPay[i].isshow = false;
+					}
+				}
+			},
+			goSelectAddress: function() {
+				// 选择地址
+				this.$router.push({
+					name: 'selectAddress'
 				});
 			}
-		});
-	},
-	methods: {
-		shutClick:function() {
-			if (this.shutOpent == require('../assets/images/icon/shut.png')) {
-				this.shutOpent = require('../assets/images/icon/open.png');
-			} else {
-				this.shutOpent = require('../assets/images/icon/shut.png');
-			}
-		},
-		selectPay:function(id) {
-			for (var i = 0; i < this.dataPay.length; i++) {
-				if (id == this.dataPay[i].id) {
-					this.dataPay[i].isshow = true;
-				} else {
-					this.dataPay[i].isshow = false;
-				}
-			}
-		},
-		goSelectAddress:function(){
-			// 选择地址
-			this.$router.push({ name: 'selectAddress'});
 		}
-	}
-};
+	};
 </script>
 
 <style scoped="scoped" lang="scss">
-@import '@/assets/css/placeOrder.scss';
+	@import '@/assets/css/placeOrder.scss';
 </style>

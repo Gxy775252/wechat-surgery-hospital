@@ -1,8 +1,3 @@
-.all {
-	width: 100%;
-	height: 100%;
-	background-color: #f7f7f7;
-}
 .diary {
 	width: 100%;
 	height: calc(4rem / 2);
@@ -34,12 +29,36 @@
 			font-size: calc(1.6rem / 2);
 			color: #999;
 		}
-		> select {
+		.Allselect-list {
 			font-size: calc(2rem / 2);
+			height:calc(4rem/2);
 			width: 100%;
 			border: 0;
 			color: #333;
 			padding: 0.66rem 0;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			.listCon{
+				width: 80%;
+				height: calc(4rem/2);
+				line-height: calc(4rem/2);
+				color:#ccc;
+				font-size: calc(2rem/2);
+				text-align: left;
+			}
+			.listConA{
+				color:#333 !important; 
+			}
+			.listImg{
+				width:calc(1rem/2);
+				height:calc(2.06rem/2);
+				>img{
+					width: 100%;
+					height: 100%;
+					transform: rotate(90deg);
+				}
+			}
 		}
 		> input {
 			font-size: calc(2rem / 2);
@@ -68,8 +87,10 @@
 		margin-top: calc(2.4rem / 2) !important;
 	}
 	&-top {
-		display: flex;
+		display: -webkit-box;
 		align-items: center;
+		overflow-x: auto;
+		overflow-y: hidden;
 		.list {
 			margin-left: calc(2.66rem / 2);
 			text-align: center;

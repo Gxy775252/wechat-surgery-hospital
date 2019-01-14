@@ -72,6 +72,15 @@ export default new Router({
 				next()
 			}
 		},
+		{
+			path: '/skinAnalysis',
+			name: 'skinAnalysis',
+			component: () => import('./views/skinAnalysis.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '皮肤分析'
+				next()
+			}
+		},
 		/**首页相关 END**/
 
 		/**商城相关**/
@@ -123,20 +132,21 @@ export default new Router({
 			}
 		},
 		{
-			path: '/newAddress',
-			name: 'newAddress',
-			component: () => import('./views/newAddress.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '编辑收货地址'
-				next()
-			}
-		},
-		{
+			path: '/selectAddress',
 			path: '/selectAddress',
 			name: 'selectAddress',
 			component: () => import('./views/selectAddress.vue'),
 			beforeEnter: (to, from, next) => {
 				document.title = '选择收货地址'
+				next()
+			}
+		},
+		{
+			path: '/newAddress',
+			name: 'newAddress',
+			component: () => import('./views/newAddress.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '编辑收货地址'
 				next()
 			}
 		},
@@ -161,13 +171,43 @@ export default new Router({
 		},
 		/**商城相关 END**/
 
+		/**预约相关 **/
+		{
+			path: '/reserve',
+			name: 'reserve',
+			component: () => import('./views/Reserve.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '预约'
+				next()
+			}
+		},
+		{
+			path: '/reserveDetail',
+			name: 'reserveDetail',
+			component: () => import('./views/reserveDetail.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '预约详情'
+				next()
+			}
+		},
+		/**预约相关 END**/
+
 		/**个人中心**/
+		{
+			path: '/mine',
+			name: 'mine',
+			component: () => import('./views/Mine.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '我的'
+				next()
+			}
+		},
 		{
 			path: '/mineNewPeople',
 			name: 'mineNewPeople',
 			component: () => import('./views/mineNewPeople.vue'),
 			beforeEnter: (to, from, next) => {
-				document.title = '我的拉新'
+				document.title = '我的拉新列表'
 				next()
 			}
 		},
@@ -177,6 +217,15 @@ export default new Router({
 			component: () => import('./views/mineInfo.vue'),
 			beforeEnter: (to, from, next) => {
 				document.title = '我的信息'
+				next()
+			}
+		},
+		{
+			path: '/mineDiary',
+			name: 'mineDiary',
+			component: () => import('./views/mineDiary.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '我的美丽日记'
 				next()
 			}
 		},
@@ -284,43 +333,7 @@ export default new Router({
 		},
 		/**驻场医生内容 END**/
 
-		{
-			path: '/reserve',
-			name: 'reserve',
-			component: () => import('./views/Reserve.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '预约'
-				next()
-			}
-		},
-		{
-			path: '/reserveDetail',
-			name: 'reserveDetail',
-			component: () => import('./views/reserveDetail.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '预约详情'
-				next()
-			}
-		},
-		{
-			path: '/mine',
-			name: 'mine',
-			component: () => import('./views/Mine.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '我的'
-				next()
-			}
-		},
 
-		{
-			path: '/mineDiary',
-			name: 'mineDiary',
-			component: () => import('./views/mineDiary.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '我的美丽日记'
-				next()
-			}
-		},
 
 		{
 			path: '/newQRCode',
@@ -484,9 +497,6 @@ export default new Router({
 				next()
 			}
 		},
-
-
-
 		{
 			path: '/successReserve',
 			name: 'successReserve',
@@ -505,15 +515,5 @@ export default new Router({
 				next()
 			}
 		},
-		{
-			path: '/skinAnalysis',
-			name: 'skinAnalysis',
-			component: () => import('./views/skinAnalysis.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '皮肤分析'
-				next()
-			}
-		},
-
 	]
 })

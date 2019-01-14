@@ -13,7 +13,7 @@
 			<div>
 				<wv-swipe :autoplay="4000" class="swiperImg">
 					<wv-swipe-item v-for="(item, key, index) in swipeContent" :key="key">
-						<img :src="item.cover || doctorImgNull" class="imgA"/>
+						<img :src="item.cover || doctorImgNull" class="imgA" />
 						<div v-if="item.isVideo==1" class="playImg">
 							<img src="@/assets/images/icon/playImg.png" />
 						</div>
@@ -94,8 +94,9 @@
 				<img src="@/assets/images/icon/level.jpg" class="line" />
 			</div>
 			<div>
-				<select class="options" v-for="item in selectList" :key="item.id">
-					<option :id="item.id">{{item.title}}</option>
+				<select class="options" v-for="(item,key,index) in selectList" :key="key" @change="selectChange(optionId)" v-model="optionId">
+					<option :value="-1">请选择</option>
+					<option :value="item.id">{{item.title}}</option>
 				</select>
 			</div>
 		</div>
@@ -113,100 +114,118 @@
 </template>
 
 <script>
-// @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
-import Vue from 'vue';
-import { Swipe, SwipeItem, Flex, FlexItem } from 'we-vue';
-import { Authorization, parseUrl } from '@/assets/js/utils';
-import wx from 'weixin-js-sdk';
-import * as api from '@/assets/js/api';
-import VideoPlay from '@/components/bigWindowVideo';
+	// @ is an alias to /src
+	// import HelloWorld from '@/components/HelloWorld.vue'
+	import Vue from 'vue';
+	import {
+		Swipe,
+		SwipeItem,
+		Flex,
+		FlexItem
+	} from 'we-vue';
+	import {
+		Authorization,
+		parseUrl
+	} from '@/assets/js/utils';
+	import wx from 'weixin-js-sdk';
+	import * as api from '@/assets/js/api';
+	import VideoPlay from '@/components/bigWindowVideo';
 
-Vue.use(Swipe)
-	.use(SwipeItem)
-	.use(Flex)
-	.use(FlexItem);
+	Vue.use(Swipe)
+		.use(SwipeItem)
+		.use(Flex)
+		.use(FlexItem);
 
-export default {
-	name: 'index',
-	data() {
-		return {
-			isPlay: false,
-			swipeContent: '',
-			configImg: '',
-			selectList: '',
-			diaryLisy: '',
-			doctorImgNull: this.$store.state.doctorImgNull
-		};
-	},
-	components: {
-		VideoPlay
-	},
-	created: function() {
-		this.$store.commit('showBottomNav', {
-			isShow: true
-		});
+	export default {
+		name: 'index',
+		data() {
+			return {
+				isPlay: false,
+				swipeContent: '',
+				configImg: '',
+				selectList: '',
+				diaryLisy: '',
+				optionId: -1,
+				doctorImgNull: this.$store.state.doctorImgNull
+			};
+		},
+		components: {
+			VideoPlay
+		},
+		created: function() {
+			this.$store.commit('showBottomNav', {
+				isShow: true
+			});
 
-		api.getIndex({
-			data: {
-				openid: this.globalData.openid
-			}
-		}).then(res => {
-			console.log('首页请求数据', res.data);
-			if (res.data.flag) {
-				this.configImg = res.data.config; //就那个看见自己上面的图，还有轮播下面的图；
-				this.swipeContent = res.data.listBanner; //轮播
-				this.selectList = res.data.listQa; //下拉框
-				this.diaryLisy = res.data.listDiary; //美丽日记内容
-			} else {
-				Toast.text({
-					duration: 1000,
-					message: '请求失败'
+			api.getIndex({
+				data: {
+					openid: this.globalData.openid
+				}
+			}).then(res => {
+				console.log('首页请求数据', res.data);
+				if (res.data.flag) {
+					this.configImg = res.data.config; //就那个看见自己上面的图，还有轮播下面的图；
+					this.swipeContent = res.data.listBanner; //轮播
+					this.selectList = res.data.listQa; //下拉框
+					this.diaryLisy = res.data.listDiary; //美丽日记内容
+				} else {
+					Toast.text({
+						duration: 1000,
+						message: '请求失败'
+					});
+				}
+			});
+		},
+		methods: {
+			selectChange: function(res) {
+				console.log('咋回事啊', res);
+				this.$router.push({
+					name: 'skinAnalysis',
+					params: {
+						selectId: res
+					}
 				});
+			},
+			goDoctorList: function() {
+				console.log('暂无搜索页面');
+				// 暂无搜索页面
+				// this.$router.push({ name: 'search'});
+			},
+			goDoctorList: function() {
+				//跳医生列表
+				this.$router.push({
+					name: 'doctorList'
+				});
+			},
+			goInstrumentList: function() {
+				// 跳仪器列表
+				this.$router.push({
+					name: 'instrumentList'
+				});
+			},
+			gobeautifulDiary: function() {
+				// 跳美丽日记
+				this.$router.push({
+					name: 'beautifulDiary'
+				});
+			},
+			videoPlay: function(res) {
+				console.log('点击播放视频', res);
+				// 点击播放视频
+				if (res.isVideo == 1) {
+					this.videoUrl = res.url;
+					this.isPlay = true;
+					this.isNone = true;
+				}
+			},
+			surtChild: function(data) {
+				this.isPlay = false;
+				this.isNone = false;
 			}
-		});
-	},
-	methods: {
-		goDoctorList: function() {
-			console.log('暂无搜索页面');
-			// 暂无搜索页面
-			// this.$router.push({ name: 'search'});
-		},
-		goDoctorList: function() {
-			//跳医生列表
-			this.$router.push({
-				name: 'doctorList'
-			});
-		},
-		goInstrumentList: function() {
-			// 跳仪器列表
-			this.$router.push({
-				name: 'instrumentList'
-			});
-		},
-		gobeautifulDiary: function() {
-			// 跳美丽日记
-			this.$router.push({
-				name: 'beautifulDiary'
-			});
-		},
-		videoPlay: function(res) {
-			console.log('点击播放视频', res);
-			// 点击播放视频
-			if (res.isVideo == 1) {
-				this.videoUrl = res.url;
-				this.isPlay = true;
-				this.isNone = true;
-			}
-		},
-		surtChild: function(data) {
-			this.isPlay = false;
-			this.isNone = false;
 		}
-	}
-};
+	};
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/css/Index.scss';
+	@import '@/assets/css/Index.scss';
 </style>

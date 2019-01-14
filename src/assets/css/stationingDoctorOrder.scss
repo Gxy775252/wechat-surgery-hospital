@@ -1,8 +1,3 @@
-.all {
-	width: 100%;
-	height: 100%;
-	background: #f7f7f7;
-}
 .navList {
 	width: 100%;
 	height: calc(6.53rem / 2);
@@ -13,16 +8,6 @@
 	> div {
 		padding: 6px calc(2rem / 2);
 		margin-left: 5px;
-		> p:first-child {
-			font-size: calc(1.73rem / 2);
-		}
-		> p:last-child {
-			width: calc(2.5rem / 2);
-			height: calc(0.2rem / 2);
-			background: #008e83;
-			margin: auto;
-			margin-top: 5px;
-		}
 	}
 }
 .conList {
@@ -85,5 +70,48 @@
 				margin-left: calc(2.33rem / 2);
 			}
 		}
+	}
+}
+.cartNull {
+	background-color: #f7f7f7;
+	text-align: center;
+	margin-top: calc(23rem / 2);
+	img {
+		width: calc(13.2rem / 2);
+		height: calc(16rem / 2);
+		margin: auto;
+	}
+	p {
+		font-size: calc(1.5rem / 2);
+		color: #aaa;
+		text-align: center;
+		margin-top: calc(2.3rem / 2);
+	}
+}
+.col_00{
+		> p:first-child {
+			font-size: calc(1.73rem / 2);
+			color:#008e83;
+		}
+		> p:last-child {
+			width: calc(2.5rem / 2);
+			height: calc(0.2rem / 2);
+			background: #008e83;
+			margin: auto;
+			margin-top: 5px;
+		}
+
+}
+.col_ff{
+	> p:first-child {
+		font-size: calc(1.73rem / 2);
+		color: #555;
+	}
+	> p:last-child {
+		width: calc(2.5rem / 2);
+		height: calc(0.2rem / 2);
+		background: #fff;
+		margin: auto;
+		margin-top: 5px;
 	}
 }

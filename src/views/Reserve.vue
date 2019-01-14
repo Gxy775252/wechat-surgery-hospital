@@ -9,24 +9,45 @@
 		<div class="Allselect">
 			<div class="Allselect-stores">
 				<p>Stores</p>
-				<select>
+				<div class="Allselect-list">
+					<div class="listCon" @click="Picker" :class="listConA">
+						{{stores | pickerValueFilter}}
+					</div>
+					<div class="listImg">
+						<!-- <img src="@/assets/images/icon/mineHore.png" /> -->
+					</div>
+				</div>
+
+				<!-- <select>
 					<option>朝阳区合生汇门店</option>
-				</select>
+				</select> -->
 				<span></span>
 			</div>
 			<div class="Allselect-stores Second">
 				<p>Subjects</p>
-				<select>
+				<div class="Allselect-list">
+					<div class="listCon">{{subjects}}</div>
+					<div class="listImg">
+						<img src="@/assets/images/icon/mineHore.png" />
+					</div>
+				</div>
+				<!-- <select>
 					<option>选择项目(必填)</option>
-				</select>
+				</select> -->
 				<span></span>
 				<div>查看项目详情</div>
 			</div>
 			<div class="Allselect-stores Third">
 				<p>Doctors</p>
-				<select>
+				<div class="Allselect-list">
+					<div class="listCon">{{doctor}}</div>
+					<div class="listImg">
+						<img src="@/assets/images/icon/mineHore.png" />
+					</div>
+				</div>
+				<!-- <select>
 					<option>选择医生(选填)</option>
-				</select>
+				</select> -->
 				<span></span>
 			</div>
 		</div>
@@ -38,15 +59,8 @@
 		</div>
 		<div class="Allselect" style="padding: calc(3rem / 2) 0;">
 			<div class="Allselect-top">
-				<div class="list active">
-					<p>今日</p>
-					<p>12-19</p>
-				</div>
-				<div class="list">
-					<p>今日</p>
-					<p>12-19</p>
-				</div>
-				<div class="list">
+				<!-- active -->
+				<div class="list" v-for="(item,key,index) in listDateInfo" :key='key' @click="clickList(item.id)" :class="">
 					<p>今日</p>
 					<p>12-19</p>
 				</div>
@@ -66,7 +80,7 @@
 		<div class="Allselect">
 			<div class="Allselect-stores">
 				<p>Name</p>
-				<input placeholder="联系人姓名"/>
+				<input placeholder="联系人姓名" />
 				<span></span>
 			</div>
 			<div class="Allselect-stores Second">
@@ -96,22 +110,96 @@
 			<button>立即预约</button>
 		</div>
 		<div style="height:3rem;"></div>
+
+		<!-- 选择门店 -->
+		<wv-picker :visible.sync="ticketPickerShow" :columns="ticketColumns" @confirm="confirmTicket" />
 	</div>
 </template>
 
 <script>
-export default {
-	data() {
-		return {};
-	},
-	created: function() {
-		this.$store.commit('showBottomNav', {
-			isShow: true
-		});
-	}
-};
+	import Vue from 'vue';
+	import * as api from '@/assets/js/api';
+	import {
+		Toast,
+		Picker,
+		Group,
+		Cell
+	} from 'we-vue';
+
+	Vue.use(Picker).use(Group).use(Cell);
+	export default {
+		data() {
+			return {
+				isVip: '', //true是vip
+				cashBal: '', //vip余额
+				listHospInfo: '', //医院列表
+				listDoctorInfo: '', //医生列表
+				listProjectInfo: '', //项目列表
+				listDateInfo: '', //时间段，明天起的30天
+				listPeriodInfo: '', //时段列表
+				stores: '', //门店
+				subjects: '选择项目(必填)', //项目
+				doctor: '选择医生(选填)', //医生
+				listConA: '', //改变颜色
+				ticketPickerShow: false,
+				ticketColumns: [{
+					values: [
+						'汽车票',
+						'飞机票',
+						'火车票',
+						'轮船票',
+						'其它'
+					],
+				}],
+			};
+		},
+		created: function() {
+			this.$store.commit('showBottomNav', {
+				isShow: true
+			});
+			api.goAppointment({
+				data: {
+					openid: this.globalData.openid
+				}
+			}).then(res => {
+				if (res.data.flag) {
+					console.log('预约', res.data);
+					for (let i = 0; i < res.data.listDate.length; i++) {
+						// console.log(res.data.listDate[i]);
+					}
+					this.listDateInfo = res.data.listDate;
+				} else {
+					Toast.text({
+						duration: 1000,
+						message: res.data.msg
+					});
+				}
+			});
+		},
+		methods: {
+			Picker: function() {
+				this.ticketPickerShow = true;
+			},
+			confirmTicket: function(picker) {
+				this.stores = picker.getValues();
+				this.listConA = 'listConA';
+			},
+			clickList:function(){},
+
+		},
+		filters: {
+			pickerValueFilter(val) {
+				if (Array.isArray(val)) {
+					return val.toString()
+				} else {
+					return '选择门店（必填）'
+				}
+			}
+		}
+	};
 </script>
 
+
 <style scoped="scoped" lang="scss">
-@import '@/assets/css/reserve.scss';
+	@import '@/assets/css/reserve.scss';
 </style>
