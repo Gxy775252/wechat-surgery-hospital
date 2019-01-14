@@ -1,6 +1,6 @@
 module.exports = {
 	// 基本路径
-	baseUrl: '/',
+	baseUrl: './',
 	// 输出文件目录
 	outputDir: 'dist',
 	// eslint-loader 是否在保存的时候检查
@@ -39,7 +39,7 @@ module.exports = {
 	pwa: {},
 	// webpack-dev-server 相关配置
 	devServer: {
-		open: true,
+		open: false,
 		host: '0.0.0.0',
 		port: 8080,
 		https: true,
