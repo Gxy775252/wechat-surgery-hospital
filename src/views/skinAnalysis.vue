@@ -1,10 +1,14 @@
 <template>
 	<div>
 		<div class="topSelect">
-			<select class="selectCon" v-for="(item,key,index) in selectList" :key="key" @change="selectChange(optionId)" v-model="optionId">
-				<option :value="-1">请选择</option>
-				<option :value="item.id">{{item.title}}</option>
-			</select>
+			<div class="options" @click="prickPro()">
+				<div class="listCon"  :class="listConA">
+					{{stores | pickerValueFilter}}
+				</div>
+				<div class="listImg">
+					<img src="@/assets/images/icon/mineHore.png" />
+				</div>
+			</div>
 		</div>
 		<div class="case">
 			<div class="caseBox">
@@ -25,81 +29,106 @@
 			<button type="button" name="button">在线预约</button>
 			<button type="button" name="button">在线咨询</button>
 		</div>
+		
+		<!-- 选择肤质 -->
+		<wv-picker :visible.sync="fruitPickerShow" :columns="fruitColumns" value-key="title" @confirm="confirmPerson" />
 	</div>
 </template>
 
 <script>
-	import {
-		Toast
-	} from 'we-vue';
-	import * as api from '@/assets/js/api';
-	export default {
-		data() {
-			return {
-				optionId: -1,
-				selectList: '',
-				detailInfo: '',
-			};
+import Vue from 'vue';
+import { Toast, Picker } from 'we-vue';
+import * as api from '@/assets/js/api';
+import * as session from '@/assets/js/session';
+Vue.use(Picker);
+export default {
+	data() {
+		return {
+			selectList: '',
+			detailInfo: '',
+			stores: [{ title: '请选择' }], //您的肤质
+			listConA: '', //改变颜色
+			fruitPickerShow: false,
+			fruitColumns: [{ values: [] }]
+		};
+	},
+	created: function() {
+		this.$store.commit('showBottomNav', {
+			isShow: false
+		});
+		api.getQaList({
+			data: {
+				openid: this.globalData.openid
+			}
+		}).then(res => {
+			if (res.data.flag) {
+				for (let i in res.data.listQa) {
+					if (res.data.listQa[i].id == session.Lstorage.getItem('selectId')) {
+						this.stores = res.data.listQa[i];
+					}
+				}
+				this.fruitColumns[0].values = res.data.listQa; //下拉框
+			} else {
+				Toast.text({
+					duration: 1000,
+					message: res.data.msg
+				});
+			}
+		});
+		api.getQaDetail({
+			data: {
+				openid: this.globalData.openid,
+				id: session.Lstorage.getItem('selectId')
+			}
+		}).then(res => {
+			if (res.data.flag) {
+				console.log('数据内容', res.data);
+				this.detailInfo = res.data.detail;
+			} else {
+				Toast.text({
+					duration: 1000,
+					message: res.data.msg
+				});
+			}
+		});
+	},
+	methods: {
+		// 选择皮肤分析
+		prickPro: function() {
+			this.fruitPickerShow = true;
 		},
-		created: function() {
-			this.$store.commit('showBottomNav', {
-				isShow: false
-			});
-			this.optionId = this.$route.params.selectId;
-			api.getQaList({
-				data: {
-					openid: this.globalData.openid
-				}
-			}).then(res => {
-				if (res.data.flag) {
-					this.selectList = res.data.listQa; //下拉框
-				} else {
-					Toast.text({
-						duration: 1000,
-						message: '请求失败'
-					});
-				}
-			});
+		confirmPerson: function(picker) {
+			this.stores = picker.getValues()[0];
+			this.listConA = 'listConA';
 			api.getQaDetail({
 				data: {
 					openid: this.globalData.openid,
-					id: this.$route.params.selectId,
+					id: session.Lstorage.getItem('selectId')
 				}
 			}).then(res => {
 				if (res.data.flag) {
-					console.log("数据内容", res.data);
+					console.log('数据内容', res.data);
 					this.detailInfo = res.data.detail;
 				} else {
 					Toast.text({
 						duration: 1000,
-						message: '请求失败'
+						message: res.data.msg
 					});
 				}
 			});
-		},
-		methods: {
-			selectChange: function(res) {
-				// 选择下拉列表内容
-				console.log(res);
-			},
-			// api.getQaList({
-			// 				data: {
-			// 					openid: this.globalData.openid,
-			// 					id: res,
-			// 				}
-			// 			}).then(res => {
-			// 				if (res.data.flag) {
-			// 					console.log("数据内容", res.data);
-			// 				} else {
-			// 					Toast.text({
-			// 						duration: 1000,
-			// 						message: '请求失败'
-			// 					});
-			// 				}
-			// 			});
+		}
+	},
+	filters: {
+		pickerValueFilter(val) {
+			if (val.constructor == Array) {
+				return '请选择';
+			} else {
+				return val.title.toString();
+			}
 		}
 	}
+};
 </script>
 <style lang="scss" scoped>
-	@import '@/assets/css/skinAnalysis.scss';
+@import '@/assets/css/skinAnalysis.scss';
 </style>

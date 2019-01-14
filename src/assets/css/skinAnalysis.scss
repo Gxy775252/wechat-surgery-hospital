@@ -1,39 +1,64 @@
-.topSelect{
+.topSelect {
 	width: 100%;
-	height:calc(10rem/2);
+	height: calc(10rem / 2);
 	background-color: #f7f7f7;
 	display: flex;
 	align-items: center;
-	.selectCon{
+	> div {
+		width: calc(44.86rem / 2);
 		margin: auto;
-		width:calc(44.93rem/2);
-		height: 2rem;
-		border:0;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		font-size: calc(2.06rem / 2);
+		font-weight: 400;
+	}
+	.options {
+		width: calc(44.86rem / 2);
+		background: #fff;
+		margin: auto;
+		height: calc(4rem / 2);
+		border: 0;
+		font-size: calc(1.6rem / 2);
+		color: #333;
+
+		.listCon {
+			margin-left: calc(1.33rem / 2);
+		}
+		.listImg {
+			width: calc(1rem / 2);
+			height: calc(2.06rem / 2);
+			margin-right: calc(1.33rem / 2);
+			> img {
+				width: 100%;
+				height: 100%;
+				transform: rotate(90deg);
+			}
+		}
 	}
 }
-.case{
+.case {
 	width: 100%;
 	background-color: #fff;
-	.caseBox{
-		width:calc(44.93rem/2);
+	.caseBox {
+		width: calc(44.93rem / 2);
 		margin: auto;
-		margin-top:1.66rem;
-		>p{
-		font-size: calc(1.73rem/2);	
-		color:#000;
-		
+		margin-top: 1.66rem;
+		> p {
+			font-size: calc(1.73rem / 2);
+			color: #000;
 		}
-		>div{
-			font-size:calc(1.46rem/2);
-			color:#666;
-			margin-top:1rem;
+		> div {
+			font-size: calc(1.46rem / 2);
+			color: #666;
+			margin-top: 1rem;
 		}
 	}
-	.zlImg{
-		width:calc(44.93rem/2);
-		margin:calc(5rem/2) auto;
-		>img{
-			width:100%;
+	.zlImg {
+		width: calc(44.93rem / 2);
+		margin: calc(5rem / 2) auto;
+		> img {
+			width: 100%;
 			height: 100%;
 		}
 	}
@@ -48,22 +73,22 @@
 		height: 100%;
 	}
 }
- .bottom_btn{
-    display: flex;
-    align-items: center;
-    position: fixed;
-    width: 100%;
-    bottom: 0px;
-    >button{
-      flex: 1;
-      padding: .67rem 1rem;
-      color: #ffffff;
-      font-size: 1.07rem;
-    }
-    >button:first-child{
-      background: #008e83;
-    }
-    >button:last-child{
-      background: #828d93;
-    }
-  }
+.bottom_btn {
+	display: flex;
+	align-items: center;
+	position: fixed;
+	width: 100%;
+	bottom: 0px;
+	> button {
+		flex: 1;
+		padding: 0.67rem 1rem;
+		color: #ffffff;
+		font-size: 1.07rem;
+	}
+	> button:first-child {
+		background: #008e83;
+	}
+	> button:last-child {
+		background: #828d93;
+	}
+}

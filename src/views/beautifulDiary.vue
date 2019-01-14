@@ -1,10 +1,11 @@
+<!-- 美丽日记 -->
 <template>
 	<div class="all">
 		<div class="swiper">
 			<div class="swiperImg">
 				<wv-swipe :autoplay="4000" class="swiperImg">
 					<wv-swipe-item v-for="(item,key,index) in swipeContent" :key="key"> 
-						<img :src="doctorImgNull" class="imgA"/>
+						<!-- <img :src="item.cover || ImgNull" class="imgA"/> -->
 						<div v-if="item.isVideo==1" class="playImg">
 							<img src="@/assets/images/icon/playImg.png" />
 						</div>
@@ -12,31 +13,32 @@
 				</wv-swipe>
 			</div>
 		</div>
-		<div class="mation" v-for="(item,key,index) in dataList" :key="key">
+		<div class="mation" v-for="(item,key,index) in dataListInfo" :key="key">
 			<div class="mationTop">
 				<div>
-					<img :src="item.headimg" />
+					<img :src="item.headimg || ImgNull" />
 				</div>
 				<div>
 					<p>{{item.vipName}}</p>
-					<p>11月 &nbsp; 12日</p>
+					<p>{{item.date10}}</p>
 				</div>
 			</div>
 			<div class="mationCenter">
-				<div v-for="(item2,key,index) in item.listCover" :key="key" @click="videoPlay(item2)">
-					<img :src="doctorImgNull" />
+				<div v-for="(item2,key,index) in item.listCover" :key="key">
+					<!-- 待修改 图片资源没有 -->
+					<!-- <img :src="item2.cover || ImgNull" /> -->
 					<!-- <div class="playImg" v-if="item2.isVideo==1">
 						<img src="@/assets/images/icon/playImg.png" />
 					</div> -->
 				</div>
 			</div>
 			<div class="mationCon" @click="goDiaryDetail(item.id)">
-				<p><span>[医美整形-ST全脸字体脂肪填充-第99天]</span>大家好我又来更新日记了，现在做完现在做完现在做完现在做完现在做完ST全脸脂肪填充已经恢复很好了，</p>
+				<p><span>[{{item.prjName}}-第{{item.dayIndex}}天]</span>{{item.content}}</p>
 			</div>
 			<div class="xian"></div>
 			<div class="mationBottom" @click="goDiaryDetail(item.id)">
 				<p>
-					1000人来过
+					{{item.brows}}人来过
 				</p>
 			</div>
 		</div>
@@ -46,21 +48,18 @@
 <script>
 import Vue from 'vue';
 import * as api from '@/assets/js/api';
-import VideoPlay from '@/components/bigWindowVideo';
-import { Swipe, SwipeItem } from 'we-vue';
+import { Swipe, SwipeItem, Toast } from 'we-vue';
+import * as session from '@/assets/js/session';
 Vue.use(Swipe).use(SwipeItem);
 export default {
 	name: 'beautifulDiary',
 	data() {
 		return {
-			dataList: '',
+			dataListInfo: '',
 			isPlay: false,
 			swipeContent: '',
-			doctorImgNull: this.$store.state.doctorImgNull
+			ImgNull: this.$store.state.ImgNull
 		};
-	},
-	components: {
-		'Video-Play': VideoPlay
 	},
 	created: function() {
 		this.$store.commit('showBottomNav', {
@@ -73,27 +72,21 @@ export default {
 		}).then(res => {
 			if (res.data.flag) {
 				console.log('美丽日记', res.data);
-				this.dataList = res.data.listDiary;
+				this.dataListInfo = res.data.listDiary;
 				this.swipeContent = res.data.listBanner;
 			} else {
 				Toast.text({
 					duration: 1000,
-					message: '请求失败'
+					message: res.data.msg
 				});
 			}
 		});
 	},
 	methods: {
-		videoPlay: function(res) {
-			// 点击播放视频
-			if (res.isVideo == 1) {
-				this.videoUrl = res.url;
-				this.isPlay = true;
-			}
-		},
 		goDiaryDetail: function(res) {
 			// 进入美丽日记详情
-			this.$router.push({ name: 'diaryDetails', params: { diaryId: res } });
+			session.Lstorage.setItem('diaryId', res);
+			this.$router.push({ name: 'diaryDetails' });
 		}
 	}
 };

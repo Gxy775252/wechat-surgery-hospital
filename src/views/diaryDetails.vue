@@ -1,10 +1,11 @@
+<!-- 美丽日记详情 -->
 <template>
 	<div>
 		<div class="userBox">
 			<div class="userImg"><img :src="detailInfo.headimg"></div>
 			<div class="userFont">
 				<p class="userName">{{detailInfo.vipName}}</p>
-				<p class="userTitle">项目名称：{{detailInfo.projectName}}</p>
+				<p class="userTitle">项目名称：{{detailInfo.prjName}}</p>
 				<p class="doctorAdd">所在门店 | {{detailInfo.hospName}}</p>
 			</div>
 		</div>
@@ -15,6 +16,7 @@
 		<div class="doctorBox">
 			<div class="doctorImgName">
 				<div class="doctorImg"><img src="@/assets/images/example/doctor.png"></div>
+				<!-- 待修改 医生头像未处理 -->
 				<div class="doctorFont">
 					<p class="doctorName">{{detailInfo.doctorName}}</p>
 					<p class="doctorTitle">{{detailInfo.doctorTitle}}</p>
@@ -27,31 +29,29 @@
 			<div class="lineImg"><img src="../assets/images/icon/level.jpg"></div>
 			<p>日记详情</p>
 		</div>
-			
 		<div class="mation">
 			<div class="mationTop">
 				<div>
-					<img :src="doctorImgNull" />
+					<img :src="detailInfo.headimg" />
 				</div>
 				<div>
-					<p>julia</p>
-					<p>11月 &nbsp; 12日</p>
+					<p>{{detailInfo.vipName}}</p>
+					<p>{{detailInfo.date10}}</p>
 				</div>
 			</div>
 			<div class="mationCenter">
 				<div>
-					<img :src="doctorImgNull" />
+					<!-- 待修改  图片内容未处理 -->
+					<img :src="ImgNull" />
 					<div class="playImg">
 						<img src="@/assets/images/icon/playImg.png" />
 					</div>
 				</div>
 			</div>
 			<div class="mationCon">
-				<p><span>[医美整形-ST全脸字体脂肪填充-第99天]</span>大家好我又来更新日记了，现在做完现在做完现在做完现在做完现在做完ST全脸脂肪填充已经恢复很好了，</p>
+				<p><span>[{{detailInfo.prjName}}-第{{detailInfo.dayIndex}}天]</span>{{detailInfo.content}}</p>
 			</div>
-			<div class="textarea">
-				图文视频详情
-			</div>
+			<div class="textarea" v-html="detailInfo.content"></div>
 		</div>			
 		<div class="lineBox">
 			<div class="lineImg"><img src="../assets/images/icon/level.jpg"></div>
@@ -69,11 +69,12 @@
 					<div class="listContent">
 						<div class="contentBox">
 							<div v-for="(item2,key,index) in item.listResource" :key="key">
-								<!-- <img :src="item2.cover"> -->
-								<img src="@/assets/images/example/doctor.png" />
+								<img :src="item2.cover">
+								<!-- 待修改 图片资源 项目名 天数 -->
 							</div>
 						</div>
 						<div class="listFont">
+							<!-- 待修改 项目名  天数 -->
 							<p><span>[医美整形-ST全脸字体脂肪填充-第99天]</span>{{item.content}}</p>
 						</div>
 					</div>
@@ -89,14 +90,17 @@
 </template>
 
 <script>
+import { Toast } from 'we-vue';
 import * as api from '@/assets/js/api';
+import * as session from '@/assets/js/session';
 export default {
+	name: 'diaryDetails',
 	data() {
 		return {
 			detailInfo: '', //日记详情
 			listResourceInfo: '', //本日记资源
 			listDiaryInfo: '', //本项目日记列表
-			doctorImgNull: this.$store.state.doctorImgNull
+			ImgNull: this.$store.state.ImgNull
 		};
 	},
 	created: function() {
@@ -106,7 +110,7 @@ export default {
 		api.getdiaryDetails({
 			data: {
 				openid: this.globalData.openid,
-				// id: this.$route.params,
+				// id: session.Lstorage.setItem('diaryId')
 				id: 1
 			}
 		}).then(res => {
@@ -118,7 +122,7 @@ export default {
 			} else {
 				Toast.text({
 					duration: 1000,
-					message: '请求失败'
+					message: res.data.msg
 				});
 			}
 		});

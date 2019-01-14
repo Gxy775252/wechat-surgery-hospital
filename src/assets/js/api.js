@@ -44,6 +44,9 @@ export const getDoctorCase = (options) => _apiPOST(`${API_ROOT}/wx/goDoctorCase`
 // 获取仪器列表信息 
 export const getInstrumentList = (options) => _apiPOST(`${API_ROOT}/wx/goInstList`, options)
 
+// 获取仪器详情
+export const goInstDetail = (options) => _apiPOST(`${API_ROOT}/wx/goInstDetail`, options)
+
 // 获取美丽日记列表信息
 export const getBeautifulDiary = (options) => _apiPOST(`${API_ROOT}/wx/goDiaryList`, options)
 
