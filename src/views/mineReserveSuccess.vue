@@ -47,9 +47,9 @@
 					<p>如有疑问，请联系客服</p>
 					<p>400-10203948</p>
 				</div>
-				<div class="button">
-					<button>再考虑考虑</button>
-					<button>确定</button>
+				<div class="buttonA">
+					<button style="color:#666">再考虑考虑</button>
+					<button style="color: #008e83;border-left:2px solid #fafafa;">确定</button>
 				</div>
 			</div>
 		</div>
@@ -58,20 +58,18 @@
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-
-			};
-		},
-		created: function() {
-			this.$store.commit('showBottomNav', {
-				isShow: false
-			});
-		}
+export default {
+	data() {
+		return {};
+	},
+	created: function() {
+		this.$store.commit('showBottomNav', {
+			isShow: false
+		});
 	}
+};
 </script>
 
 <style lang="scss" scoped>
-	@import '@/assets/css/mineReserveSuccess.scss';
+@import '@/assets/css/mineReserveSuccess.scss';
 </style>
