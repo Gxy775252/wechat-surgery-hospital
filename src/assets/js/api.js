@@ -27,6 +27,9 @@ export const getVipShare = (options) => _apiPOST(`${API_ROOT}/wx/goVipShare`, op
 // 获取充值积分收益列表信息
 export const getChargeInterestList = (options) => _apiPOST(`${API_ROOT}/wx/getChargeInterestList`, options)
 
+//	上传图片
+export const uploadPic = (options) => _apiPOST(`${API_ROOT}/wx/uploadPic`, options)
+
 /**首页相关 --------------------------------------------**/
 
 // 获取首页列表信息

@@ -6,7 +6,6 @@
 			<div class="userFont">
 				<p class="userName">{{detailInfo.vipName}}</p>
 				<p class="userTitle">项目名称：{{detailInfo.prjName}}</p>
-				<p class="doctorAdd">所在门店 | {{detailInfo.hospName}}</p>
 			</div>
 		</div>
 		<div class="lineBox">
@@ -20,7 +19,7 @@
 				<div class="doctorFont">
 					<p class="doctorName">{{detailInfo.doctorName}}</p>
 					<p class="doctorTitle">{{detailInfo.doctorTitle}}</p>
-					<p class="doctorAdd">所在门店 | {{detailInfo.hospName}}</p>
+					<p class="doctorAdd">所在门店所在门店 | {{detailInfo.hospName}}</p>
 				</div>
 			</div>
 			<div class="doctorHorn"><img src="../assets/images/icon/horn.png"></div>
@@ -30,20 +29,10 @@
 			<p>日记详情</p>
 		</div>
 		<div class="mation">
-			<div class="mationTop">
-				<div>
-					<img :src="detailInfo.headimg" />
-				</div>
-				<div>
-					<p>{{detailInfo.vipName}}</p>
-					<p>{{detailInfo.date10}}</p>
-				</div>
-			</div>
 			<div class="mationCenter">
-				<div>
-					<!-- 待修改  图片内容未处理 -->
-					<img :src="ImgNull" />
-					<div class="playImg">
+				<div v-for="(item,key,index) in listResourceInfo" :key="key">
+					<img :src="item.cover || ImgNull" /> 
+					<div class="playImg" v-if="item.isVideo==1">
 						<img src="@/assets/images/icon/playImg.png" />
 					</div>
 				</div>
@@ -51,7 +40,6 @@
 			<div class="mationCon">
 				<p><span>[{{detailInfo.prjName}}-第{{detailInfo.dayIndex}}天]</span>{{detailInfo.content}}</p>
 			</div>
-			<div class="textarea" v-html="detailInfo.content"></div>
 		</div>			
 		<div class="lineBox">
 			<div class="lineImg"><img src="../assets/images/icon/level.jpg"></div>
@@ -69,8 +57,11 @@
 					<div class="listContent">
 						<div class="contentBox">
 							<div v-for="(item2,key,index) in item.listResource" :key="key">
-								<img :src="item2.cover">
+								<img :src="item2.cover || ImgNull">
 								<!-- 待修改 图片资源 项目名 天数 -->
+								<div class="playImg" v-if="item2.isVideo==1">
+									<img src="@/assets/images/icon/playImg.png" />
+								</div>
 							</div>
 						</div>
 						<div class="listFont">
@@ -85,7 +76,7 @@
 			<button type="button" name="button" class="btnA">在线预约</button>
 			<button type="button" name="button" class="btnB">在线咨询</button>
 		</div>
-		<div style="height: 90px;"></div>
+		<div style="height: 3rem;"></div>
 	</div>
 </template>
 

@@ -58,16 +58,21 @@
 					<wv-textarea placeholder="请输入文本" :rows="4"></wv-textarea>
 				</div>
 			</div>
+			<form class="form form-horizontal" ref="form"  method="post" enctype="multipart/form-data">
+				<input hidden name="uploadName" :value="uploadName">
+			</form>
 			<div class="img">
 				<div class="checkbox-title" style="padding-bottom: calc(3.2rem / 2);">上传照片或者视频（最多5张）</div>
-				<div class="imgA">
-					<div class="imgA-An">
+				<div class="imgA" >
+					<div class="imgA-An" >
 						<img src="../assets/images/icon/upload.png" />
+	<input type="file" style="1px solid red;" name="uploadFile3" @change="changeUpload1('uploadFile3','idImg3')" accept="image/*" />
+
 					</div>
 					<div style="clear: both;"></div>
 				</div>
 			</div>
-			<div style="height: 6rem;"></div>
+			<div style="height: 3rem;"></div>
 		</div>
 		<div class="buttonA" @click="submit">
 			<button>提交</button>
@@ -78,26 +83,28 @@
 </template>
 
 <script>
-	import Vue from 'vue';
-	import * as api from '@/assets/js/api';
-	import {
-		Textarea,
-		Toast,
-		Picker
-	} from 'we-vue';
-	Vue.use(Textarea).use(Picker);
-	export default {
-		data() {
-			return {
-				doctorImgNull: this.$store.state.doctorImgNull,
-				ifSex: 2, //是否做过整容项目
-				list: [], //整容项目
-				listArray: [], //存储整容项目
-				stores: [{name:'请选择您的肤质'}], //您的肤质
-				listConA: '', //改变颜色
-				fruitPickerShow: false,
-				fruitColumns: [{
-					values: [{
+import Vue from 'vue';
+import * as api from '@/assets/js/api';
+import { Textarea, Toast, Picker } from 'we-vue';
+Vue.use(Textarea).use(Picker);
+import axios from 'axios';
+export default {
+	data() {
+		return {
+			doctorImgNull: this.$store.state.doctorImgNull,
+			ifSex: 2, //是否做过整容项目
+			list: [], //整容项目
+			listArray: [], //存储整容项目
+			stores: [{ name: '请选择您的肤质' }], //您的肤质
+			listConA: '', //改变颜色
+
+			uploadName: '', //inout 名称
+
+			fruitPickerShow: false,
+			fruitColumns: [
+				{
+					values: [
+						{
 							name: 'Apple',
 							price: 1.3
 						},
@@ -114,82 +121,133 @@
 							price: 0.5
 						}
 					]
-				}],
+				}
+			]
+		};
+	},
+	created: function() {
+		this.$store.commit('showBottomNav', {
+			isShow: false
+		});
+		api.goVipSkinInfo({
+			data: {
+				openid: this.globalData.openid
+			}
+		}).then(res => {
+			if (res.data.flag) {
+				console.log('我的肤质页', res.data);
+				for (let i in res.data.listProject) {
+					res.data.listProject[i].isClick = false;
+				}
+				this.list = res.data.listProject; //整容项目
+				this.ticketColumns = res.data.skinInfo; //肤质信息
+			} else {
+				Toast.text({
+					duration: 1000,
+					message: res.data.msg
+				});
+			}
+		});
+	},
+	methods: {
+		changeUpload1: function(_uploadName, _idImg) {
+			//
+			// 				idImg = _idImg;
 
-			};
+			console.log(_uploadName, '2121---');
+			this.uploadName = _uploadName;
+
+			console.log(this.$refs.form, 'ijdskjksd');
+			let that = this;
+			setTimeout(function() {
+				var formData = new FormData(that.$refs.form);
+				that.Up(formData);
+			}, 1000);
+
+			console.log(this.uploadName, '211212121');
 		},
-		created: function() {
-			this.$store.commit('showBottomNav', {
-				isShow: false
+
+		Up: function(data) {
+			console.log(data, '231efvds');
+			// 			let config = {
+			// 			headers: { "Content-Type": "multipart/form-data" },
+			// 			};
+			const insta = axios.create({
+				withCredentials: true
 			});
-			api.goVipSkinInfo({
-				data: {
-					openid: this.globalData.openid
-				}
-			}).then(res => {
-				if (res.data.flag) {
-					console.log('我的肤质页', res.data);
-					for (let i in res.data.listProject) {
-						res.data.listProject[i].isClick = false;
-					}
-					this.list = res.data.listProject; //整容项目
-					this.ticketColumns = res.data.skinInfo; //肤质信息
-				} else {
-					Toast.text({
-						duration: 1000,
-						message: res.data.msg
-					});
-				}
-			});
-		},
-		methods: {
-			// 提交内容
-			submit:function(){
-				// 待修改  提交内容  submitSkininfo 接口地址
-				this.$router.push({
-					name: 'mineDiaryList'
+			insta
+				.post('http://tcjh.suitang1973.com/wx/uploadPic', data)
+				.then(res => {
+					console.log(res.data);
 				})
-			},
-			
-			// 多选整容项目
-			checkbox: function(res) {
-				for (let i in this.list) {
-					if (this.list[i].id == res && !this.list[i].isClick) {
-						this.list[i].isClick = true;
-						this.listArray.push(this.list[i].id);
-					} else if (this.list[i].id == res && this.list[i].isClick) {
-						this.list[i].isClick = false;
-						if (this.listArray.indexOf(this.list[i].id) > -1) {
-							this.listArray.splice(this.listArray.indexOf(this.list[i].id), 1);
-						}
-					}
-				}
-			},
-			// 选择您的肤质
-			Picker: function() {
-				this.fruitPickerShow = true;
-			},
-			confirmPerson: function(picker) {
-				this.stores = picker.getValues()[0]
-				this.listConA = 'listConA';
-			},
-			// 选择是否做过整容项目
-			sex(res) {
-				this.ifSex = res;
-			},
+				.catch(function(error) {
+					console.log(error);
+				});
+			// 						axios({
+			// 							method: 'post',
+			// 							url: ' http://tcjh.suitang1973.com/wx/uploadPic',
+			// 							data: data
+			// 						})
+			// 							.then(function(response) {
+			// 								console.log(response);
+			// 							})
+			// 							.catch(function(error) {
+			// 								console.log(error);
+			// 							});
+			// 			api.uploadPic({
+			// 				data: data
+			// 			}).then(res => {
+			// 				console.log(res, '调成功啦');
+			// 			});
 		},
-		filters: {
-			pickerValueFilter(val) {
-				if (val.constructor == Array) {
-					return '请选择您的肤质'
-				} else {
-					return val.name.toString()
+
+		// 提交内容
+		submit: function() {
+			// 待修改  提交内容  submitSkininfo 接口地址
+			this.$router.push({
+				name: 'mineDiaryList'
+			});
+		},
+
+		// 多选整容项目
+		checkbox: function(res) {
+			for (let i in this.list) {
+				if (this.list[i].id == res && !this.list[i].isClick) {
+					this.list[i].isClick = true;
+					this.listArray.push(this.list[i].id);
+				} else if (this.list[i].id == res && this.list[i].isClick) {
+					this.list[i].isClick = false;
+					if (this.listArray.indexOf(this.list[i].id) > -1) {
+						this.listArray.splice(this.listArray.indexOf(this.list[i].id), 1);
+					}
 				}
 			}
+		},
+		// 选择您的肤质
+		Picker: function() {
+			this.fruitPickerShow = true;
+		},
+		confirmPerson: function(picker) {
+			this.stores = picker.getValues()[0];
+			this.listConA = 'listConA';
+		},
+		// 选择是否做过整容项目
+		sex(res) {
+			this.ifSex = res;
 		}
-	};
+	},
+	filters: {
+		pickerValueFilter(val) {
+			if (val.constructor == Array) {
+				return '请选择您的肤质';
+			} else {
+				return val.name.toString();
+			}
+		}
+	}
+};
 </script>
 
 <style lang="scss" scoped>
-	@import '@/assets/css/mineDiary.scss';
+@import '@/assets/css/mineDiary.scss';
 </style>

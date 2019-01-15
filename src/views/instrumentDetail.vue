@@ -78,7 +78,7 @@ export default {
 		api.goInstDetail({
 			data: {
 				openid: this.globalData.openid,
-				id: session.Lstorage.getItem('skinId')
+				id: session.Lstorage.getItem('instr')
 			}
 		}).then(res => {
 			if (res.data.flag) {

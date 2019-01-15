@@ -2,8 +2,8 @@
 <template lang="html">
   <div class="content">
     <div class="header">
-     <!-- <div class="swiper">
-      	<div class="swiperImg">
+     <div class="swiper">
+      	<!-- <div class="swiperImg">
       		<wv-swipe :autoplay="4000" class="swiperImg">
       			<wv-swipe-item v-for="(item,key,index) in swipeContent" :key="key">
       				<img :src="item.cover || ImgNull" class="imgA" />
@@ -12,8 +12,8 @@
       				</div>
       			</wv-swipe-item>
       		</wv-swipe>
-      	</div>
-      </div> -->
+      	</div> -->
+      </div>
       <div class="dortor_name">
         <p class="name">{{doctorInfo.name}}</p>
         <i></i>
@@ -57,7 +57,7 @@
           <i></i>
           <p>职业资格证书编号</p>
         </div>
-        <!-- <p>{{listDqpcInfo[0].no || ""}}</p> -->
+        <p>{{doctorInfo.dpqc}}</p>
       </div>
       <div class="dortor_resume_list">
         <div class="dortor_resume_list_title">

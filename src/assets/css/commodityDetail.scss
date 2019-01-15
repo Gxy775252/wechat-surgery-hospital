@@ -129,7 +129,9 @@
 	width: 100%;
 	padding: 1rem 0;
 	background-color: #fff;
-	display: flex;
+	display: -webkit-box;
+	overflow-x: auto;
+	overflow-y: hidden;
 	.recommendContent {
 		width: calc(13.93rem / 2);
 		padding: 0 0 1rem 1rem;
@@ -394,6 +396,6 @@
 }
 .colorA {
 	background-color: #008e83 !important;
-	color:#fff !important;
-	border:1px solid #008e83 !important;
+	color: #fff !important;
+	border: 1px solid #008e83 !important;
 }

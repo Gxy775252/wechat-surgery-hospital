@@ -1,3 +1,4 @@
+<!-- 商城首页 -->
 <template>
 	<div>
 		<div class="mallTop">
@@ -26,19 +27,19 @@
 			</div>
 		</div>
 		<div class="centerImg">
-			<div class="left">
-				<img src="@/assets/images/example/tuOne.png" />
+			<div class="left" @click="goCommodityDetail(imgA.goodsid)">
+				<img :src="imgA || ImgNull" />
 			</div>
 			<div class="right">
-				<div class="top">
-					<img src="@/assets/images/example/tuTwo.png" />
+				<div class="top" @click="goCommodityDetail(imgB.goodsid)">
+					<img :src="imgB || ImgNull" />
 				</div>
 				<div class="bottom">
-					<div>
-						<img src="@/assets/images/example/tuThree.png" />
+					<div @click="goCommodityDetail(imgC.goodsid)">
+						<img :src="imgC || ImgNull" />
 					</div>
-					<div>
-						<img src="@/assets/images/example/tuFour.png" />
+					<div @click="goCommodityDetail(imgD.goodsid)">
+						<img :src="imgD || ImgNull" />
 					</div>
 				</div>
 			</div>
@@ -50,8 +51,9 @@
 			</div>
 		</div>
 		<div class="list">
-			<div class="listText" v-for="item in listHotInfo" :key="item.id">
+			<div class="listText" v-for="(item,key,index) in listHotInfo" :key="key">
 				<div class="listImg">
+					<!-- 待修改  没有封面图 -->
 					<img src="@/assets/images/example/yiqi.png" />
 				</div>
 				<div class="listContent" @click="goCommodityDetail(item.id)">
@@ -75,15 +77,21 @@
 
 <script>
 import Vue from 'vue';
-import { Swipe, SwipeItem } from 'we-vue';
+import { Swipe, SwipeItem,Toast } from 'we-vue';
 import * as api from '@/assets/js/api';
 Vue.use(Swipe).use(SwipeItem);
+import * as session from '@/assets/js/session';
 export default {
+	name:'shoppingMall',
 	data() {
 		return {
 			listBannerInfo: '', //轮播
 			listClassifyInfo: '', //分类列表
 			listHotInfo: '', //热门商品
+			imgA: '',
+			imgB: '',
+			imgC: '',
+			imgD: '',
 			selectId: 0, //分类选中 0=全部
 			ImgNull: this.$store.state.ImgNull
 		};
@@ -103,10 +111,14 @@ export default {
 				this.listBannerInfo = res.data.listBanner; //轮播内容
 				this.listClassifyInfo = res.data.listClassify; //分类列表
 				this.listHotInfo = res.data.listHot; //热门商品
+				this.imgA = res.data.topProduct1; //图片一
+				this.imgB = res.data.topProduct2; //图片一
+				this.imgC = res.data.topProduct3; //图片一
+				this.imgD = res.data.topProduct4; //图片一
 			} else {
 				Toast.text({
 					duration: 1000,
-					message: '请求失败'
+					message: res.data.msg
 				});
 			}
 		});
@@ -114,11 +126,13 @@ export default {
 	methods: {
 		select_P: function(res) {
 			// 跳转商品列表并将当前点击的分类id传入
-			this.$router.push({ name: 'commodityList', params: { shopId: res } });
+			session.Lstorage.setItem('shopId', res);
+			this.$router.push({ name: 'commodityList' });
 		},
 		goCommodityDetail: function(res) {
 			// 跳转商品详情并将当前点击的商品id传入
-			this.$router.push({ name: 'commodityDetail', params: { shopId: res } });
+			session.Lstorage.setItem('shopId', res);
+			this.$router.push({ name: 'commodityDetail' });
 		}
 	}
 };

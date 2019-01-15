@@ -12,7 +12,6 @@ body {
 		height: calc(6.86rem / 2);
 		width: calc(6.86rem / 2);
 		margin-left: calc(1.3rem / 2);
-		border-radius: 100%;
 		overflow: hidden;
 		img {
 			height: 100%;
@@ -61,7 +60,7 @@ body {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	height: calc(12rem / 2);
+	padding: 15px 0;
 	.doctorImgName {
 		display: flex;
 		.doctorImg {
@@ -75,7 +74,6 @@ body {
 		}
 		.doctorFont {
 			margin-left: calc(1.4rem / 2);
-			height: calc(7.5rem / 2);
 			.doctorName {
 				font-size: calc(1.6rem / 2);
 				color: #333;
@@ -104,12 +102,12 @@ body {
 	border-left: calc(0.25rem / 2) solid #008e83;
 	.yearFont {
 		color: #008e83;
-		font-size: calc(1.2rem/ 2) ;
+		font-size: calc(1.2rem / 2);
 		margin-left: calc(1.4rem / 2);
 	}
-	.yearFontA{
+	.yearFontA {
 		color: #666;
-		font-size:calc(1.06rem/2);
+		font-size: calc(1.06rem / 2);
 		margin-left: calc(1.4rem / 2);
 	}
 	.month {
@@ -134,42 +132,14 @@ body {
 
 .mation {
 	margin-top: calc(2.4rem / 2);
-	.mationTop {
-		width: 90%;
-		margin-left: 0.66rem;
-		display: flex;
-		align-items: center;
-		> div:first-child {
-			width: calc(6.53rem / 2);
-			height: calc(6.53rem / 2);
-			border-radius: 100%;
-			overflow: hidden;
-			margin-right: calc(2.4rem / 2);
-			> img {
-				width: 100%;
-				height: 100%;
-			}
-		}
-		> div:last-child {
-			> p:first-child {
-				font-size: calc(1.86rem / 2);
-				color: #000;
-				font-weight: 500;
-			}
-			> p:last-child {
-				font-size: calc(1.2rem / 2);
-				color: #aaa;
-			}
-		}
-	}
 	.mationCenter {
 		display: flex;
 		margin: calc(1.33rem / 2) 0;
 		> div {
-			width: calc(23.06rem / 2);
-			height: calc(25rem / 2);
-			margin-left: 9px;
+			width: calc(21rem / 2);
+			height: calc(23rem / 2);
 			position: relative;
+			margin-left: calc(2.5rem / 2);
 			> img {
 				width: 100%;
 				height: 100%;
@@ -189,12 +159,6 @@ body {
 			color: #008e83 !important;
 			padding: 0 5px;
 		}
-	}
-	.textarea {
-		width: calc(45rem / 2);
-		margin: calc(1.8rem / 2) auto;
-		font-size: calc(1.6rem / 2);
-		color: #666;
 	}
 	.xian {
 		width: calc(47.2rem / 2);
@@ -224,9 +188,12 @@ body {
 		width: 100%;
 		display: flex;
 		justify-content: space-between;
-		img {
-			width: calc(20rem / 2);
-			height: calc(21.3rem / 2);
+		> div {
+			position: relative;
+			>img {
+				width: calc(20rem / 2);
+				height: calc(21.3rem / 2);
+			}
 		}
 	}
 	.listFont {

@@ -25,12 +25,12 @@
 					<img src="@/assets/images/icon/horn.png" />
 				</div>
 			</div>
-			<!-- <div class="selectorDiv">
+			<div class="selectorDiv">
 				<p>参数</p>
 				<div>
 					<img src="@/assets/images/icon/horn.png" />
 				</div>
-			</div> 19-1-10 参数功能无用-->
+			</div>
 		</div>
 		<div>
 			<div class="diary">
@@ -43,7 +43,7 @@
 				<div class="evalTop">
 					<div class="topInfor">
 						<div>
-							<img src="@/assets/images/icon/cart.png" />
+							<img :src="item.headimg || ImgNull" />
 						</div>
 						<div class="CDsecod">
 							<p>{{item.vipName}}</p>
@@ -51,13 +51,12 @@
 						</div>
 					</div>
 					<div class="topStars">
-						<div>
+						<div v-for="(item,key,index) in item.stars" :key='key'>
 							<img src="@/assets/images/icon/smallStars.png" />
 						</div>
-
 					</div>
 				</div>
-				<div class="evaluateContent">comment
+				<div class="evaluateContent">
 					<p>{{item.comment}}</p>
 				</div>
 				<div class="evaluateSee" @click='goAllevaluate()'>
@@ -108,6 +107,7 @@
 					<p class="rcBrief">香调浓郁，持久清爽重制物配方</p>
 					<p class="rcPrice">￥ 99</p>
 				</div>
+				<div style="width:1rem;"></div>
 			</div>
 		</div>
 		<div class="bottomOperation">
@@ -268,245 +268,241 @@
 </template>
 
 <script>
-	import Vue from 'vue';
-	import {
-		Swipe,
-		SwipeItem,
-		Toast
-	} from 'we-vue';
-	Vue.use(Swipe).use(SwipeItem);
-	import * as api from '@/assets/js/api';
-	export default {
-		name: 'commodityDetail',
-		data() {
-			return {
-				shopId: 0, //商品id
-				swipeContent: '', //轮播
-				listSizeInfo: '', //规格中的尺码
-				listCommentsInfo: '', //评论列表
-				goodsinfo: '', //商品内容
-				ifCollection: '', //是否收藏
-				num: 1, //默认为0
-				addSizeHidden: false, //点击加入购物车
-				buySizeHidden: false, //点击立即购买
-				sizeHidden: false, //点击规格显示的弹层
-				storage: '有', //库存
-				sizeId: 0, //选择规格id
-				disabled: false, //按钮能否点击
-				ImgNull: this.$store.state.ImgNull
-			};
+import Vue from 'vue';
+import { Swipe, SwipeItem, Toast } from 'we-vue';
+Vue.use(Swipe).use(SwipeItem);
+import * as api from '@/assets/js/api';
+export default {
+	name: 'commodityDetail',
+	data() {
+		return {
+			shopId: 0, //商品id
+			swipeContent: '', //轮播
+			listSizeInfo: '', //规格中的尺码
+			listCommentsInfo: '', //评论列表
+			goodsinfo: '', //商品内容
+			ifCollection: '', //是否收藏
+			num: 1, //默认为0
+			addSizeHidden: false, //点击加入购物车
+			buySizeHidden: false, //点击立即购买
+			sizeHidden: false, //点击规格显示的弹层
+			storage: '有', //库存
+			sizeId: 0, //选择规格id
+			disabled: false, //按钮能否点击
+			ImgNull: this.$store.state.ImgNull
+		};
+	},
+	created: function() {
+		this.$store.commit('showBottomNav', {
+			isShow: false
+		});
+		this.shopId = this.$route.params.shopId;
+		// 商品详情
+		api.getCommodityDetail({
+			data: {
+				openid: this.globalData.openid,
+				// id: this.shopId,
+				id: 14
+			}
+		}).then(res => {
+			if (res.data.flag) {
+				console.log('商城详情内容', res.data);
+				this.ifCollection = res.data.favored; //是否收藏
+				this.swipeContent = res.data.listBanner; //轮播
+				this.listSizeInfo = res.data.listSize; //规格中的尺码
+				this.listCommentsInfo = res.data.listComments; //评论列表
+				this.goodsinfo = res.data.goods; //商品内容
+				// 待修改 评价总数 相关推荐 尺码库存（都是缺少数据）
+			} else {
+				Toast.text({
+					duration: 1000,
+					message: res.data.msg
+				});
+			}
+		});
+	},
+	methods: {
+		openaddSize: function() {
+			// 通过加入点击显示的弹层
+			this.addSizeHidden = true;
 		},
-		created: function() {
-			this.$store.commit('showBottomNav', {
-				isShow: false
-			});
-			this.shopId = this.$route.params.shopId;
-			// 商品详情
-			api.getCommodityDetail({
+
+		openbuySize: function() {
+			// 通过加入点击显示的弹层
+			this.buySizeHidden = true;
+		},
+		seeSize: function() {
+			// 通过规格点击显示的弹层
+			this.sizeHidden = true;
+		},
+		close: function() {
+			// 关闭购买弹层
+			this.sizeHidden = false;
+			this.num = 1;
+			this.sizeId = 0;
+			this.addSizeHidden = false;
+			this.buySizeHidden = false;
+			this.disabled = false;
+		},
+
+		selectSize: function(res) {
+			//选择规格
+			console.log(res);
+			this.sizeId = res;
+		},
+
+		reduce: function(res) {
+			// 减号
+			if (this.num > 1) {
+				this.num -= 1;
+			}
+		},
+
+		plus: function(res) {
+			// 加号
+			this.num += 1;
+		},
+
+		addToCart: function(res) {
+			// 加入购物车
+			if (this.sizeId == 0) {
+				Toast.text({
+					duration: 1000,
+					message: '请选择规格'
+				});
+				return;
+			}
+			console.log('规格id', this.sizeid, '数目', this.num);
+			this.disabled = true;
+			api.addCart({
 				data: {
 					openid: this.globalData.openid,
-					// id: this.shopId,
-					id: 14
+					goodsid: 14,
+					sizeid: this.sizeId,
+					count: this.num
 				}
 			}).then(res => {
 				if (res.data.flag) {
-					console.log('商城详情内容', res.data);
-					this.ifCollection = res.data.favored; //是否收藏
-					this.swipeContent = res.data.listBanner; //轮播
-					this.listSizeInfo = res.data.listSize; //规格中的尺码
-					this.listCommentsInfo = res.data.listComments; //评论列表
-					this.goodsinfo = res.data.goods; //商品内容
-					// 待修改 评价总数 相关推荐 尺码库存（都是缺少数据）
+					console.log('添加购物车', res.data);
+					Toast.text({
+						duration: 1000,
+						message: '已加入购物车'
+					});
+					// 待修改 加入购物车后再购物车标志右上方出现数字设计图有
 				} else {
 					Toast.text({
 						duration: 1000,
 						message: res.data.msg
 					});
 				}
+				this.disabled = false;
 			});
 		},
-		methods: {
-			openaddSize: function() {
-				// 通过加入点击显示的弹层
-				this.addSizeHidden = true;
-			},
 
-			openbuySize: function() {
-				// 通过加入点击显示的弹层
-				this.buySizeHidden = true;
-			},
-			seeSize: function() {
-				// 通过规格点击显示的弹层
-				this.sizeHidden = true;
-			},
-			close: function() {
-				// 关闭购买弹层
-				this.sizeHidden = false;
-				this.num = 1;
-				this.sizeId = 0;
-				this.addSizeHidden = false;
-				this.buySizeHidden = false;
+		immediatePurchase: function() {
+			// 直接购买
+			if (this.sizeId == 0) {
+				Toast.text({
+					duration: 1000,
+					message: '请选择规格'
+				});
+				return;
+			}
+			console.log('规格id', this.sizeid, '数目', this.num);
+			this.disabled = true;
+			api.submitGoodsOrder({
+				data: {
+					openid: this.globalData.openid,
+					fromCart: 0,
+					goodsid: 14,
+					sizeid: this.sizeId,
+					count: this.num,
+					cartidList: ''
+				}
+			}).then(res => {
+				if (res.data.flag) {
+					console.log('直接购买', res.data);
+					// 待修改 生成订单id后 携带订单id跳转到订单确认页面
+					this.$router.push({
+						name: 'placeOrder',
+						params: {
+							orderId: res.data.orderid
+						}
+					});
+				} else {
+					Toast.text({
+						duration: 1000,
+						message: res.data.msg
+					});
+				}
 				this.disabled = false;
-			},
+			});
+		},
 
-			selectSize: function(res) {
-				//选择规格
-				console.log(res);
-				this.sizeId = res;
-			},
-
-			reduce: function(res) {
-				// 减号
-				if (this.num > 1) {
-					this.num -= 1;
-				}
-			},
-
-			plus: function(res) {
-				// 加号
-				this.num += 1;
-			},
-
-			addToCart: function(res) {
-				// 加入购物车
-				if (this.sizeId == 0) {
-					Toast.text({
-						duration: 1000,
-						message: '请选择规格'
-					});
-					return;
-				}
-				console.log('规格id', this.sizeid, '数目', this.num);
-				this.disabled = true;
-				api.addCart({
+		collection: function(res) {
+			// 收藏
+			if (this.ifCollection == 0) {
+				api.getFavorGoods({
 					data: {
 						openid: this.globalData.openid,
-						goodsid: 14,
-						sizeid: this.sizeId,
-						count: this.num
+						goodsid: res
 					}
 				}).then(res => {
 					if (res.data.flag) {
-						console.log('添加购物车', res.data);
-						Toast.text({
-							duration: 1000,
-							message: '已加入购物车'
-						});
-						// 待修改 加入购物车后再购物车标志右上方出现数字设计图有
+						this.ifCollection = 1;
 					} else {
 						Toast.text({
 							duration: 1000,
 							message: res.data.msg
 						});
 					}
-					this.disabled = false;
 				});
-			},
-
-			immediatePurchase: function() {
-				// 直接购买
-				if (this.sizeId == 0) {
-					Toast.text({
-						duration: 1000,
-						message: '请选择规格'
-					});
-					return;
-				}
-				console.log('规格id', this.sizeid, '数目', this.num);
-				this.disabled = true;
-				api.submitGoodsOrder({
+			} else if (this.ifCollection == 1) {
+				api.getFavorGoods({
 					data: {
 						openid: this.globalData.openid,
-						fromCart: 0,
-						goodsid: 14,
-						sizeid: this.sizeId,
-						count: this.num,
-						cartidList: ''
+						goodsid: res
 					}
 				}).then(res => {
 					if (res.data.flag) {
-						console.log('直接购买', res.data);
-						// 待修改 生成订单id后 携带订单id跳转到订单确认页面
-						this.$router.push({
-							name: 'placeOrder',
-							params: {
-								orderId: res.data.orderid
-							}
-						});
+						this.ifCollection = 0;
 					} else {
 						Toast.text({
 							duration: 1000,
 							message: res.data.msg
 						});
 					}
-					this.disabled = false;
-				});
-			},
-
-			collection: function(res) {
-				// 收藏
-				if (this.ifCollection == 0) {
-					api.getFavorGoods({
-						data: {
-							openid: this.globalData.openid,
-							goodsid: res
-						}
-					}).then(res => {
-						if (res.data.flag) {
-							this.ifCollection = 1;
-						} else {
-							Toast.text({
-								duration: 1000,
-								message: res.data.msg
-							});
-						}
-					});
-				} else if (this.ifCollection == 1) {
-					api.getFavorGoods({
-						data: {
-							openid: this.globalData.openid,
-							goodsid: res
-						}
-					}).then(res => {
-						if (res.data.flag) {
-							this.ifCollection = 0;
-						} else {
-							Toast.text({
-								duration: 1000,
-								message: res.data.msg
-							});
-						}
-					});
-				}
-			},
-
-			goCart: function(res) {
-				// 去购物车
-				this.$router.push({
-					name: 'shoppingCart'
-				});
-			},
-
-			goAllevaluate: function() {
-				// 去全部评价
-				this.$router.push({
-					name: 'allEvaluate',
-					params: {
-						goodsid: this.shopId
-					}
-				});
-			},
-			goIndex: function() {
-				// 回首页
-				this.$router.push({
-					name: 'index'
 				});
 			}
+		},
+
+		goCart: function(res) {
+			// 去购物车
+			this.$router.push({
+				name: 'shoppingCart'
+			});
+		},
+
+		goAllevaluate: function() {
+			// 去全部评价
+			this.$router.push({
+				name: 'allEvaluate',
+				params: {
+					goodsid: this.shopId
+				}
+			});
+		},
+		goIndex: function() {
+			// 回首页
+			this.$router.replace({
+				name: 'index'
+			});
 		}
-	};
+	}
+};
 </script>
 
 <style lang="scss" scoped>
-	@import '@/assets/css/commodityDetail.scss';
-	@import '@/assets/css/Index.scss';
+@import '@/assets/css/commodityDetail.scss';
+@import '@/assets/css/Index.scss';
 </style>

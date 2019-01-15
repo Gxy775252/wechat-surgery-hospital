@@ -54,7 +54,7 @@
 				<img src="@/assets/images/icon/level.jpg" />
 				<p>美丽日记</p>
 			</div>
-			<div class="diaryRight" @click="gobeautifulDiary()">
+			<div class="diaryRight" @click="gobeautifulDiary2()">
 				<p>MORE</p>
 				<img src="@/assets/images/icon/rightGray.png" />
 			</div>
@@ -66,7 +66,7 @@
 				</div>
 				<div>
 					<p>{{item.vipName}}</p>
-					<p>11月 &nbsp; 12日</p>
+					<p>{{item.date10}}</p>
 				</div>
 			</div>
 			<div class="mationCenter">
@@ -77,14 +77,13 @@
 					</div>
 				</div>
 			</div>
-			<!-- 待修改  美丽日记需要跳转 -->
-			<div class="mationCon">
-				<p><span>[医美整形-ST全脸字体脂肪填充-第99天]</span>大家好我又来更新日记了，现在做完现在做完现在做完现在做完现在做完ST全脸脂肪填充已经恢复很好了，</p>
+			<div class="mationCon" @click="goDiaryDetail(item.id)">
+				<p><span>[{{item.prjName}}-第{{item.dayIndex}}天]</span>{{item.content}}</p>
 			</div>
-			<div class="xian"></div>
-			<div class="mationBottom">
+			<div class="xian" @click="goDiaryDetail(item.id)"></div>
+			<div class="mationBottom" @click="goDiaryDetail(item.id)">
 				<p>
-					1000人来过
+					{{item.brows}}人来过
 				</p>
 			</div>
 		</div>
@@ -189,11 +188,17 @@ export default {
 				name: 'instrumentList'
 			});
 		},
-		gobeautifulDiary: function() {
+		gobeautifulDiary2: function() {
+			console.log('是否执行');
 			// 跳美丽日记
 			this.$router.push({
 				name: 'beautifulDiary'
 			});
+		},
+		goDiaryDetail: function(res) {
+			// 进入美丽日记详情
+			session.Lstorage.setItem('diaryId', res);
+			this.$router.push({ name: 'diaryDetails' });
 		},
 		// 选择皮肤分析
 		prickPro: function() {

@@ -17,6 +17,9 @@
 			<div class="insList">
 				<div class="insImg">
 					<img :src="item.coverResource.cover  || ImgNull" />
+					<div v-if="item.coverResource.isVideo==1" class="playImg">
+						<img src="@/assets/images/icon/playImg.png" />
+					</div>
 				</div>
 				<div class="insInfo" @click="goDetail(item.id)">
 					<p>{{item.name}}</p>
@@ -70,10 +73,10 @@ export default {
 	methods: {
 		goDetail: function(res) {
 			// 跳转到仪器详情并将仪器id缓存
-			session.Lstorage.setItem('skinId', res);
+			session.Lstorage.setItem('instr', res);
 			// 跳转到皮肤页面
 			this.$router.push({
-				name: 'skinAnalysis'
+				name: 'instrumentDetail'
 			});
 		}
 	}

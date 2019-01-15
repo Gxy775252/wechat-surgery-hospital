@@ -5,7 +5,7 @@
 			<div class="swiperImg">
 				<wv-swipe :autoplay="4000" class="swiperImg">
 					<wv-swipe-item v-for="(item,key,index) in swipeContent" :key="key"> 
-						<!-- <img :src="item.cover || ImgNull" class="imgA"/> -->
+						<img :src="item.cover || ImgNull" class="imgA"/>
 						<div v-if="item.isVideo==1" class="playImg">
 							<img src="@/assets/images/icon/playImg.png" />
 						</div>
@@ -25,11 +25,10 @@
 			</div>
 			<div class="mationCenter">
 				<div v-for="(item2,key,index) in item.listCover" :key="key">
-					<!-- 待修改 图片资源没有 -->
-					<!-- <img :src="item2.cover || ImgNull" /> -->
-					<!-- <div class="playImg" v-if="item2.isVideo==1">
+					<img :src="item2.cover || ImgNull" /> 
+					<div class="playImg" v-if="item2.isVideo==1">
 						<img src="@/assets/images/icon/playImg.png" />
-					</div> -->
+					</div>
 				</div>
 			</div>
 			<div class="mationCon" @click="goDiaryDetail(item.id)">

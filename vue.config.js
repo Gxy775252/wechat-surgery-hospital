@@ -42,8 +42,8 @@ module.exports = {
 		open: false,
 		host: '0.0.0.0',
 		port: 8080,
-		https: true,
-		hotOnly: true,
+		https: false,
+		hotOnly: false,
 		inline: true, //热更新
 		proxy: null, // 设置代理
 		before: app => {}
