@@ -1,7 +1,7 @@
 <!-- 确认订单 -->
 <template>
-	<!-- 	<div class="background">
-		<div class="addbox">
+		<div class="background">
+		<div class="addbox"  @click="goSelectAddress()">
 			<div class="bigBox">
 				<div class="addFont">
 					<div>
@@ -36,70 +36,19 @@
 				<div class="selectImg">
 					<img v-if="!item.isshow" src="../assets/images/icon/sele.png" />
 					<img v-if="item.isshow" src="../assets/images/icon/select.png" />
-			     </div>
-			</div>
-		</div>
-		<div class="integralBox">
-			<div class="integralFont">
-				<p class="uses">使用积分</p>
-				<p class="numberInt">（{{scoreBalInfo}}积分共抵扣{{maxScoreInfo}}元）</p>
-			</div>
-			<img :src="shutOpent" @click="shutClick"/>
-		</div>
-		<div class="bottomBox">
-			<div class="bottomMoney">￥{{cashBalInfo}}</div>
-			<div class="bottomPay">去支付</div>
-		</div>
-	</div> -->
-	<div class="background">
-		<div class="addbox" @click="goSelectAddress()">
-			<div class="bigBox">
-				<div class="addFont">
-					<div>
-						<p class="nameFont">收件人：撒打发的说法</p>
-						<p class="nameFont">电话：撒打发的说法</p>
-					</div>
-					<p class="add">收件地址：撒打发的说法</p>
-				</div>
-			</div>
-			<div class="buttonImg"><img src="../assets/images/icon/rightGray.png"></div>
-		</div>
-		<div class="comBox">
-			<img :src="ImgNull" class="comImg">
-			<div class="specName">
-				<p class="comName">谁u的撒回复</p>
-				<p class="spec">规格：的撒回复</p>
-				<div>
-					<p class="money">￥299</p>
-					<div class="number">x1</div>
-				</div>
-			</div>
-		</div>
-		<div class="payBox">
-			<div class="payFont">支付方式</div>
-		</div>
-		<div class="payName">
-			<div class="payWeChat" v-for="item in dataPay" :key="item.id" @click="selectPay(item.id)">
-				<div class="imgWeChat">
-					<img :src="item.img" />
-					<p>{{item.payFont}}</p>
-				</div>
-				<div class="selectImg">
-					<img v-if="!item.isshow" src="../assets/images/icon/sele.png" />
-					<img v-if="item.isshow" src="../assets/images/icon/select.png" />
 				</div>
 			</div>
 		</div>
 		<div class="integralBox">
 			<div class="integralFont">
 				<p class="uses">使用积分</p>
-				<p class="numberInt">（1000积分共抵扣0000元）</p>
+				<p class="numberInt">（{{scoreBalInfo}}积分共抵扣0000{{maxScoreInfo}}元）</p>
 			</div>
 			<img :src="shutOpent" @click="shutClick" />
 		</div>
 		<div class="bottomBox">
-			<div class="bottomMoney">￥000000</div>
-			<div class="bottomPay" @click="submitMoney">去支付</div>
+			<div class="bottomMoney">￥{{cashBalInfo}}</div>
+			<div class="bottomPay"  @click="submitMoney">去支付</div>
 		</div>
 	</div>
 </template>
@@ -146,9 +95,8 @@ export default {
 		// 订单确认页面
 		api.getConfirmOrder({
 			data: {
-				openid: this.globalData.openid
-				// id: this.shopId,
-				// 待修改  没见到有参数
+				openid: this.globalData.openid,
+				orderid: this.orderId
 			}
 		}).then(res => {
 			if (res.data.flag) {
@@ -169,7 +117,7 @@ export default {
 	},
 	methods: {
 		submitMoney: function() {
-			// 去支付
+			// 待修改  支付不知道是那个接口
 			console.log(this.dataPayId, '1=微信支付2=余额支付');
 			console.log(this.shutOpentId, '1=不适用积分');
 		},

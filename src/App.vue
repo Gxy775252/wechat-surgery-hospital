@@ -1,34 +1,52 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view v-if="isRouterAlive"/>
     <Tabber v-if="$store.state.showBottomNav"></Tabber>
   </div>
 </template>
 <script type="text/javascript">
 import Tabber from '@/components/Tabber';
 export default {
-    name: 'app',
-    components: {
-        Tabber
-    },
-    created: function() {
-        // function aaa(){
-        //   console.log('222')
-        // }
-    },
-    mounted: function() {}
+	name: 'app',
+	provide() {
+		return {
+			reload: this.reload
+		};
+	},
+	data() {
+		return {
+			isRouterAlive: true
+		};
+	},
+	components: {
+		Tabber
+	},
+	created: function() {
+		// function aaa(){
+		//   console.log('222')
+		// }
+	},
+	mounted: function() {},
+	methods: {
+		reload() {
+			this.isRouterAlive = false;
+			this.$nextTick(function() {
+				this.isRouterAlive = true;
+			});
+		}
+	}
 };
-(function (docs, win) {
-  var docEls = docs.documentElement,
-  resizeEvts = 'orientationchange' in window ? 'orientationchange' : 'resize',
-  recalcs = function () {
-  //getBoundingClientRect()这个方法返回一个矩形对象
-  window.rem = docEls.getBoundingClientRect().width/25;
-  docEls.style.fontSize = window.rem + 'px';
-};
-  recalcs();
-  if (!docs.addEventListener) return;
-  win.addEventListener(resizeEvts, recalcs, false);
+(function(docs, win) {
+	var docEls = docs.documentElement,
+		resizeEvts = 'orientationchange' in window ? 'orientationchange' : 'resize',
+		recalcs = function() {
+			//getBoundingClientRect()这个方法返回一个矩形对象
+			window.rem = docEls.getBoundingClientRect().width / 25;
+			docEls.style.fontSize = window.rem + 'px';
+		};
+	recalcs();
+	if (!docs.addEventListener) return;
+	win.addEventListener(resizeEvts, recalcs, false);
 })(document, window);
 // wx.config({
 //    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印

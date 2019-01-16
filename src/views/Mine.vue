@@ -1,3 +1,4 @@
+<!-- 我的 -->
 <template>
 	<div class="all">
 		<div class="mine">
@@ -11,19 +12,17 @@
 				</div>
 			</div>
 			<div class="mine-bottom">
-				<div @click="getMineNewPeople">
+				<div @click="getMineIntegral">
 					<p>{{vipInfo.scoreBal || 0}}</p>
 					<p>我的积分</p>
 				</div>
-				<div>
+				<div @click="goMineBalance">
 					<p>{{vipInfo.cashBal || 0}}</p>
 					<p>我的余额</p>
 				</div>
-				<div>
-					<!-- <router-link to="/mineNewPeople"> -->
+				<div @click="goMineNewPeople">
 					<p>{{vipInfo.fans || 0}}</p>
 					<p>我的拉新</p>
-					<!-- </router-link> -->
 				</div>
 			</div>
 		</div>
@@ -70,91 +69,102 @@
 </template>
 
 <script>
-	import * as api from '@/assets/js/api';
-	import {
-		Toast,
-	} from 'we-vue'
-	export default {
-		data() {
-			return {
-				vipInfo: '',
-			};
-		},
-		created: function() {
-			this.$store.commit('showBottomNav', {
-				isShow: true
-			});
-			api.getVipCentor({
-				data: {
-					openid: this.globalData.openid
-				}
-			}).then(res => {
-				if (res.data.flag) {
-					console.log('个人中心', res.data);
-					this.vipInfo = res.data.vip;
-				} else {
-					Toast.text({
-						duration: 1000,
-						message: '请求失败'
-					});
-				}
-			});
-		},
-		methods: {
-			mineReservationOrder:function(){
-				//跳我的预约订单
-				this.$router.push({
-					name:'mineReservationOrder'
-				})
-				},
-			gomineDiary: function() {
-				// 跳我的美丽日记
-				this.$router.push({
-					name: 'mineDiary'
-				});
-			},
-			getMineNewPeople: function() {
-				//跳我的拉新列表
-				this.$router.push({
-					name: 'mineNewPeople'
-				});
-			},
-			getnewQRCode: function() {
-				// 跳拉新二维码页面
-				this.$router.push({
-					name: 'newQRCode'
-				})
-			},
-			getmineCollector: function() {
-				// 跳我的收藏
-				this.$router.push({
-					name: 'mineCollector'
-				})
-			},
-			getmineInfo: function() {
-				// 跳我的信息页面
-				this.$router.push({
-					name: 'mineInfo'
-				})
-			},
-			getsetupPW: function(res) {
-				console.log(res);
-				if (res == 1) {
-					// 	this.$router.push({
-					// 		name: 'setupPW'
-					// 	})
-					// 待修改   要跳转到设置6位密码的页面
-				} else {
-					this.$router.push({
-						name: 'setupPW'
-					})
-				}
+import * as api from '@/assets/js/api';
+import { Toast } from 'we-vue';
+export default {
+	name: 'Mine',
+	data() {
+		return {
+			vipInfo: ''
+		};
+	},
+	created: function() {
+		this.$store.commit('showBottomNav', {
+			isShow: true
+		});
+		api.getVipCentor({
+			data: {
+				openid: this.globalData.openid
 			}
+		}).then(res => {
+			if (res.data.flag) {
+				console.log('个人中心', res.data);
+				this.vipInfo = res.data.vip;
+			} else {
+				Toast.text({
+					duration: 1000,
+					message: res.data.msg
+				});
+			}
+		});
+	},
+	methods: {
+		goMineNewPeople:function(){
+			//跳我的拉新
+			this.$router.push({
+				name: 'mineNewPeople'
+			});
 		},
+		goMineBalance: function() {
+			//跳我的余额
+			this.$router.push({
+				name: 'mineBalance'
+			});
+		},
+		mineReservationOrder: function() {
+			//跳我的预约订单
+			this.$router.push({
+				name: 'mineReservationOrder'
+			});
+		},
+		gomineDiary: function() {
+			// 跳我的美丽日记
+			this.$router.push({
+				name: 'mineDiary'
+			});
+		},
+		getMineIntegral: function() {
+			//跳我的积分
+			this.$router.push({
+				name: 'mineIntegral'
+			});
+		},
+		getnewQRCode: function() {
+			// 跳拉新二维码页面
+			this.$router.push({
+				name: 'newQRCode'
+			});
+		},
+		getmineCollector: function() {
+			// 跳我的收藏
+			this.$router.push({
+				name: 'mineCollector'
+			});
+		},
+		getmineInfo: function() {
+			// 跳我的信息页面
+			this.$router.push({
+				name: 'mineInfo'
+			});
+		},
+		getsetupPW: function(res) {
+			console.log(res);
+			if (res == 1) {
+				// 	this.$router.push({
+				// 		name: 'setupPW'
+				// 	})
+				// 待修改   要跳转到设置6位密码的页面
+			} else {
+				this.$router.push({
+					name: 'setupPW'
+				});
+			}
+		}
 	}
+};
 </script>
 
 
 <style lang="scss" scoped>
-	@import '@/assets/css/mine.scss';
+@import '@/assets/css/mine.scss';
 </style>
