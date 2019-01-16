@@ -12,6 +12,9 @@ import {
 	_apiDELETE
 } from './apiUtils'
 
+// 根据code 换取用户信息 /wx/getOpenidByCode
+export const getUserWechatInfo = (options) => _apiPOST(`${API_ROOT}/wx/getOpenidByCode`, options)
+
 // 获取会员信息 http://chaoxing.juyouyueqi.com/api/index.php?
 export const getAndSendSms = (options) => _apiPOST(`${API_ROOT}/wx/getAndSendSms`, options)
 
@@ -35,16 +38,16 @@ export const uploadPic = (options) => _apiPOST(`${API_ROOT}/wx/uploadPic`, optio
 // 获取首页列表信息
 export const getIndex = (options) => _apiPOST(`${API_ROOT}/wx/goMain`, options)
 
-// 获取医生列表信息 
+// 获取医生列表信息
 export const getDoctorList = (options) => _apiPOST(`${API_ROOT}/wx/goDoctorList`, options)
 
-// 获取医生详情信息 
+// 获取医生详情信息
 export const getDoctorDetail = (options) => _apiPOST(`${API_ROOT}/wx/goDoctorDetail`, options)
 
-// 获取医生案例列表信息 
+// 获取医生案例列表信息
 export const getDoctorCase = (options) => _apiPOST(`${API_ROOT}/wx/goDoctorCase`, options)
 
-// 获取仪器列表信息 
+// 获取仪器列表信息
 export const getInstrumentList = (options) => _apiPOST(`${API_ROOT}/wx/goInstList`, options)
 
 // 获取仪器详情
@@ -173,9 +176,9 @@ export const getDoctorOrderDetail = (options) => _apiPOST(`${API_ROOT}/wx/getDoc
 export const getDoctorVipList = (options) => _apiPOST(`${API_ROOT}/wx/getDoctorVipList`, options)
 //驻场医生 - 查看美丽日记
 export const goDoctorVipDiaryList = (options) => _apiPOST(`${API_ROOT}/wx/goDoctorVipDiaryList`, options)
-//驻场医生 - 上传美丽日记	
+//驻场医生 - 上传美丽日记
 export const goDoctorDiaryAdd = (options) => _apiPOST(`${API_ROOT}/wx/goDoctorDiaryAdd`, options)
-//驻场医生 - 美丽日记详情	
+//驻场医生 - 美丽日记详情
 export const goDoctorDiaryDetail = (options) => _apiPOST(`${API_ROOT}/wx/goDoctorDiaryDetail`, options)
 //驻场医生 - 删除
 export const delVipDiary = (options) => _apiPOST(`${API_ROOT}/wx/delVipDiary`, options)

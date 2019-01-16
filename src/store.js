@@ -9,11 +9,21 @@ export default new Vuex.Store({
 		showBottomNav: true,
 		ImgNull: require('@/assets/images/icon/cartNull.png'),
 		doctorImgNull: require('@/assets/images/example/doctor.png'),
+		uid: null,
+		wechatInfo: null,
+		toPath: null
 	},
 	getters: {},
 	mutations: {
 		showBottomNav(state, type) {
 			state.showBottomNav = type.isShow
+		},
+		setWechatInfo(state, data){
+			state.wechatInfo = data.wechatInfo
+			state.uid = data.wechatInfo.openid
+		},
+		setToPath(state, data){
+			state.toPath = data.path
 		}
 	},
 	actions: {

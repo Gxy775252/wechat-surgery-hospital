@@ -155,7 +155,7 @@ export default {
 		this.$store.commit('showBottomNav', {
 			isShow: true
 		});
-
+		console.log(this.$store.state,'----------????state')
 		api.getIndex({
 			data: {
 				openid: this.globalData.openid

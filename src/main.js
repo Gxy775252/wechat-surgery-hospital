@@ -9,6 +9,52 @@ import 'babel-polyfill'
 import wx from 'weixin-js-sdk'
 import * as API from '@/assets/js/api'
 import VideoPlayer from 'vue-video-player'
+import { parseUrl } from './assets/js/utils'
+
+router.beforeEach((to, from, next) => {
+  // document.title = to.meta.title		//修改各个页面的title
+  var uid = store.state.uid		//获取uid
+	console.log(to,'--------???')
+	console.log(uid,'--------???uid')
+	store.commit('setToPath', {
+		path: to.fullPath
+	})
+  if (uid == null) {
+		let code = parseUrl('code')
+		console.log(code,'---------code')
+		if(code != null){
+			API.getUserWechatInfo({
+				data: {
+					code: code
+				}
+			}).then(res => {
+				console.log(res,'-------------res success')
+				if(res.data.flag){
+					let { data } = res
+					let wechatInfo = Object.assign({openid: data.openid}, {nickname: data.nickname}, {headimg: data.headimg})
+					store.commit('setWechatInfo', {
+						wechatInfo: wechatInfo
+					})
+					// next(to.fullPath)
+					// window.location.href = `${window.location.href}${to.fullPath}`
+					// setTimeout(() => {
+					console.log(parseUrl('path'),'------path')
+					next()
+					// }, 2000)
+				}
+			})
+		}else{
+			console.log(window.location,'-------location')
+			window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx347f2c6ff3c8a16d&redirect_uri=${window.location.origin}?path=aaa&response_type=code&scope=snsapi_userinfo#wechat_redirect`
+
+			console.log('fail')
+		}
+  } else {
+    next()
+  }
+	// next()
+
+})
 
 // API.postAPI({data: {
 //   method: 'wechat_config',
