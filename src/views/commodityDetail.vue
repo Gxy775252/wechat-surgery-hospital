@@ -272,6 +272,7 @@ import Vue from 'vue';
 import { Swipe, SwipeItem, Toast } from 'we-vue';
 Vue.use(Swipe).use(SwipeItem);
 import * as api from '@/assets/js/api';
+import * as session from '@/assets/js/session';
 export default {
 	name: 'commodityDetail',
 	data() {
@@ -296,13 +297,12 @@ export default {
 		this.$store.commit('showBottomNav', {
 			isShow: false
 		});
-		this.shopId = this.$route.params.shopId;
+		this.shopId = session.Lstorage.getItem('shopId');
 		// 商品详情
 		api.getCommodityDetail({
 			data: {
 				openid: this.globalData.openid,
-				// id: this.shopId,
-				id: 14
+				id: this.shopId
 			}
 		}).then(res => {
 			if (res.data.flag) {
@@ -423,11 +423,9 @@ export default {
 				if (res.data.flag) {
 					console.log('直接购买', res.data);
 					// 待修改 生成订单id后 携带订单id跳转到订单确认页面
+					session.Lstorage.setItem('orderId', res.data.orderid);
 					this.$router.push({
 						name: 'placeOrder',
-						params: {
-							orderId: res.data.orderid
-						}
 					});
 				} else {
 					Toast.text({
@@ -458,7 +456,7 @@ export default {
 					}
 				});
 			} else if (this.ifCollection == 1) {
-				api.getFavorGoods({
+				api.unfavor({
 					data: {
 						openid: this.globalData.openid,
 						goodsid: res
@@ -485,11 +483,9 @@ export default {
 
 		goAllevaluate: function() {
 			// 去全部评价
+			session.Lstorage.setItem('goodsid', this.shopId);
 			this.$router.push({
-				name: 'allEvaluate',
-				params: {
-					goodsid: this.shopId
-				}
+				name: 'allEvaluate'
 			});
 		},
 		goIndex: function() {

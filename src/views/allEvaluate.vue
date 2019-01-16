@@ -1,3 +1,4 @@
+<!-- 全部评价 -->
 <template>
 	<div class="all">
 		<div class="AllList">
@@ -39,7 +40,9 @@
 <script>
 import * as api from '@/assets/js/api';
 import { Toast } from 'we-vue';
+import * as session from '@/assets/js/session';
 export default {
+	name: 'allEvaluate',
 	data() {
 		return {
 			listCommentsInfo: '', //评论列表
@@ -50,7 +53,7 @@ export default {
 		this.$store.commit('showBottomNav', {
 			isShow: false
 		});
-		this.shopId = this.$route.params.shopId;
+		this.shopId = session.Lstorage.getItem('goodsid');
 		// 评论
 		api.getAllComments({
 			data: {
