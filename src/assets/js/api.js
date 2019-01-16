@@ -18,17 +18,9 @@ export const getAndSendSms = (options) => _apiPOST(`${API_ROOT}/wx/getAndSendSms
 // post获取数据
 export const postRegister = (options) => _apiPOST(`${API_ROOT}/wx/register`, options)
 
-// 获取我的页面信息
-export const getVipCentor = (options) => _apiPOST(`${API_ROOT}/wx/goVipCentor`, options)
-
-// 获取拉新二维码信息
-export const getVipShare = (options) => _apiPOST(`${API_ROOT}/wx/goVipShare`, options)
-
-// 获取充值积分收益列表信息
-export const getChargeInterestList = (options) => _apiPOST(`${API_ROOT}/wx/getChargeInterestList`, options)
-
 //	上传图片
 export const uploadPic = (options) => _apiPOST(`${API_ROOT}/wx/uploadPic`, options)
+
 
 /**首页相关 --------------------------------------------**/
 
@@ -120,6 +112,7 @@ export const deleteFromCart = (options) => _apiPOST(`${API_ROOT}/wx/deleteFromCa
 
 /**商城相关 -------------------------------------------- END**/
 
+
 /**预约相关 -------------------------------------------- **/
 
 // 预约首页
@@ -128,8 +121,16 @@ export const goAppointment = (options) => _apiPOST(`${API_ROOT}/wx/goAppointment
 /**预约相关 -------------------------------------------- END**/
 
 
-
 /**个人中心 -------------------------------------------- **/
+
+// 获取我的页面信息
+export const getVipCentor = (options) => _apiPOST(`${API_ROOT}/wx/goVipCentor`, options)
+
+// 获取我的信息
+export const getVipDetail = (options) => _apiPOST(`${API_ROOT}/wx/getVipDetail`, options)
+
+// 保存信息
+export const saveVipInfo = (options) => _apiPOST(`${API_ROOT}/wx/saveVipInfo`, options)
 
 // 获取我的收藏页面信息
 export const getVipFavorList = (options) => _apiPOST(`${API_ROOT}/wx/getVipFavorList`, options)
@@ -137,8 +138,23 @@ export const getVipFavorList = (options) => _apiPOST(`${API_ROOT}/wx/getVipFavor
 // 取消收藏
 export const unfavor = (options) => _apiPOST(`${API_ROOT}/wx/unfavor`, options)
 
-// 保存信息
-export const saveVipInfo = (options) => _apiPOST(`${API_ROOT}/wx/saveVipInfo`, options)
+// 我的余额页
+export const goVipBalance = (options) => _apiPOST(`${API_ROOT}/wx/goVipBalance`, options)
+
+//  充值页
+export const goVipChargeList = (options) => _apiPOST(`${API_ROOT}/wx/goVipChargeList`, options)
+
+//   提交充值请求
+export const submitCharge = (options) => _apiPOST(`${API_ROOT}/wx/submitCharge`, options)
+
+//    我的积分页
+export const goVipScore = (options) => _apiPOST(`${API_ROOT}/wx/goVipScore`, options)
+
+//     实时获取积分余额
+export const getVipScoreBal = (options) => _apiPOST(`${API_ROOT}/wx/getVipScoreBal`, options)
+
+//    赠送积分
+export const genScoreGift = (options) => _apiPOST(`${API_ROOT}/wx/genScoreGift`, options)
 
 // 获取我的肤质页面信息
 export const goVipSkinInfo = (options) => _apiPOST(`${API_ROOT}/wx/goVipSkinInfo`, options)
@@ -152,33 +168,45 @@ export const getVipDiaryList = (options) => _apiPOST(`${API_ROOT}/wx/getVipDiary
 //重置密码
 export const getResetGiftPwd = (options) => _apiPOST(`${API_ROOT}/wx/resetGiftPwd`, options)
 
-
 // 获取我的预约订单信息
 export const getVipGoodsOrderList = (options) => _apiPOST(`${API_ROOT}/wx/getVipGoodsOrderList`, options)
 
+// 获取拉新二维码信息
+export const getVipShare = (options) => _apiPOST(`${API_ROOT}/wx/goVipShare`, options)
+
+// 获取充值积分收益列表信息
+export const getChargeInterestList = (options) => _apiPOST(`${API_ROOT}/wx/getChargeInterestList`, options)
+
 /**个人中心 -------------------------------------------- END**/
-
-
 
 
 /**驻场医生 -------------------------------------------- start**/
 
 // 驻场医生-个人中心
 export const getDoctorDetailSettled = (options) => _apiPOST(`${API_ROOT}/wx/getDoctorDetail`, options)
+
 //驻场医生-预约订单
 export const getDoctorOrderList = (options) => _apiPOST(`${API_ROOT}/wx/getDoctorOrderList`, options)
+
 //驻场医生-订单详情
 export const getDoctorOrderDetail = (options) => _apiPOST(`${API_ROOT}/wx/getDoctorOrderDetail`, options)
+
 //驻场医生 - 我的用户
 export const getDoctorVipList = (options) => _apiPOST(`${API_ROOT}/wx/getDoctorVipList`, options)
+
 //驻场医生 - 查看美丽日记
 export const goDoctorVipDiaryList = (options) => _apiPOST(`${API_ROOT}/wx/goDoctorVipDiaryList`, options)
+
 //驻场医生 - 上传美丽日记	
 export const goDoctorDiaryAdd = (options) => _apiPOST(`${API_ROOT}/wx/goDoctorDiaryAdd`, options)
+
 //驻场医生 - 美丽日记详情	
 export const goDoctorDiaryDetail = (options) => _apiPOST(`${API_ROOT}/wx/goDoctorDiaryDetail`, options)
+
 //驻场医生 - 删除
 export const delVipDiary = (options) => _apiPOST(`${API_ROOT}/wx/delVipDiary`, options)
+
 //驻场医生 - 上传美丽日记订单详情
 export const getVipOrderList = (options) => _apiPOST(`${API_ROOT}/wx/getVipOrderList`, options)
+
 /**驻场医生 -------------------------------------------- END**/

@@ -211,11 +211,11 @@ export default new Router({
 			}
 		},
 		{
-			path: '/mineNewPeople',
-			name: 'mineNewPeople',
-			component: () => import('./views/mineNewPeople.vue'),
+			path: '/newQRCode',
+			name: 'newQRCode',
+			component: () => import('./views/newQRCode.vue'),
 			beforeEnter: (to, from, next) => {
-				document.title = '我的拉新列表'
+				document.title = '拉新二维码'
 				next()
 			}
 		},
@@ -225,6 +225,60 @@ export default new Router({
 			component: () => import('./views/mineInfo.vue'),
 			beforeEnter: (to, from, next) => {
 				document.title = '我的信息'
+				next()
+			}
+		},
+		{
+			path: '/mineCollector',
+			name: 'mineCollector',
+			component: () => import('./views/mineCollector.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '我的收藏'
+				next()
+			}
+		},
+		{
+			path: '/mineBalance',
+			name: 'mineBalance',
+			component: () => import('./views/mineBalance.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '我的余额'
+				next()
+			}
+		},
+		{
+			path: '/allProfit',
+			name: 'allProfit',
+			component: () => import('./views/allProfit.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '全部收益'
+				next()
+			}
+		},
+		{
+			path: '/Recharge',
+			name: 'Recharge',
+			component: () => import('./views/Recharge.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '充值'
+				next()
+			}
+		},
+		{
+			path: '/mineIntegral',
+			name: 'mineIntegral',
+			component: () => import('./views/mineIntegral.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '我的积分'
+				next()
+			}
+		},
+		{
+			path: '/mineNewPeople',
+			name: 'mineNewPeople',
+			component: () => import('./views/mineNewPeople.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '我的拉新列表'
 				next()
 			}
 		},
@@ -343,33 +397,9 @@ export default new Router({
 
 
 
-		{
-			path: '/newQRCode',
-			name: 'newQRCode',
-			component: () => import('./views/newQRCode.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '拉新二维码'
-				next()
-			}
-		},
-		{
-			path: '/mineCollector',
-			name: 'mineCollector',
-			component: () => import('./views/mineCollector.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '我的收藏'
-				next()
-			}
-		},
-		{
-			path: '/mineBalance',
-			name: 'mineBalance',
-			component: () => import('./views/mineBalance.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '我的余额'
-				next()
-			}
-		},
+
+
+
 		{
 			path: '/mineOrder',
 			name: 'mineOrder',
@@ -397,24 +427,8 @@ export default new Router({
 				next()
 			}
 		},
-		{
-			path: '/Recharge',
-			name: 'Recharge',
-			component: () => import('./views/Recharge.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '充值'
-				next()
-			}
-		},
-		{
-			path: '/allProfit',
-			name: 'allProfit',
-			component: () => import('./views/allProfit.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '全部收益'
-				next()
-			}
-		},
+
+
 		{
 			path: '/mineReservationOrder',
 			name: 'mineReservationOrder',
@@ -442,15 +456,7 @@ export default new Router({
 				next()
 			}
 		},
-		{
-			path: '/mineIntegral',
-			name: 'mineIntegral',
-			component: () => import('./views/mineIntegral.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '我的积分'
-				next()
-			}
-		},
+
 		{
 			path: '/minePaymentOrder',
 			name: 'minePaymentOrder',
