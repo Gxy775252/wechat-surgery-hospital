@@ -10,7 +10,7 @@ import wx from 'weixin-js-sdk'
 import * as API from '@/assets/js/api'
 import VideoPlayer from 'vue-video-player'
 import { parseUrl } from './assets/js/utils'
-
+						console.log(this,"config----------------");
 router.beforeEach((to, from, next) => {
   // document.title = to.meta.title		//修改各个页面的title
   var uid = store.state.uid		//获取uid

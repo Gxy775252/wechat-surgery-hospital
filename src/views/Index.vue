@@ -156,6 +156,7 @@ export default {
 			isShow: true
 		});
 		console.log(this.$store.state,'----------????state')
+		console.log(this.globalData,'------------------index globalDatass')
 		api.getIndex({
 			data: {
 				openid: this.globalData.openid

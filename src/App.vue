@@ -25,6 +25,8 @@ export default {
 		// function aaa(){
 		//   console.log('222')
 		// }
+		this.globalData.openid = this.$store.state.uid
+		// console.log(this.globalData,'---------', this.$store,'-------store')
 	},
 	mounted: function() {},
 	methods: {
