@@ -68,7 +68,7 @@ export default {
 		this.selectId = session.Lstorage.getItem('shopId') || 0;
 		api.getCommodityList({
 			data: {
-				openid: this.globalData.openid,
+				openid: this.$store.state.uid,
 				classifyid: this.selectId, //0，表示全部
 				ascByPrice: this.ascByPrice, //价格排序
 				ascBySales: this.ascBySales //销量排序
@@ -93,7 +93,7 @@ export default {
 			console.log(this.selectId);
 			api.getCommodityDetail({
 				data: {
-					openid: this.globalData.openid,
+					openid: this.$store.state.uid,
 					classifyid: res, //0，表示全部
 					ascByPrice: this.ascByPrice, //价格排序
 					ascBySales: this.ascBySales //销量排序
@@ -121,7 +121,7 @@ export default {
 			}
 			api.getCommodityList({
 				data: {
-					openid: this.globalData.openid,
+					openid: this.$store.state.uid,
 					classifyid: this.selectId, //0，表示全部
 					ascByPrice: this.ascByPrice, //价格排序
 					ascBySales: this.ascBySales //销量排序
@@ -149,7 +149,7 @@ export default {
 			}
 			api.getCommodityDetail({
 				data: {
-					openid: this.globalData.openid,
+					openid: this.$store.state.uid,
 					classifyid: this.selectId, //0，表示全部
 					ascByPrice: this.ascByPrice, //价格排序
 					ascBySales: this.ascBySales //销量排序

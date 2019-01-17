@@ -159,7 +159,7 @@ export default {
 		console.log(this.globalData,'------------------index globalDatass')
 		api.getIndex({
 			data: {
-				openid: this.globalData.openid
+				openid: this.$store.state.uid
 			}
 		}).then(res => {
 			console.log('首页请求数据', res.data);

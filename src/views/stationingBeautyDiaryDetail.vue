@@ -86,7 +86,7 @@ export default {
 		});
 		api.goDoctorDiaryDetail({
 			data: {
-				openid: this.globalData.openid,
+				openid: this.$store.state.uid,
 				id:1
 			}
 		}).then(res => {

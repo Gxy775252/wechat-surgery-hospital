@@ -3,7 +3,6 @@ const constants = require('./constants')
 
 // const API_ROOT = constants.requestUrl.substr(0, constants.requestUrl.length - 1)
 const API_ROOT = 'http://tcjh.suitang1973.com'
-// console.log(API_ROOT, '--------API_ROOT')
 
 import {
 	_apiPOST,
@@ -168,11 +167,29 @@ export const submitSkininfo = (options) => _apiPOST(`${API_ROOT}/wx/submitSkinin
 //获取我的日记列表
 export const getVipDiaryList = (options) => _apiPOST(`${API_ROOT}/wx/getVipDiaryList`, options)
 
+//获取我的日记详情
+export const getVipDiaryDetail = (options) => _apiPOST(`${API_ROOT}/wx/getVipDiaryDetail`, options)
+
+//获取我的日记详情
+export const saveDiary = (options) => _apiPOST(`${API_ROOT}/wx/saveDiary`, options)
+
 //重置密码
 export const getResetGiftPwd = (options) => _apiPOST(`${API_ROOT}/wx/resetGiftPwd`, options)
 
-// 获取我的预约订单信息
+//  我的预约单列表
 export const getVipGoodsOrderList = (options) => _apiPOST(`${API_ROOT}/wx/getVipGoodsOrderList`, options)
+
+//  取消预约单
+export const cancelPrjtOrder = (options) => _apiPOST(`${API_ROOT}/wx/cancelPrjtOrder`, options)
+
+//  取消预约单
+export const getVipPrjtOrderDetail = (options) => _apiPOST(`${API_ROOT}/wx/getVipPrjtOrderDetail`, options)
+
+//  取消商城单
+export const cancelGoodsOrder = (options) => _apiPOST(`${API_ROOT}/wx/cancelGoodsOrder`, options)
+
+//  申请退货退款页面
+export const refundOrder = (options) => _apiPOST(`${API_ROOT}/wx/refundOrder`, options)
 
 // 获取拉新二维码信息
 export const getVipShare = (options) => _apiPOST(`${API_ROOT}/wx/goVipShare`, options)

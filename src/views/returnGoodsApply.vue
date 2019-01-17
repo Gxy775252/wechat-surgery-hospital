@@ -1,3 +1,4 @@
+<!-- 退货页面 -->
 <template>
 	<div class="all">
 		<div class="list">
@@ -34,22 +35,44 @@
 
 <script>
 import Vue from 'vue';
-import { Textarea } from 'we-vue'
-Vue.use(Textarea)
-	export default {
-		data() {
-			return {
-
-			};
-		},
-		created: function() {
-			this.$store.commit('showBottomNav', {
-				isShow: false
-			});
-		}
+import { Textarea, Toast } from 'we-vue';
+import * as api from '@/assets/js/api';
+import * as session from '@/assets/js/session';
+Vue.use(Textarea);
+export default {
+	name: 'returnGoodsApply',
+	data() {
+		return {};
+	},
+	created: function() {
+		this.$store.commit('showBottomNav', {
+			isShow: false
+		});
+		api.cancelPrjtOrder({
+			data: {
+				openid: this.$store.state.uid,
+			}
+		}).then(res => {
+			console.log('是否取消了----', res);
+			if (res.data.flag) {
+				Toast.text({
+					duration: 1000,
+					message: '取消成功'
+				});
+				this.reload();
+			} else {
+				Toast.text({
+					duration: 1000,
+					message: res.data.msg
+				});
+			}
+		});
+		// 待修改 接口不是很明白
+		// session.Lstorage.setItem('refundOrderID', res);
 	}
+};
 </script>
 
 <style lang="scss" scoped>
-	@import '@/assets/css/returnGoodsApply.scss';
+@import '@/assets/css/returnGoodsApply.scss';
 </style>

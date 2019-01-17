@@ -93,7 +93,7 @@
 						data:{
 						oldPwd:this.pwd,
 					    newPwd:this.newPwd,
-						openid: this.globalData.openid
+						openid: this.$store.state.uid
 						}
 					}).then(res=>{
 						if (res.data.flag) {

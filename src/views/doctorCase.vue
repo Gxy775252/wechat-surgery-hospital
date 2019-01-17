@@ -54,7 +54,7 @@ export default {
 		});
 		api.getDoctorCase({
 			data: {
-				openid: this.globalData.openid,
+				openid: this.$store.state.uid,
 				doctorid: session.Lstorage.getItem('caseId'), //医生id,
 				projectid: 0 //项目id 0=全部,
 			}
@@ -78,7 +78,7 @@ export default {
 			this.proId = res;
 			api.getDoctorCase({
 				data: {
-					openid: this.globalData.openid,
+					openid: this.$store.state.uid,
 					doctorid: session.Lstorage.getItem('caseId'), //医生id,
 					projectid: res,
 				}

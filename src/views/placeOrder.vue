@@ -95,7 +95,7 @@ export default {
 		// 订单确认页面
 		api.getConfirmOrder({
 			data: {
-				openid: this.globalData.openid,
+				openid: this.$store.state.uid,
 				orderid: this.orderId
 			}
 		}).then(res => {

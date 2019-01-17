@@ -100,7 +100,7 @@ export default {
 		});
 		api.getdiaryDetails({
 			data: {
-				openid: this.globalData.openid,
+				openid: this.$store.state.uid,
 				// id: session.Lstorage.setItem('diaryId')
 				id: 1
 			}

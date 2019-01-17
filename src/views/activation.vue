@@ -21,21 +21,12 @@
 				</div>
 			</div>
 			<div class="primary">
-				<button type="button">激活</button>
+				<button type="button" @click="submit">激活</button>
 			</div>
 		</div>
 		<div class="seeI">
 			<img src="@/assets/images/icon/kanjian.png" />
 		</div>
-<!-- 		<Tan-Chuang>
-			<div class="slotImg">
-				<img src="@/assets/images/icon/lihe.png" />
-			</div>
-			<p class="slotP">恭喜你，注册成功</p>
-			<div class="slotDiv">
-				<p>获得1000积分商城支付可抵扣</p>
-			</div>
-		</Tan-Chuang> -->
 	</div>
 </template>
 
@@ -63,6 +54,83 @@ export default {
 		this.$store.commit('showBottomNav', {
 			isShow: false
 		});
+	},
+	methods: {
+		getCode: function() {
+			let isPhone = /^1(3|4|5|7|8)\d{9}$/;
+			let { value } = this.$refs.phone;
+			if (!isPhone.test(value)) {
+				Toast.text({
+					duration: 1000,
+					message: '请输入正确格式的手机号'
+				});
+				return;
+			}
+			api.getAndSendSms({
+				data: {
+					phone: value,
+					openid: this.$store.state.uid
+				}
+			}).then(res => {
+				const code = res.data.code;
+				if (res.data.flag) {
+					this.code = code || '112233';
+					Toast.text({
+						duration: 1000,
+						message: '已发送'
+					});
+					this.setTime(this.count);
+				} else {
+					Toast.text({
+						duration: 1000,
+						message: '发送失败'
+					});
+				}
+			});
+		},
+		submit: function() {
+			let isPhone = /^1(3|4|5|7|8)\d{9}$/;
+			let { code, phone } = this.$refs;
+			if (!isPhone.test(phone.value)) {
+				Toast.text({
+					duration: 1000,
+					message: '请输入正确格式的手机号'
+				});
+				return;
+			}
+			if (code.value != this.code) {
+				Toast.text({
+					duration: 1000,
+					message: '验证码不正确'
+				});
+				return;
+			}
+			api.postRegister({
+				data: {
+					openid: this.$store.state.uid,
+					phone: phone.value,
+					validcode: code.value
+				}
+			}).then(res => {
+				if (res.data.flag) {
+					// this.successReg = true;
+					this.$router.push({ name: 'stationingDoctorPersonalCenter' });
+				}
+			});
+		},
+		setTime: function(num) {
+			let run = setInterval(() => {
+				num--;
+				if (num == 0) {
+					this.codeText = '点击发送验证码';
+					this.getCodeIsClick = true;
+					clearInterval(run);
+				} else {
+					this.codeText = `${num}s`;
+					this.getCodeIsClick = false;
+				}
+			}, 1000);
+		}
 	}
 };
 </script>

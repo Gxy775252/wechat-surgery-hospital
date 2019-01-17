@@ -36,7 +36,7 @@ export default {
 		});
 		api.getVipShare({
 			data: {
-				shareOpenid: this.globalData.openid
+				shareOpenid: this.$store.state.uid
 			}
 		}).then(res => {
 			console.log(res.data);

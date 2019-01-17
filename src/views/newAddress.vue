@@ -121,7 +121,7 @@ export default {
 		) {
 			api.getVipAddressDetail({
 				data: {
-					openid: this.globalData.openid,
+					openid: this.$store.state.uid,
 					addressid: session.Lstorage.getItem('editid')
 				}
 			}).then(res => {
@@ -177,7 +177,7 @@ export default {
 			// 待修改  选择地址后会清空其他input框的内容
 			// 			api.saveVipAddress({
 			// 				data: {
-			// 					openid: this.globalData.openid,
+			// 					openid: this.$store.state.uid,
 			// 					postName: this.$refs.nameInput.value,
 			// 					postPhone: this.$refs.phoneInput.value,
 			// 					postAddress: this.$refs.addressInput.value,

@@ -102,7 +102,7 @@ export default {
 		});
 		api.getShoppingMall({
 			data: {
-				openid: this.globalData.openid,
+				openid: this.$store.state.uid,
 				classifyid: 0 //0，表示全部
 			}
 		}).then(res => {

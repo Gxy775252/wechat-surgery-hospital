@@ -1,3 +1,4 @@
+<!-- 美丽日记 -->
 <template>
 	<div class="all">
 		<div class="diaryList">
@@ -72,7 +73,7 @@
 					<div style="clear: both;"></div>
 				</div>
 			</div>
-			<div style="height: 3rem;"></div>
+			<div style="height: 6rem;"></div>
 		</div>
 		<div class="buttonA" @click="submit">
 			<button>提交</button>
@@ -89,6 +90,7 @@ import { Textarea, Toast, Picker } from 'we-vue';
 Vue.use(Textarea).use(Picker);
 import axios from 'axios';
 export default {
+	name:'mineDiary',
 	data() {
 		return {
 			doctorImgNull: this.$store.state.doctorImgNull,
@@ -131,7 +133,7 @@ export default {
 		});
 		api.goVipSkinInfo({
 			data: {
-				openid: this.globalData.openid
+				openid: this.$store.state.uid
 			}
 		}).then(res => {
 			if (res.data.flag) {
@@ -151,9 +153,6 @@ export default {
 	},
 	methods: {
 		changeUpload1: function(_uploadName, _idImg) {
-			//
-			// 				idImg = _idImg;
-
 			console.log(_uploadName, '2121---');
 			this.uploadName = _uploadName;
 
@@ -204,6 +203,26 @@ export default {
 		// 提交内容
 		submit: function() {
 			// 待修改  提交内容  submitSkininfo 接口地址
+// 			api.getDoctorCase({
+// 				data: {
+// 					openid: this.$store.state.uid,
+// 					skinType:,
+// 					faceLifted:,
+// 					projects:,
+// 					memo:,
+// 					resourceList:,
+// 				}
+// 			}).then(res => {
+// 				if (res.data.flag) {
+// 					console.log('医生案例列表请求数据', res.data);
+// 					// 待修改成功之后跳转
+// 				} else {
+// 					Toast.text({
+// 						duration: 1000,
+// 						message: res.data.msg
+// 					});
+// 				}
+// 			});
 			this.$router.push({
 				name: 'mineDiaryList'
 			});

@@ -301,7 +301,7 @@ export default {
 		// 商品详情
 		api.getCommodityDetail({
 			data: {
-				openid: this.globalData.openid,
+				openid: this.$store.state.uid,
 				id: this.shopId
 			}
 		}).then(res => {
@@ -376,7 +376,7 @@ export default {
 			this.disabled = true;
 			api.addCart({
 				data: {
-					openid: this.globalData.openid,
+					openid: this.$store.state.uid,
 					goodsid: 14,
 					sizeid: this.sizeId,
 					count: this.num
@@ -412,7 +412,7 @@ export default {
 			this.disabled = true;
 			api.submitGoodsOrder({
 				data: {
-					openid: this.globalData.openid,
+					openid: this.$store.state.uid,
 					fromCart: 0,
 					goodsid: 14,
 					sizeid: this.sizeId,
@@ -442,7 +442,7 @@ export default {
 			if (this.ifCollection == 0) {
 				api.getFavorGoods({
 					data: {
-						openid: this.globalData.openid,
+						openid: this.$store.state.uid,
 						goodsid: res
 					}
 				}).then(res => {
@@ -458,7 +458,7 @@ export default {
 			} else if (this.ifCollection == 1) {
 				api.unfavor({
 					data: {
-						openid: this.globalData.openid,
+						openid: this.$store.state.uid,
 						goodsid: res
 					}
 				}).then(res => {

@@ -57,7 +57,7 @@ export default {
 		// 评论
 		api.getAllComments({
 			data: {
-				openid: this.globalData.openid,
+				openid: this.$store.state.uid,
 				goodsid: this.shopId
 			}
 		}).then(res => {

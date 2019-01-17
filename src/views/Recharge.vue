@@ -60,7 +60,7 @@ export default {
 		});
 		api.goVipChargeList({
 			data: {
-				openid: this.globalData.openid
+				openid: this.$store.state.uid
 			}
 		}).then(res => {
 			if (res.data.flag) {
@@ -87,7 +87,7 @@ export default {
 			}
 			api.submitCharge({
 				data: {
-					openid: this.globalData.openid,
+					openid: this.$store.state.uid,
 					money: this.bankInfo
 				}
 			}).then(res => {

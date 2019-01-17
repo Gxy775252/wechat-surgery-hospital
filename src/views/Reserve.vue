@@ -159,7 +159,7 @@
 			});
 			api.goAppointment({
 				data: {
-					openid: this.globalData.openid
+					openid: this.$store.state.uid
 				}
 			}).then(res => {
 				if (res.data.flag) {

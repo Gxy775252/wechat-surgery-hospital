@@ -56,7 +56,7 @@ export default {
 		});
 		api.getVipFavorList({
 			data: {
-				openid: this.globalData.openid
+				openid: this.$store.state.uid
 			}
 		}).then(res => {
 			console.log('我的收藏', res.data);
@@ -81,7 +81,7 @@ export default {
 				.then(() => {
 					api.unfavor({
 						data: {
-							openid: this.globalData.openid,
+							openid: this.$store.state.uid,
 							goodsid: res
 						}
 					}).then(res => {

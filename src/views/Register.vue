@@ -81,7 +81,7 @@ export default {
             api.getAndSendSms({
                 data: {
                     phone: value,
-                    openid: this.globalData.openid
+                    openid: this.$store.state.uid
                 }
             }).then(res => {
                 const code = res.data.code;
@@ -119,7 +119,7 @@ export default {
             }
             api.postRegister({
                 data: {
-                    openid: this.globalData.openid,
+                    openid: this.$store.state.uid,
                     phone: phone.value,
                     validcode: code.value
                 }

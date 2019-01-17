@@ -148,7 +148,7 @@ export default {
 		});
 		api.getDoctorDetail({
 			data: {
-				openid: this.globalData.openid,
+				openid: this.$store.state.uid,
 				id: session.Lstorage.getItem('doctorId')
 			}
 		}).then(res => {

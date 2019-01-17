@@ -32,7 +32,7 @@
 				<img src="../assets/images/icon/mineHore.png" />
 			</div>
 		</div>
-		<div class="list">
+		<div class="list" @click="mineOrder">
 			<p>我的商城订单</p>
 			<div>
 				<img src="../assets/images/icon/mineHore.png" />
@@ -84,7 +84,7 @@ export default {
 		});
 		api.getVipCentor({
 			data: {
-				openid: this.globalData.openid
+				openid: this.$store.state.uid
 			}
 		}).then(res => {
 			if (res.data.flag) {
@@ -115,6 +115,12 @@ export default {
 			//跳我的预约订单
 			this.$router.push({
 				name: 'mineReservationOrder'
+			});
+		},
+		mineOrder:function(){
+			//商城单子
+			this.$router.push({
+				name: 'mineOrder'
 			});
 		},
 		gomineDiary: function() {

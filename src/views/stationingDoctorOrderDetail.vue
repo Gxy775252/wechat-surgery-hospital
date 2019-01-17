@@ -73,50 +73,48 @@
 </template>
 
 <script>
-	import {
-		Toast
-	} from 'we-vue';
-	import * as api from '@/assets/js/api';
-	export default {
-		data() {
-			return {
-				doctorImgNull: this.$store.state.doctorImgNull,
-				ImgNull: this.$store.state.ImgNull,
-				orderInfo:''
-			};
-		},
-		created: function() {
-			
-			var id = this.$route.params.id;
-			this.$store.commit('showBottomNav', {
-				isShow: false
-			});
-			api.getDoctorOrderDetail({
-				data: {
-					openid: this.globalData.openid,
-					id:id
-				}
-			}).then(res => {
-				if (res.data.flag) {
-					console.log('医生订单详情', res.data);
-					this.orderInfo = res.data.order
-				} else {
-					Toast.text({
-						duration: 1000,
-						message: res.data.msg
-					});
-				}
-			});
-		},
-		methods:{
-			goVieaCases:function(){
-				this.$router.push({ name: 'stationingDoctorOrder'});
+import { Toast } from 'we-vue';
+import * as api from '@/assets/js/api';
+import * as session from '@/assets/js/session';
+export default {
+	data() {
+		return {
+			doctorImgNull: this.$store.state.doctorImgNull,
+			ImgNull: this.$store.state.ImgNull,
+			orderInfo: ''
+		};
+	},
+	created: function() {
+		var id = session.Lstorage.getItem('id');
+		this.$store.commit('showBottomNav', {
+			isShow: false
+		});
+		api.getDoctorOrderDetail({
+			data: {
+				openid: this.$store.state.uid,
+				id: id
 			}
+		}).then(res => {
+			if (res.data.flag) {
+				console.log('医生订单详情', res.data);
+				this.orderInfo = res.data.order;
+			} else {
+				Toast.text({
+					duration: 1000,
+					message: res.data.msg
+				});
+			}
+		});
+	},
+	methods: {
+		goVieaCases: function() {
+			this.$router.push({ name: 'stationingDoctorOrder' });
 		}
-	};
+	}
+};
 </script>
 
 <style lang="scss" scoped>
-	@import '@/assets/css/stationingDoctorOrderDetail.scss';
-	@import '@/assets/css/mineReserveCheck.scss';
+@import '@/assets/css/stationingDoctorOrderDetail.scss';
+@import '@/assets/css/mineReserveCheck.scss';
 </style>

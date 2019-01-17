@@ -35,7 +35,7 @@ export default {
 		});
 		api.getChargeInterestList({
 			data: {
-				openid: this.globalData.openid,
+				openid: this.$store.state.uid,
 				chargeid: session.Lstorage.getItem('chargeId')
 			}
 		}).then(res => {

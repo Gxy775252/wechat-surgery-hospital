@@ -77,7 +77,7 @@ export default {
 		});
 		api.goInstDetail({
 			data: {
-				openid: this.globalData.openid,
+				openid: this.$store.state.uid,
 				id: session.Lstorage.getItem('instr')
 			}
 		}).then(res => {
