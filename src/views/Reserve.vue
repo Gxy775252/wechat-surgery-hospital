@@ -10,8 +10,8 @@
 			<div class="Allselect-stores">
 				<p>Stores</p>
 				<div class="Allselect-list">
-					<div class="listCon" @click="Picker" :class="listConA">
-						{{stores | pickerValueFilter}}
+					<div class="listCon">
+						{{stores}}
 					</div>
 					<div class="listImg">
 						<!-- <img src="@/assets/images/icon/mineHore.png" /> -->
@@ -111,8 +111,6 @@
 		</div>
 		<div style="height:3rem;"></div>
 
-		<!-- 选择门店 -->
-		<wv-picker :visible.sync="ticketPickerShow" :columns="ticketColumns" @confirm="confirmTicket" />
 	</div>
 </template>
 
@@ -130,27 +128,10 @@
 	export default {
 		data() {
 			return {
-				isVip: '', //true是vip
-				cashBal: '', //vip余额
-				listHospInfo: '', //医院列表
-				listDoctorInfo: '', //医生列表
-				listProjectInfo: '', //项目列表
 				listDateInfo: '', //时间段，明天起的30天
-				listPeriodInfo: '', //时段列表
-				stores: '', //门店
+				stores: '选择门店(必填)', //门店
 				subjects: '选择项目(必填)', //项目
 				doctor: '选择医生(选填)', //医生
-				listConA: '', //改变颜色
-				ticketPickerShow: false,
-				ticketColumns: [{
-					values: [
-						'汽车票',
-						'飞机票',
-						'火车票',
-						'轮船票',
-						'其它'
-					],
-				}],
 			};
 		},
 		created: function() {
@@ -164,9 +145,6 @@
 			}).then(res => {
 				if (res.data.flag) {
 					console.log('预约', res.data);
-					for (let i = 0; i < res.data.listDate.length; i++) {
-						// console.log(res.data.listDate[i]);
-					}
 					this.listDateInfo = res.data.listDate;
 				} else {
 					Toast.text({
@@ -177,25 +155,8 @@
 			});
 		},
 		methods: {
-			Picker: function() {
-				this.ticketPickerShow = true;
-			},
-			confirmTicket: function(picker) {
-				this.stores = picker.getValues();
-				this.listConA = 'listConA';
-			},
-			clickList:function(){},
 
 		},
-		filters: {
-			pickerValueFilter(val) {
-				if (Array.isArray(val)) {
-					return val.toString()
-				} else {
-					return '选择门店（必填）'
-				}
-			}
-		}
 	};
 </script>
 

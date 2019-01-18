@@ -120,6 +120,27 @@ export const deleteFromCart = (options) => _apiPOST(`${API_ROOT}/wx/deleteFromCa
 // 预约首页
 export const goAppointment = (options) => _apiPOST(`${API_ROOT}/wx/goAppointment`, options)
 
+// 获取医院的项目列表
+export const getHospitalProjectList = (options) => _apiPOST(`${API_ROOT}/wx/getHospitalProjectList`, options)
+
+// 获取项目的可选医生列表
+export const getProjectDoctorList = (options) => _apiPOST(`${API_ROOT}/wx/getProjectDoctorList`, options)
+
+// 获取项目详情
+export const getProjectDetail = (options) => _apiPOST(`${API_ROOT}/wx/getProjectDetail`, options)
+
+// 模板消息-预约详情页
+export const goModelOrderDetail = (options) => _apiPOST(`${API_ROOT}/wx/goModelOrderDetail`, options)
+
+// 模板消息-满意度调查页
+export const goModelSurvey = (options) => _apiPOST(`${API_ROOT}/wx/goModelSurvey`, options)
+
+// 提交满意度调查
+export const submitSurvey = (options) => _apiPOST(`${API_ROOT}/wx/submitSurvey`, options)
+
+//  提交预约
+export const submitProjectOrder = (options) => _apiPOST(`${API_ROOT}/wx/submitProjectOrder`, options)
+
 /**预约相关 -------------------------------------------- END**/
 
 

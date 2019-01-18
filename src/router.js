@@ -98,15 +98,6 @@ export default new Router({
 				next()
 			},
 		},
-		{
-			path: '/investigation',
-			name: 'investigation',
-			component: () => import('./views/investigation.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '满意度调查'
-				next()
-			}
-		},
 		/**首页相关 END**/
 
 		/**商城相关**/
@@ -225,7 +216,15 @@ export default new Router({
 				next()
 			}
 		},
-
+		{
+			path: '/investigation',
+			name: 'investigation',
+			component: () => import('./views/investigation.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '满意度调查'
+				next()
+			}
+		},
 		/**预约相关 END**/
 
 		/**个人中心**/
