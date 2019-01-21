@@ -59,6 +59,8 @@ import {
 } from 'we-vue';
 import * as api from '@/assets/js/api';
 import * as session from '@/assets/js/session';
+import wx from 'weixin-js-sdk'
+
 export default {
   name: 'placeOrder',
   data() {
@@ -89,41 +91,81 @@ export default {
     };
   },
   created: function() {
+    let _this = this
     this.$store.commit('showBottomNav', {
       isShow: false
     });
     this.orderId = session.Lstorage.getItem('orderId');
-    console.log(this.orderId, '-------------');
+    // function getConfig(){
+    //   return new Promise((res, ret) => {
+    //     api.getWechatConfig({
+    //       data: {
+    //         url: window.location.href.split('#')[0]
+    //       }
+    //     }).then(res => {
+    //       console.log(res,'----------res')
+    //     })
+    //   })
+    // }
+
     // 订单确认页面
-    api.getConfirmOrder({
-      data: {
-        openid: this.$store.state.uid,
-        orderid: this.orderId
-      }
-    }).then(res => {
-      if (res.data.flag) {
-        console.log('订单确认', res.data);
-        this.cashBalInfo = res.data.cashBal; //现金金额
-        this.scoreBalInfo = res.data.scoreBal; //积分余额
-        this.maxScoreInfo = res.data.maxScore; //最大抵扣积分
-        this.orderInfo = res.data.order; //订单信息
-        this.addressInfo = res.data.address; //默认地址信息
-        this.listDetailInfo = res.data.listDetail; //商品列表
-      } else {
-        Toast.text({
-          duration: 1000,
-          message: res.data.msg
-        });
-      }
-    });
+    function initData(){
+      api.getConfirmOrder({
+        data: {
+          openid: _this.$store.state.uid,
+          orderid: _this.orderId
+        }
+      }).then(res => {
+        if (res.data.flag) {
+          console.log('订单确认', res.data)
+          _this.cashBalInfo = res.data.cashBal //现金金额
+          _this.scoreBalInfo = res.data.scoreBal //积分余额
+          _this.maxScoreInfo = res.data.maxScore //最大抵扣积分
+          _this.orderInfo = res.data.order //订单信息
+          _this.addressInfo = res.data.address //默认地址信息
+          _this.listDetailInfo = res.data.listDetail //商品列表
+        } else {
+          Toast.text({
+            duration: 1000,
+            message: res.data.msg
+          });
+        }
+      });
+    }
+    initData()
   },
   methods: {
     submitMoney: function() {
+      let parmas = Object.assign({}, {openid: this.$store.state.uid}, {orderid: this.orderId}, {wxcash: this.dataPayId == 1 ? this.orderInfo.money : '' }, {score: this.shutOpentId != 1 ? this.scoreBalInfo : ''}, {vipcash: this.dataPayId == 2 ? this.cashBalInfo : ''}, {postName: this.addressInfo.postName}, {postPhone: this.addressInfo.postPhone}, {postAddress: this.addressInfo.postAddress})
       // 待修改  支付不知道是那个接口
+      // if (typeof WeixinJSBridge == "undefined") { // 判断是否在微信浏览器内
+      //     if (document.addEventListener) {
+      //         document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+      //     } else if (document.attachEvent) {
+      //         document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+      //         document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+      //     }
+      // } else {
+      // laalla
+      // }
+      this.submitPay(parmas)
       console.log(this.dataPayId, '1=微信支付2=余额支付');
       console.log(this.shutOpentId, '1=不适用积分');
     },
-
+    submitPay: function(parmas){
+      api.getWechatPay({
+        data: parmas
+      }).then(res => {
+        console.log(res,'-------res pay')
+        if(res.data.flag){
+          if(res.data.finished == 1){
+            // vip 支付
+          }else{
+            // 跳转页面
+          }
+        }
+      })
+    },
     shutClick: function() {
       if (this.shutOpent == require('../assets/images/icon/shut.png')) {
         this.shutOpent = require('../assets/images/icon/open.png');

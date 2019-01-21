@@ -23,6 +23,11 @@ export const postRegister = (options) => _apiPOST(`${API_ROOT}/wx/register`, opt
 //	上传图片
 export const uploadPic = (options) => _apiPOST(`${API_ROOT}/wx/uploadPic`, options)
 
+// 微信 config /wx/getJssdkSign
+export const getWechatConfig = (options) => _apiPOST(`${API_ROOT}/wx/getJssdkSign`, options)
+
+// 微信 支付 签名
+export const getWechatPay = (options) => _apiPOST(`${API_ROOT}/wx/getWxpaySign`, options)
 
 /**首页相关 --------------------------------------------**/
 
@@ -238,10 +243,10 @@ export const getDoctorVipList = (options) => _apiPOST(`${API_ROOT}/wx/getDoctorV
 //驻场医生 - 查看美丽日记
 export const goDoctorVipDiaryList = (options) => _apiPOST(`${API_ROOT}/wx/goDoctorVipDiaryList`, options)
 
-//驻场医生 - 上传美丽日记	
+//驻场医生 - 上传美丽日记
 export const goDoctorDiaryAdd = (options) => _apiPOST(`${API_ROOT}/wx/goDoctorDiaryAdd`, options)
 
-//驻场医生 - 美丽日记详情	
+//驻场医生 - 美丽日记详情
 export const goDoctorDiaryDetail = (options) => _apiPOST(`${API_ROOT}/wx/goDoctorDiaryDetail`, options)
 
 //驻场医生 - 删除
