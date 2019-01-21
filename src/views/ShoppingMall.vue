@@ -54,7 +54,10 @@
 			<div class="listText" v-for="(item,key,index) in listHotInfo" :key="key">
 				<div class="listImg">
 					<!-- 待修改  没有封面图 -->
-					<img src="@/assets/images/example/yiqi.png" />
+					<img :src="item.resource.cover" />
+					<div v-if="item.resource.isVideo==1" class="playImg">
+						<img src="@/assets/images/icon/playImg.png" />
+					</div>
 				</div>
 				<div class="listContent" @click="goCommodityDetail(item.id)">
 					<p class="lctA">{{item.name}}</p>

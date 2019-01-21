@@ -30,9 +30,9 @@
 	}
 }
 .evaluate {
-	background-color: #ffffff;
+	background-color: #fff;
 	width: 100%;
-	margin-bottom: calc(2rem/2);
+	margin-bottom: calc(2rem / 2);
 	.evalTop {
 		padding: 1.33rem 0.66rem;
 		margin: auto;
@@ -82,15 +82,15 @@
 	.evaluateContent {
 		width: 91%;
 		margin: auto;
-		margin-bottom: 1.33rem;
 		font-size: calc(1.6rem / 2);
 		color: #333;
+		border-bottom: 1px solid #F0F0F0;
+		padding-bottom: 1.33rem;
 	}
 	.evaluateSee {
 		font-size: calc(1.33rem / 2);
 		color: #666;
 		height: calc(5.93rem / 2);
-		border-top: 1px solid #f7f7f7;
 		> p {
 			margin-left: calc(3.6rem / 2);
 			line-height: calc(5.93rem / 2);

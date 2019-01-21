@@ -43,6 +43,10 @@
 					> p:first-child {
 						font-size: 0.93rem;
 						color: #008e83;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						width: 45px;
 					}
 					> p:last-child {
 						font-size: 0.67rem;
@@ -115,6 +119,7 @@
 		.dortor_resume_list {
 			margin-left: 0.4rem;
 			padding: 0.67rem;
+
 			.dortor_resume_list_title {
 				display: flex;
 				align-items: center;
@@ -133,6 +138,16 @@
 				margin-left: 1.33rem;
 				color: #333333;
 				font-size: 0.8rem;
+			}
+			.dortor_resume_list_title2 {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				> p {
+					margin-left: 1.33rem;
+					color: #333333;
+					font-size: 0.8rem;
+				}
 			}
 		}
 	}

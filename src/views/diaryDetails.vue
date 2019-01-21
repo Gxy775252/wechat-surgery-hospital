@@ -2,71 +2,76 @@
 <template>
 	<div>
 		<div class="userBox">
-			<div class="userImg"><img :src="detailInfo.headimg"></div>
+			<div class="userImg"><img :src="detailInfo.headimg" /></div>
 			<div class="userFont">
-				<p class="userName">{{detailInfo.vipName}}</p>
-				<p class="userTitle">项目名称：{{detailInfo.prjName}}</p>
+				<p class="userName">{{ detailInfo.vipName }}</p>
+				<p class="userTitle">项目名称：{{ detailInfo.prjName }}</p>
 			</div>
 		</div>
 		<div class="lineBox">
-			<div class="lineImg"><img src="../assets/images/icon/level.jpg"></div>
+			<div class="lineImg"><img src="../assets/images/icon/level.jpg" /></div>
 			<p>项目医生</p>
 		</div>
 		<div class="doctorBox">
 			<div class="doctorImgName">
-				<div class="doctorImg"><img src="@/assets/images/example/doctor.png"></div>
+				<div class="doctorImg"><img :src="detailInfo.doctorHeadimg || ImgNull" /></div>
 				<!-- 待修改 医生头像未处理 -->
 				<div class="doctorFont">
-					<p class="doctorName">{{detailInfo.doctorName}}</p>
-					<p class="doctorTitle">{{detailInfo.doctorTitle}}</p>
-					<p class="doctorAdd">所在门店所在门店 | {{detailInfo.hospName}}</p>
+					<p class="doctorName">{{ detailInfo.doctorName }}</p>
+					<p class="doctorTitle">{{ detailInfo.doctorTitle }}</p>
+					<p class="doctorAdd">所在门店所在门店 | {{ detailInfo.hospName }}</p>
 				</div>
 			</div>
-			<div class="doctorHorn"><img src="../assets/images/icon/horn.png"></div>
+			<div class="doctorHorn"><img src="../assets/images/icon/horn.png" /></div>
 		</div>
 		<div class="lineBox">
-			<div class="lineImg"><img src="../assets/images/icon/level.jpg"></div>
+			<div class="lineImg"><img src="../assets/images/icon/level.jpg" /></div>
 			<p>日记详情</p>
 		</div>
 		<div class="mation">
 			<div class="mationCenter">
-				<div v-for="(item,key,index) in listResourceInfo" :key="key">
-					<img :src="item.cover || ImgNull" /> 
-					<div class="playImg" v-if="item.isVideo==1">
+				<div v-for="(item, key, index) in listResourceInfo" :key="key">
+					<img :src="item.cover || ImgNull" />
+					<div class="playImg" v-if="item.isVideo == 1">
 						<img src="@/assets/images/icon/playImg.png" />
 					</div>
 				</div>
 			</div>
 			<div class="mationCon">
-				<p><span>[{{detailInfo.prjName}}-第{{detailInfo.dayIndex}}天]</span>{{detailInfo.content}}</p>
+				<p>
+					<span>[{{ detailInfo.prjName }}-第{{ detailInfo.dayIndex }}天]</span
+					>{{ detailInfo.content }}
+				</p>
 			</div>
-		</div>			
+		</div>
 		<div class="lineBox">
-			<div class="lineImg"><img src="../assets/images/icon/level.jpg"></div>
+			<div class="lineImg"><img src="../assets/images/icon/level.jpg" /></div>
 			<p>美丽日记</p>
 		</div>
 		<div>
 			<div class="diaryList">
 				<p class="yearFont">2018年</p>
 				<p class="yearFontA">Beautiful Diary</p>
-				<div class="monthBox" v-for="(item,key,index) in listDiaryInfo" :key="key">
+				<div class="monthBox" v-for="(item, key, index) in listDiaryInfo" :key="key">
 					<div class="month">
-						<div class="monthImg"><img src="@/assets/images/icon/level.jpg"></div>
-						<p>{{item.date10}}</p>
+						<div class="monthImg"><img src="@/assets/images/icon/level.jpg" /></div>
+						<p>{{ item.date10 }}</p>
 					</div>
 					<div class="listContent">
 						<div class="contentBox">
-							<div v-for="(item2,key,index) in item.listResource" :key="key">
-								<img :src="item2.cover || ImgNull">
+							<div v-for="(item2, key, index) in item.listResource" :key="key">
+								<img :src="item2.cover || ImgNull" />
 								<!-- 待修改 图片资源 项目名 天数 -->
-								<div class="playImg" v-if="item2.isVideo==1">
+								<div class="playImg" v-if="item2.isVideo == 1">
 									<img src="@/assets/images/icon/playImg.png" />
 								</div>
 							</div>
 						</div>
 						<div class="listFont">
 							<!-- 待修改 项目名  天数 -->
-							<p><span>[医美整形-ST全脸字体脂肪填充-第99天]</span>{{item.content}}</p>
+							<p>
+								<span>[{{item.prjName}}-第{{item.dayIndex}}天]</span>{{ item.content }}
+							</p>
 						</div>
 					</div>
 				</div>
