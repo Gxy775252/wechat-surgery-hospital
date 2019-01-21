@@ -27,13 +27,13 @@
 			<div class="lastDiv"><img src="@/assets/images/icon/search.png" /></div>
 		</div>
 		<div class="AllList">
-			<div class="listDiv" v-for="item in listGoodsInfo" :key="item.id">
+			<div class="listDiv" v-for="item in listGoodsInfo" :key="item.id" @click="goCommodityDetail(item.id)">
 				<div class="listImg"><img src="@/assets/images/example/doctor.png" /></div>
 				<div class="listText">
-					<p @click="goCommodityDetail(item.id)">{{ item.name }}</p>
-					<p @click="goCommodityDetail(item.id)">{{ item.brief }}</p>
+					<p>{{ item.name }}</p>
+					<p>{{ item.brief }}</p>
 					<div class="ListPrice">
-						<p @click="goCommodityDetail(item.id)">￥ {{ item.price }}</p>
+						<p>￥ {{ item.price }}</p>
 						<div><img src="@/assets/images/icon/joinCart.png" /></div>
 					</div>
 				</div>

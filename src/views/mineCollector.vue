@@ -72,7 +72,6 @@ export default {
 	},
 	methods: {
 		shoucang: function(res) {
-			let that = this;
 			Dialog.confirm({
 				title: '确认取消收藏吗？',
 				skin: 'ios',

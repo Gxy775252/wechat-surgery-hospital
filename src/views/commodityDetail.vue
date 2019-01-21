@@ -41,7 +41,7 @@
           <div><img :src="item.headimg || ImgNull" /></div>
           <div class="CDsecod">
             <p>{{ item.vipName }}</p>
-            <p>{{ item.createTime }}</p>
+            <p>{{ item.createTime }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;规格：{{item.sizeName}}</p>
           </div>
         </div>
         <div class="topStars">
@@ -77,12 +77,9 @@
       </div>
     </div>
     <div class="recommend">
-      <div class="recommendContent" v-for="(item, key, index) in listRelative" :key="key" v-if="item != null">
+      <div class="recommendContent" v-for="(item, key, index) in listRelative" :key="key" v-if="item != null" @click="goCommodityDetail(item.id)">
         <div class="rcImg">
           <img :src="item.coverResource.cover || ImgNull" />
-          <div v-if="item.coverResource.isVideo == 1" class="playImg">
-            <img src="@/assets/images/icon/playImg.png" />
-          </div>
         </div>
         <p class="rcTitle">{{ item.name }}</p>
         <p class="rcBrief">{{ item.brief }}</p>
@@ -121,7 +118,7 @@
       <div class="modelTop">
         <div class="modelTop-left"><img :src="swipeContent[0].cover || ImgNull" /></div>
         <div class="modelTop-center">
-          <p>￥ 99</p>
+          <p>￥ {{ goodsinfo.price }}</p>
           <p>请选择规格</p>
         </div>
         <div class="modelTop-close" @click="close()">
@@ -167,7 +164,8 @@
       <div class="modelTop">
         <div class="modelTop-left"><img :src="swipeContent[0].cover || ImgNull" /></div>
         <div class="modelTop-center">
-          <p>￥ 99</p>
+          <p>￥ {{ goodsinfo.price }}</p>
+          <!-- 待修改 不同规格不同价格 -->
           <p>请选择规格</p>
         </div>
         <div class="modelTop-close" @click="close()">
@@ -213,7 +211,7 @@
       <div class="modelTop">
         <div class="modelTop-left"><img :src="swipeContent[0].cover || ImgNull" /></div>
         <div class="modelTop-center">
-          <p>￥ 99</p>
+          <p>￥ {{ goodsinfo.price }}</p>
           <p>请选择规格</p>
         </div>
         <div class="modelTop-close" @click="close()">
@@ -303,41 +301,52 @@ export default {
       sizeId: 0, //选择规格id
       disabled: false, //按钮能否点击
       ifListProp: false, //是否显示产品参数内容
-      ImgNull: this.$store.state.ImgNull
+      ImgNull: this.$store.state.ImgNull,
+      abc: '',
     };
   },
   created: function() {
-    this.$store.commit('showBottomNav', {
+    let that=this;
+    that.$store.commit('showBottomNav', {
       isShow: false
     });
-    this.shopId = session.Lstorage.getItem('shopId');
+    that.shopId = session.Lstorage.getItem('shopId');
     // 商品详情
-    api.getCommodityDetail({
-      data: {
-        openid: this.$store.state.uid,
-        id: this.shopId
-      }
-    }).then(res => {
-      if (res.data.flag) {
-        console.log('商城详情内容', res.data);
-        this.comments = res.data.comments; //评论数量
-        this.ifCollection = res.data.favored; //是否收藏
-        this.swipeContent = res.data.listBanner; //轮播
-        this.listSizeInfo = res.data.listSize; //规格中的尺码
-        this.listCommentsInfo = res.data.listComments; //评论列表
-        this.goodsinfo = res.data.goods; //商品内容
-        this.listRelative = res.data.listRelative; //关联商品
-        this.listProp = res.data.listProp; //商品属性
-        // 待修改 评价总数 相关推荐 尺码库存（都是缺少数据）
-      } else {
-        Toast.text({
-          duration: 1000,
-          message: res.data.msg
-        });
-      }
-    });
+    that.abc = function(id) {
+      api.getCommodityDetail({
+        data: {
+          openid: that.$store.state.uid,
+          id: id
+        }
+      }).then(res => {
+        if (res.data.flag) {
+          console.log('商城详情内容', res.data);
+          that.comments = res.data.comments; //评论数量
+          that.ifCollection = res.data.favored; //是否收藏
+          that.swipeContent = res.data.listBanner; //轮播
+          that.listSizeInfo = res.data.listSize; //规格中的尺码
+          that.listCommentsInfo = res.data.listComments; //评论列表
+          that.goodsinfo = res.data.goods; //商品内容
+          that.listRelative = res.data.listRelative; //关联商品
+          that.listProp = res.data.listProp; //商品属性
+          // 待修改 评价总数 相关推荐 尺码库存（都是缺少数据）
+        } else {
+          Toast.text({
+            duration: 1000,
+            message: res.data.msg
+          });
+        }
+      })
+    };
+    that.abc(that.shopId);
+
   },
   methods: {
+    goCommodityDetail: function(res) {
+      //跳转到商品详情
+      this.abc(res);
+    },
+
     seeParameter: function() {
       // 打开参数内容
       this.ifListProp = true;
@@ -448,8 +457,6 @@ export default {
         }
       }).then(res => {
         if (res.data.flag) {
-          // 待修改 生成订单id后 携带订单id跳转到订单确认页面
-          console.log('aaaaaaa-----ok',res.data);
           this.buySizeHidden = false;
           session.Lstorage.setItem('orderId', res.data.orderid);
           this.$router.push({

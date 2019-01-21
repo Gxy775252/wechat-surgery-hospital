@@ -27,9 +27,14 @@ import * as api from '@/assets/js/api';
 import * as session from '@/assets/js/session';
 export default {
 	name: 'selectAddress',
+	inject: ['reload'],
 	data() {
 		return {
-			listAddressInfo: ''
+			listAddressInfo: '',
+			defaultProps1: {
+				children: 'children',
+				label: 'comName'
+			}
 		};
 	},
 	created: function() {
@@ -63,8 +68,6 @@ export default {
 				}
 			}).then(res => {
 				if (res.data.flag) {
-					console.log('选择地址', res.data);
-					// 待修改 选择完地址后要干嘛
 					this.$router.go(-1);
 				} else {
 					Toast.text({
@@ -97,6 +100,8 @@ export default {
 						}
 					}).then(res => {
 						if (res.data.flag) {
+							console.log('-------',res.data);
+							this.reload();
 						} else {
 							Toast.text({
 								duration: 1000,

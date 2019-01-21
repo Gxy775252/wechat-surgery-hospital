@@ -47,7 +47,7 @@
     <img :src="shutOpent" @click="shutClick" />
   </div>
   <div class="bottomBox">
-    <div class="bottomMoney">￥{{cashBalInfo}}</div>
+    <div class="bottomMoney">￥{{orderInfo.money}}</div>
     <div class="bottomPay" @click="submitMoney">去支付</div>
   </div>
 </div>
