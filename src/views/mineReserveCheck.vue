@@ -7,29 +7,29 @@
 		<div class="doctor">
 			<div class="doctorTop">
 				<div class="topImg">
-					<img :src="doctorImgNull" />
+					<img :src="ImgNull" />
 				</div>
 				<div class="topText">
 					<div>
-						<p class="fontA">黄伟医生</p>
+						<p class="fontA">{{orderInfo.doctorName}}</p>
 						<p class="fontB"></p>
-						<p class="fontC">整形医院五官精雕主任</p>
+						<p class="fontC">{{orderInfo.doctorTitle}}</p>
 					</div>
-					<p>多功能细胞与字体脂肪移植课题研究组成员中华医学学会于学美容协会</p>
+					<p>{{orderInfo.doctorBrief}}</p>
 				</div>
 			</div>
 			<div class="doctorBottom">
 				<div>
 					<p>预约时间</p>
-					<p>11月10日 14：00</p>
+					<p>{{orderInfo.date}} {{orderInfo.period}}</p>
 				</div>
 				<div>
 					<p>预约门店</p>
-					<p>北京市朝阳区门店</p>
+					<p>{{orderInfo.hospName}}</p>
 				</div>
 				<div>
 					<p>预约项目</p>
-					<p>打水光针</p>
+					<p>{{orderInfo.prjName}}</p>
 				</div>
 			</div>
 		</div>
@@ -50,9 +50,7 @@
 			</div>
 		</div>
 		<div class="white">
-			<div>
-				治疗结果，文字图片视频
-			</div>
+			<div v-html="orderInfo.process"></div>
 		</div>
 		<div class="diary">
 			<div class="diaryLeft">
@@ -61,9 +59,7 @@
 			</div>
 		</div>
 		<div class="white">
-			<div>
-				治疗结果，文字图片视频
-			</div>
+			<div v-html="orderInfo.outcome"></div>
 		</div>
 		<div class="diary">
 			<div class="diaryLeft">
@@ -72,9 +68,7 @@
 			</div>
 		</div>
 		<div class="white">
-			<div>
-				治疗结果，文字图片视频
-			</div>
+			<div v-html="orderInfo.postInfo"></div>
 		</div>
 		<div class="diary">
 			<div class="diaryLeft">
@@ -83,16 +77,14 @@
 			</div>
 		</div>
 		<div class="white">
-			<div>
-				治疗结果，文字图片视频
-			</div>
+			<div v-html="orderInfo.postNotes"></div>
 		</div>
 		<div class="tiShiInfo">
 			注：分享成功可获得积分奖励哦！
 		</div>
 		<div class="QRCode">
 			<div>
-				<img src="@/assets/images/icon/newQRcode.png"/>
+				<img :src="orderInfo.barcode"/>
 			</div>
 			<p>北京塑研医疗美容诊所</p>
 		</div>
@@ -101,7 +93,8 @@
 		</div>
 		<div style="height: 5rem;"></div>
 		<div class="botton">
-			<button>分享订单</button>
+			<button >分享订单</button>
+			<!-- 分享后进入的页面 -->
 		</div>
 		<!-- 分享订单 -->
 <!-- 		<Tan-Chuang>
@@ -114,15 +107,21 @@
 			</div>
 		</Tan-Chuang> -->
 		<!-- 分享订单 END-->
+		<!-- 待修改 分享订单后出现弹窗 -->
 	</div>
 </template>
 
 <script>
+import Vue from 'vue';
+import { Toast, Dialog } from 'we-vue';
+import * as api from '@/assets/js/api';
+import * as session from '@/assets/js/session';
 import TanChuang from '@/components/tanChuang';
 export default {
 	data() {
 		return {
-			doctorImgNull: this.$store.state.doctorImgNull
+			ImgNull: this.$store.state.ImgNull,
+			orderInfo: ''
 		};
 	},
 	components: {
@@ -131,6 +130,23 @@ export default {
 	created: function() {
 		this.$store.commit('showBottomNav', {
 			isShow: false
+		});
+		api.getVipPrjtOrderDetail({
+			data: {
+				openid: this.$store.state.uid,
+				orderid: session.Lstorage.getItem('seeId')
+			}
+		}).then(res => {
+			console.log(res);
+			if (res.data.flag) {
+				console.log('我的预约订单详情', res.data);
+				this.orderInfo = res.data.order;
+			} else {
+				Toast.text({
+					duration: 1000,
+					message: res.data.msg
+				});
+			}
 		});
 	}
 };

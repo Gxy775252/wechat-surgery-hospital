@@ -96,7 +96,7 @@ export default {
 		});
 		api.getVipOrderList({
 			data: {
-				openid: this.globalData.openid,
+				openid: this.$store.state.uid,
 				vipid:1
 			}
 		}).then(res => {

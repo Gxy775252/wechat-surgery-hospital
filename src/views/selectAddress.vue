@@ -38,7 +38,7 @@ export default {
 		});
 		api.getVipAddressList({
 			data: {
-				openid: this.globalData.openid
+				openid: this.$store.state.uid
 			}
 		}).then(res => {
 			if (res.data.flag) {
@@ -58,7 +58,7 @@ export default {
 			console.log(res);
 			api.setVipAddressid({
 				data: {
-					openid: this.globalData.openid,
+					openid: this.$store.state.uid,
 					addressid: res
 				}
 			}).then(res => {
@@ -92,7 +92,7 @@ export default {
 				.then(() => {
 					api.deleteVipAddressid({
 						data: {
-							openid: this.globalData.openid,
+							openid: this.$store.state.uid,
 							addressid: res
 						}
 					}).then(res => {

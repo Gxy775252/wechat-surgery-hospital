@@ -71,7 +71,7 @@ export default {
 		});
 		api.getDoctorList({
 			data: {
-				openid: this.globalData.openid
+				openid: this.$store.state.uid
 			}
 		}).then(res => {
 			if (res.data.flag) {

@@ -3,7 +3,6 @@ const constants = require('./constants')
 
 // const API_ROOT = constants.requestUrl.substr(0, constants.requestUrl.length - 1)
 const API_ROOT = 'http://tcjh.suitang1973.com'
-// console.log(API_ROOT, '--------API_ROOT')
 
 import {
 	_apiPOST,
@@ -121,6 +120,27 @@ export const deleteFromCart = (options) => _apiPOST(`${API_ROOT}/wx/deleteFromCa
 // 预约首页
 export const goAppointment = (options) => _apiPOST(`${API_ROOT}/wx/goAppointment`, options)
 
+// 获取医院的项目列表
+export const getHospitalProjectList = (options) => _apiPOST(`${API_ROOT}/wx/getHospitalProjectList`, options)
+
+// 获取项目的可选医生列表
+export const getProjectDoctorList = (options) => _apiPOST(`${API_ROOT}/wx/getProjectDoctorList`, options)
+
+// 获取项目详情
+export const getProjectDetail = (options) => _apiPOST(`${API_ROOT}/wx/getProjectDetail`, options)
+
+// 模板消息-预约详情页
+export const goModelOrderDetail = (options) => _apiPOST(`${API_ROOT}/wx/goModelOrderDetail`, options)
+
+// 模板消息-满意度调查页
+export const goModelSurvey = (options) => _apiPOST(`${API_ROOT}/wx/goModelSurvey`, options)
+
+// 提交满意度调查
+export const submitSurvey = (options) => _apiPOST(`${API_ROOT}/wx/submitSurvey`, options)
+
+//  提交预约
+export const submitProjectOrder = (options) => _apiPOST(`${API_ROOT}/wx/submitProjectOrder`, options)
+
 /**预约相关 -------------------------------------------- END**/
 
 
@@ -168,11 +188,29 @@ export const submitSkininfo = (options) => _apiPOST(`${API_ROOT}/wx/submitSkinin
 //获取我的日记列表
 export const getVipDiaryList = (options) => _apiPOST(`${API_ROOT}/wx/getVipDiaryList`, options)
 
+//获取我的日记详情
+export const getVipDiaryDetail = (options) => _apiPOST(`${API_ROOT}/wx/getVipDiaryDetail`, options)
+
+//获取我的日记详情
+export const saveDiary = (options) => _apiPOST(`${API_ROOT}/wx/saveDiary`, options)
+
 //重置密码
 export const getResetGiftPwd = (options) => _apiPOST(`${API_ROOT}/wx/resetGiftPwd`, options)
 
-// 获取我的预约订单信息
+//  我的预约单列表
 export const getVipGoodsOrderList = (options) => _apiPOST(`${API_ROOT}/wx/getVipGoodsOrderList`, options)
+
+//  取消预约单
+export const cancelPrjtOrder = (options) => _apiPOST(`${API_ROOT}/wx/cancelPrjtOrder`, options)
+
+//  取消预约单
+export const getVipPrjtOrderDetail = (options) => _apiPOST(`${API_ROOT}/wx/getVipPrjtOrderDetail`, options)
+
+//  取消商城单
+export const cancelGoodsOrder = (options) => _apiPOST(`${API_ROOT}/wx/cancelGoodsOrder`, options)
+
+//  申请退货退款页面
+export const refundOrder = (options) => _apiPOST(`${API_ROOT}/wx/refundOrder`, options)
 
 // 获取拉新二维码信息
 export const getVipShare = (options) => _apiPOST(`${API_ROOT}/wx/goVipShare`, options)

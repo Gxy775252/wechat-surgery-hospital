@@ -1,3 +1,4 @@
+<!-- 美丽日记 -->
 <template>
 	<div class="all">
 		<div class="diaryList">
@@ -58,21 +59,24 @@
 					<wv-textarea placeholder="请输入文本" :rows="4"></wv-textarea>
 				</div>
 			</div>
-			<form class="form form-horizontal" ref="form"  method="post" enctype="multipart/form-data">
-				<input hidden name="uploadName" :value="uploadName">
-			</form>
+			
 			<div class="img">
 				<div class="checkbox-title" style="padding-bottom: calc(3.2rem / 2);">上传照片或者视频（最多5张）</div>
 				<div class="imgA" >
 					<div class="imgA-An" >
 						<img src="../assets/images/icon/upload.png" />
-	<input type="file" style="1px solid red;" name="uploadFile3" @change="changeUpload1('uploadFile3','idImg3')" accept="image/*" />
+						
+						<form class="form form-horizontal" ref="form"  method="post" enctype="multipart/form-data">
+							<input type="file" style="1px solid red;" name="uploadFile3" @change="changeUpload1('uploadFile3')" accept="image/*" />
+							<input hidden name="uploadName" :value="uploadName">
+						</form>
+	
 
 					</div>
 					<div style="clear: both;"></div>
 				</div>
 			</div>
-			<div style="height: 3rem;"></div>
+			<div style="height: 6rem;"></div>
 		</div>
 		<div class="buttonA" @click="submit">
 			<button>提交</button>
@@ -89,6 +93,7 @@ import { Textarea, Toast, Picker } from 'we-vue';
 Vue.use(Textarea).use(Picker);
 import axios from 'axios';
 export default {
+	name: 'mineDiary',
 	data() {
 		return {
 			doctorImgNull: this.$store.state.doctorImgNull,
@@ -131,7 +136,7 @@ export default {
 		});
 		api.goVipSkinInfo({
 			data: {
-				openid: this.globalData.openid
+				openid: this.$store.state.uid
 			}
 		}).then(res => {
 			if (res.data.flag) {
@@ -151,9 +156,6 @@ export default {
 	},
 	methods: {
 		changeUpload1: function(_uploadName, _idImg) {
-			//
-			// 				idImg = _idImg;
-
 			console.log(_uploadName, '2121---');
 			this.uploadName = _uploadName;
 
@@ -163,47 +165,41 @@ export default {
 				var formData = new FormData(that.$refs.form);
 				that.Up(formData);
 			}, 1000);
-
+			//
 			console.log(this.uploadName, '211212121');
 		},
 
 		Up: function(data) {
-			console.log(data, '231efvds');
-			// 			let config = {
-			// 			headers: { "Content-Type": "multipart/form-data" },
-			// 			};
-			const insta = axios.create({
-				withCredentials: true
+			api.uploadPic({
+				data: data
+			}).then(res => {
+				console.log(res, '调成功啦');
 			});
-			insta
-				.post('http://tcjh.suitang1973.com/wx/uploadPic', data)
-				.then(res => {
-					console.log(res.data);
-				})
-				.catch(function(error) {
-					console.log(error);
-				});
-			// 						axios({
-			// 							method: 'post',
-			// 							url: ' http://tcjh.suitang1973.com/wx/uploadPic',
-			// 							data: data
-			// 						})
-			// 							.then(function(response) {
-			// 								console.log(response);
-			// 							})
-			// 							.catch(function(error) {
-			// 								console.log(error);
-			// 							});
-			// 			api.uploadPic({
-			// 				data: data
-			// 			}).then(res => {
-			// 				console.log(res, '调成功啦');
-			// 			});
 		},
 
 		// 提交内容
 		submit: function() {
 			// 待修改  提交内容  submitSkininfo 接口地址
+			// 			api.getDoctorCase({
+			// 				data: {
+			// 					openid: this.$store.state.uid,
+			// 					skinType:,
+			// 					faceLifted:,
+			// 					projects:,
+			// 					memo:,
+			// 					resourceList:,
+			// 				}
+			// 			}).then(res => {
+			// 				if (res.data.flag) {
+			// 					console.log('医生案例列表请求数据', res.data);
+			// 					// 待修改成功之后跳转
+			// 				} else {
+			// 					Toast.text({
+			// 						duration: 1000,
+			// 						message: res.data.msg
+			// 					});
+			// 				}
+			// 			});
 			this.$router.push({
 				name: 'mineDiaryList'
 			});

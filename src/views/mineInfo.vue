@@ -159,7 +159,7 @@ export default {
 		});
 		api.getVipDetail({
 			data: {
-				openid: this.globalData.openid
+				openid: this.$store.state.uid
 			}
 		}).then(res => {
 			res.data.vip.birthdate = res.data.vip.birthdate.split(' ')[0];
@@ -230,7 +230,7 @@ export default {
 			}
 			api.saveVipInfo({
 				data: {
-					openid: this.globalData.openid,
+					openid: this.$store.state.uid,
 					gender: gender,
 					birthdate: this.$refs.birthday.innerText,
 					address: this.$refs.address.innerText,

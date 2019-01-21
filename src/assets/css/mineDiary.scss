@@ -1,3 +1,6 @@
+.all {
+	background: #fff !important;
+}
 .diaryList {
 	width: 100%;
 	height: calc(6.46rem / 2);
@@ -37,13 +40,13 @@
 					height: 100%;
 				}
 			}
-			>input{
+			> input {
 				position: absolute;
-				right:calc(6rem / 2);
-				height:100%;
-				width:80%;
+				right: calc(6rem / 2);
+				height: 100%;
+				width: 80%;
 				text-align: right;
-				font-size:calc(1.73rem/2);
+				font-size: calc(1.73rem / 2);
 			}
 		}
 		.select {
@@ -128,24 +131,24 @@
 		}
 	}
 }
-.buttonA{
+.buttonA {
 	width: 100%;
-	height:calc(6.26rem/2);
+	height: calc(6.26rem / 2);
 	position: fixed;
-	bottom:0;
-	left:0;
-	>button{
+	bottom: 0;
+	left: 0;
+	> button {
 		width: 100%;
 		height: 100%;
-		font-size:calc(1.8rem/2);
-		background:#008e83;
-		color:#fff;
+		font-size: calc(1.8rem / 2);
+		background: #008e83;
+		color: #fff;
 	}
 }
-input::-webkit-input-placeholder{
-	font-size:calc(1.73rem/2);
-	color:#ccc;
+input::-webkit-input-placeholder {
+	font-size: calc(1.73rem / 2);
+	color: #ccc;
 }
-.listConA{
-	color:#333 !important; 
+.listConA {
+	color: #333 !important;
 }

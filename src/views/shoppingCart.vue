@@ -122,7 +122,7 @@ export default {
 		});
 		api.getMyCart({
 			data: {
-				openid: this.globalData.openid
+				openid: this.$store.state.uid
 			}
 		}).then(res => {
 			if (res.data.flag) {
@@ -160,7 +160,7 @@ export default {
 			// 待修改 立即修改
 			// 				api.submitGoodsOrder({
 			// 					data: {
-			// 						openid: this.globalData.openid,
+			// 						openid: this.$store.state.uid,
 			// 						fromCart: 1,
 			// 						goodsid: '',
 			// 						sizeid: '',
@@ -180,7 +180,7 @@ export default {
 			// submitConfirmOrder  提交订单  （商品详情应该也要记得加上）
 			// 				api.submitGoodsOrder({
 			// 					data: {
-			// 						openid: this.globalData.openid,
+			// 						openid: this.$store.state.uid,
 			// 						fromCart: 1,
 			// 						goodsid: '',
 			// 						sizeid: '',
@@ -209,7 +209,7 @@ export default {
 					// 待修改 删除内容
 					// 						api.deleteFromCart({
 					// 							data: {
-					// 								openid: this.globalData.openid,
+					// 								openid: this.$store.state.uid,
 					// 								goodsid: '',
 					// 								sizeid: '',
 					// 							}
@@ -260,7 +260,7 @@ export default {
 					.then(() => {
 						api.deleteFromCart({
 							data: {
-								openid: this.globalData.openid,
+								openid: this.$store.state.uid,
 								goodsid: '',
 								sizeid: ''
 							}
@@ -282,7 +282,7 @@ export default {
 			// 待修改  修改sku数量不知道怎么弄
 			// api.changeCartCount({
 			// 					data: {
-			// 						openid: this.globalData.openid,
+			// 						openid: this.$store.state.uid,
 			// 						goodsid: '',
 			// 						sizeid: '',
 			// 						count:'',
@@ -304,7 +304,7 @@ export default {
 			// 待修改  修改sku数量不知道怎么弄
 			// 				api.changeCartCount({
 			// 					data: {
-			// 						openid: this.globalData.openid,
+			// 						openid: this.$store.state.uid,
 			// 						goodsid: '',
 			// 						sizeid: '',
 			// 						count:'',

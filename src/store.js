@@ -9,7 +9,7 @@ export default new Vuex.Store({
 		showBottomNav: true,
 		ImgNull: require('@/assets/images/icon/cartNull.png'),
 		doctorImgNull: require('@/assets/images/example/doctor.png'),
-		uid: null || 'test',
+		uid: null,
 		wechatInfo: null,
 		toPath: null
 	},

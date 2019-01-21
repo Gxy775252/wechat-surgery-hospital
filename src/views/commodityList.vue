@@ -2,47 +2,45 @@
 <template>
 	<div>
 		<div class="navList">
-			<p @click="select_P(0)" :class="selectId==0?'selection':''">全部</p>
-			<p v-for="item in listClassifyInfo" :key="item.id" :class="item.id==selectId?'selection':''" @click="select_P(item.id)">{{item.name}}</p>
+			<p @click="select_P(0)" :class="selectId == 0 ? 'selection' : ''">全部</p>
+			<p
+				v-for="item in listClassifyInfo"
+				:key="item.id"
+				:class="item.id == selectId ? 'selection' : ''"
+				@click="select_P(item.id)"
+			>
+				{{ item.name }}
+			</p>
 			<p style="width: 0.5px;"></p>
 		</div>
 		<div class="orderBy">
 			<div @click="clickByPrice()">
-				<p>价格排序</p>
-				<img src="@/assets/images/icon/arrowUp.png" v-show="ascByPrice==1" />
-				<img src="@/assets/images/icon/arrowDown.png" v-show="ascByPrice==-1" />
-
+				<p :class="ascBy ? 'colorABC' : ''">价格排序</p>
+				<img src="@/assets/images/icon/arrowUp.png" v-show="ascByPrice == 0" />
+				<img src="@/assets/images/icon/arrowDown.png" v-show="ascByPrice == 1" />
 			</div>
 			<div @click="clickBySales()">
-				<p>销量排序</p>
-				<img src="@/assets/images/icon/arrowUp.png" v-show="ascBySales==1" />
-				<img src="@/assets/images/icon/arrowDown.png" v-show="ascBySales==-1" />
+				<p :class="!ascBy ? 'colorABC' : ''">销量排序</p>
+				<img src="@/assets/images/icon/arrowUp.png" v-show="ascBySales == 0" />
+				<img src="@/assets/images/icon/arrowDown.png" v-show="ascBySales == 1" />
 			</div>
-			<div class="lastDiv">
-				<img src="@/assets/images/icon/search.png" />
-			</div>
+			<div class="lastDiv"><img src="@/assets/images/icon/search.png" /></div>
 		</div>
 		<div class="AllList">
 			<div class="listDiv" v-for="item in listGoodsInfo" :key="item.id">
-				<div class="listImg">
-					<img src="@/assets/images/example/doctor.png" />
-				</div>
+				<div class="listImg"><img src="@/assets/images/example/doctor.png" /></div>
 				<div class="listText">
-					<p @click="goCommodityDetail(item.id)">{{item.name}}</p>
-					<p @click="goCommodityDetail(item.id)">{{item.brief}}</p>
+					<p @click="goCommodityDetail(item.id)">{{ item.name }}</p>
+					<p @click="goCommodityDetail(item.id)">{{ item.brief }}</p>
 					<div class="ListPrice">
-						<p @click="goCommodityDetail(item.id)">￥ {{item.price}}</p>
-						<div>
-							<img src="@/assets/images/icon/joinCart.png" />
-						</div>
+						<p @click="goCommodityDetail(item.id)">￥ {{ item.price }}</p>
+						<div><img src="@/assets/images/icon/joinCart.png" /></div>
 					</div>
 				</div>
 			</div>
 			<div style="clear:both;"></div>
 		</div>
-		<div class="cart" @click="goCart">
-			<img src="@/assets/images/icon/cart.png" />
-		</div>
+		<div class="cart" @click="goCart"><img src="@/assets/images/icon/cart.png" /></div>
 	</div>
 </template>
 
@@ -51,12 +49,13 @@ import * as api from '@/assets/js/api';
 import * as session from '@/assets/js/session';
 import { Toast } from 'we-vue';
 export default {
-	name:'commodityList',
+	name: 'commodityList',
 	data() {
 		return {
 			selectId: 0, //分类选中 0=全部
-			ascByPrice: 1, //1=价格升序
-			ascBySales: 1, //销量升序
+			ascByPrice: 0, //1=价格升序
+			ascBySales: 0, //销量升序
+			ascBy: true, //x选中那个
 			listClassifyInfo: '', //分类
 			listGoodsInfo: '' //商品列表
 		};
@@ -68,10 +67,9 @@ export default {
 		this.selectId = session.Lstorage.getItem('shopId') || 0;
 		api.getCommodityList({
 			data: {
-				openid: this.globalData.openid,
+				openid: this.$store.state.uid,
 				classifyid: this.selectId, //0，表示全部
-				ascByPrice: this.ascByPrice, //价格排序
-				ascBySales: this.ascBySales //销量排序
+				desc: this.ascByPrice //价格排序
 			}
 		}).then(res => {
 			if (res.data.flag) {
@@ -90,14 +88,22 @@ export default {
 		select_P: function(res) {
 			// 跳转商品列表并将当前点击的分类id传入
 			this.selectId = res;
-			console.log(this.selectId);
+			let data = {};
+			if (this.ascBy) {
+				data = {
+					openid: this.$store.state.uid,
+					classifyid: this.selectId, //0，表示全部
+					desc: this.ascByPrice //价格排序
+				};
+			} else {
+				data = {
+					openid: this.$store.state.uid,
+					classifyid: this.selectId, //0，表示全部
+					sortBySales: this.ascBySales //销量排序
+				};
+			}
 			api.getCommodityDetail({
-				data: {
-					openid: this.globalData.openid,
-					classifyid: res, //0，表示全部
-					ascByPrice: this.ascByPrice, //价格排序
-					ascBySales: this.ascBySales //销量排序
-				}
+				data: data
 			}).then(res => {
 				if (res.data.flag) {
 					console.log('商城首页内容', res.data);
@@ -113,19 +119,28 @@ export default {
 		},
 		clickByPrice: function() {
 			// 价格筛选功能
-			console.log(this.ascByPrice);
+			this.ascBy = true;
 			if (this.ascByPrice == 1) {
-				this.ascByPrice = -1;
-			} else if (this.ascByPrice == -1) {
+				this.ascByPrice = 0;
+			} else if (this.ascByPrice == 0) {
 				this.ascByPrice = 1;
 			}
-			api.getCommodityList({
-				data: {
-					openid: this.globalData.openid,
+			let data = {};
+			if (this.ascBy) {
+				data = {
+					openid: this.$store.state.uid,
 					classifyid: this.selectId, //0，表示全部
-					ascByPrice: this.ascByPrice, //价格排序
-					ascBySales: this.ascBySales //销量排序
-				}
+					desc: this.ascByPrice //价格排序
+				};
+			} else {
+				data = {
+					openid: this.$store.state.uid,
+					classifyid: this.selectId, //0，表示全部
+					sortBySales: this.ascBySales //销量排序
+				};
+			}
+			api.getCommodityList({
+				data: data
 			}).then(res => {
 				if (res.data.flag) {
 					console.log('商城首页内容', res.data);
@@ -141,19 +156,28 @@ export default {
 		},
 		clickBySales: function() {
 			// 销量筛选功能
-			console.log(this.ascBySales);
+			this.ascBy = false;
 			if (this.ascBySales == 1) {
 				this.ascBySales = -1;
 			} else if (this.ascBySales == -1) {
 				this.ascBySales = 1;
 			}
-			api.getCommodityDetail({
-				data: {
-					openid: this.globalData.openid,
+			let data = {};
+			if (this.ascBy) {
+				data = {
+					openid: this.$store.state.uid,
 					classifyid: this.selectId, //0，表示全部
-					ascByPrice: this.ascByPrice, //价格排序
-					ascBySales: this.ascBySales //销量排序
-				}
+					desc: this.ascByPrice //价格排序
+				};
+			} else {
+				data = {
+					openid: this.$store.state.uid,
+					classifyid: this.selectId, //0，表示全部
+					sortBySales: this.ascBySales //销量排序
+				};
+			}
+			api.getCommodityDetail({
+				data: data
 			}).then(res => {
 				if (res.data.flag) {
 					console.log('商城首页内容', res.data);

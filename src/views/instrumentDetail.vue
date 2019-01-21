@@ -33,7 +33,9 @@
           <i></i>
           <p>{{item.name}}</p>
         </div>
-        <p>{{item.brief}}</p>
+		<div class="dortor_resume_list_title2">
+			<p>{{item.brief}}</p>
+		</div>
       </div>
     </div>
     <div class="dortor_title">
@@ -77,7 +79,7 @@ export default {
 		});
 		api.goInstDetail({
 			data: {
-				openid: this.globalData.openid,
+				openid: this.$store.state.uid,
 				id: session.Lstorage.getItem('instr')
 			}
 		}).then(res => {

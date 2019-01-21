@@ -89,7 +89,7 @@ export default {
 		});
 		api.goVipScore({
 			data: {
-				openid: this.globalData.openid
+				openid: this.$store.state.uid
 			}
 		}).then(res => {
 			if (res.data.flag) {
@@ -119,7 +119,7 @@ export default {
 			// 待修改 生成积分赠送记录接口 和 使赠送记录生效 接口 不清楚
 // 			api.genScoreGift({
 // 				data: {
-// 					openid: this.globalData.openid,
+// 					openid: this.$store.state.uid,
 // 					password: 123,
 // 					score: this.$refs.inputA.value
 // 				}
@@ -132,7 +132,7 @@ export default {
 // 					});
 // 					api.getVipScoreBal({
 // 						data: {
-// 							openid: this.globalData.openid
+// 							openid: this.$store.state.uid
 // 						}
 // 					}).then(res => {
 // 						if (res.data.flag) {

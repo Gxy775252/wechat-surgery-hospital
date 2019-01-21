@@ -9,6 +9,15 @@ export default new Router({
 	routes: [
 		/**首页相关**/
 		{
+			path: '/register',
+			name: 'register',
+			component: () => import('./views/Register.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '注册'
+				next()
+			}
+		},
+		{
 			path: '/',
 			name: 'index',
 			component: () => import('./views/Index.vue'),
@@ -198,6 +207,24 @@ export default new Router({
 				next()
 			}
 		},
+		{
+			path: '/successReserve',
+			name: 'successReserve',
+			component: () => import('./views/successReserve.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '预订成功'
+				next()
+			}
+		},
+		{
+			path: '/investigation',
+			name: 'investigation',
+			component: () => import('./views/investigation.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '满意度调查'
+				next()
+			}
+		},
 		/**预约相关 END**/
 
 		/**个人中心**/
@@ -282,6 +309,117 @@ export default new Router({
 				next()
 			}
 		},
+		{
+			path: '/setupPW',
+			name: 'setupPW',
+			component: () => import('./views/setupPW.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '积分赠送密码'
+				next()
+			}
+		},
+		{
+			path: '/setPayPw',
+			name: 'setPayPw',
+			component: () => import('./views/setPayPw.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '积分赠送密码'
+				next()
+			}
+		},
+		{
+			path: '/mineReservationOrder',
+			name: 'mineReservationOrder',
+			component: () => import('./views/mineReservationOrder.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '我的预约订单'
+				next()
+			}
+		},
+		{
+			path: '/mineReserveSuccess',
+			name: 'mineReserveSuccess',
+			component: () => import('./views/mineReserveSuccess.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '我的预约订单'
+				next()
+			}
+		},
+		{
+			path: '/mineReserveCheck',
+			name: 'mineReserveCheck',
+			component: () => import('./views/mineReserveCheck.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '我的预约订单'
+				next()
+			}
+		},
+		{
+			path: '/mineOrder',
+			name: 'mineOrder',
+			component: () => import('./views/mineOrder.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '我的商城订单'
+				next()
+			}
+		},
+		{
+			path: '/returnGoodsChoice',
+			name: 'returnGoodsChoice',
+			component: () => import('./views/returnGoodsChoice.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '我的商城订单'
+				next()
+			}
+		},
+		{
+			path: '/returnGoodsApply',
+			name: 'returnGoodsApply',
+			component: () => import('./views/returnGoodsApply.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '退货申请'
+				next()
+			}
+		},
+
+		{
+			path: '/mineExamine',
+			name: 'mineExamine',
+			component: () => import('./views/mineExamine.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '我的商城订单'
+				next()
+			}
+		},
+		{
+			path: '/minePaymentOrder',
+			name: 'minePaymentOrder',
+			component: () => import('./views/minePaymentOrder.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '我的商城订单'
+				next()
+			}
+		},
+		{
+			path: '/mineViewLogistics',
+			name: 'mineViewLogistics',
+			component: () => import('./views/mineViewLogistics.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '我的商城订单'
+				next()
+			}
+		},
+
+		{
+			path: '/commodityEvaluation',
+			name: 'commodityEvaluation',
+			component: () => import('./views/commodityEvaluation.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '我的商城订单'
+				next()
+			}
+		},
+
 		{
 			path: '/mineDiary',
 			name: 'mineDiary',
@@ -394,140 +532,5 @@ export default new Router({
 			}
 		},
 		/**驻场医生内容 END**/
-
-
-
-
-
-
-		{
-			path: '/mineOrder',
-			name: 'mineOrder',
-			component: () => import('./views/mineOrder.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '我的商城订单'
-				next()
-			}
-		},
-		{
-			path: '/mineExamine',
-			name: 'mineExamine',
-			component: () => import('./views/mineExamine.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '我的商城订单'
-				next()
-			}
-		},
-		{
-			path: '/setupPW',
-			name: 'setupPW',
-			component: () => import('./views/setupPW.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '积分赠送密码'
-				next()
-			}
-		},
-
-
-		{
-			path: '/mineReservationOrder',
-			name: 'mineReservationOrder',
-			component: () => import('./views/mineReservationOrder.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '我的预约订单'
-				next()
-			}
-		},
-		{
-			path: '/mineReserveSuccess',
-			name: 'mineReserveSuccess',
-			component: () => import('./views/mineReserveSuccess.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '我的预约订单'
-				next()
-			}
-		},
-		{
-			path: '/mineReserveCheck',
-			name: 'mineReserveCheck',
-			component: () => import('./views/mineReserveCheck.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '我的预约订单'
-				next()
-			}
-		},
-
-		{
-			path: '/minePaymentOrder',
-			name: 'minePaymentOrder',
-			component: () => import('./views/minePaymentOrder.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '我的商城订单'
-				next()
-			}
-		},
-		{
-			path: '/mineViewLogistics',
-			name: 'mineViewLogistics',
-			component: () => import('./views/mineViewLogistics.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '我的商城订单'
-				next()
-			}
-		},
-		{
-			path: '/returnGoodsChoice',
-			name: 'returnGoodsChoice',
-			component: () => import('./views/returnGoodsChoice.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '我的商城订单'
-				next()
-			}
-		},
-		{
-			path: '/commodityEvaluation',
-			name: 'commodityEvaluation',
-			component: () => import('./views/commodityEvaluation.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '我的商城订单'
-				next()
-			}
-		},
-		{
-			path: '/returnGoodsApply',
-			name: 'returnGoodsApply',
-			component: () => import('./views/returnGoodsApply.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '退货申请'
-				next()
-			}
-		},
-		{
-			path: '/register',
-			name: 'register',
-			component: () => import('./views/Register.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '注册'
-				next()
-			}
-		},
-		{
-			path: '/successReserve',
-			name: 'successReserve',
-			component: () => import('./views/successReserve.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '预订成功'
-				next()
-			}
-		},
-		{
-			path: '/investigation',
-			name: 'investigation',
-			component: () => import('./views/investigation.vue'),
-			beforeEnter: (to, from, next) => {
-				document.title = '满意度调查'
-				next()
-			}
-		},
 	]
 })

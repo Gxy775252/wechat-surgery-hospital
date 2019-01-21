@@ -12,23 +12,25 @@
 					<img :src="item.headimg || ImgNull" />
 				</div>
 				<div>
-					<p>{{item.title}}</p>
+					<p>{{item.vipName}}</p>
 					<p>{{item.date10}}</p>
 				</div>
 			</div>
 			<div class="caseCen">
-				<img :src="ImgNull" />
-				<!-- 待修改 需要修改成内容图片 -->
+				<img :src="item.listCover[0].cover || ImgNull" />
+				<div v-if="item.listCover[0].isVideo == 1" class="playImg">
+					<img src="@/assets/images/icon/playImg.png" />
+				</div>
 			</div>
 			<div class="mationCon">
 				<!-- 待修改 缺少项目名称和天数 -->
-				<p><span>[医美整形-ST全脸字体脂肪填充-第99天]</span>{{item.brief}}</p>
+				<p><span>[{{item.title}}]</span>{{item.brief}}</p>
 			</div>
 			<div class="xian"></div>
 			<div class="mationBottom">
 				<p>
 					<!-- 缺少浏览量 -->
-					1000人来过
+					{{item.browCount || 0}}人来过
 				</p>
 			</div>
 		</div>
@@ -54,7 +56,7 @@ export default {
 		});
 		api.getDoctorCase({
 			data: {
-				openid: this.globalData.openid,
+				openid: this.$store.state.uid,
 				doctorid: session.Lstorage.getItem('caseId'), //医生id,
 				projectid: 0 //项目id 0=全部,
 			}
@@ -78,7 +80,7 @@ export default {
 			this.proId = res;
 			api.getDoctorCase({
 				data: {
-					openid: this.globalData.openid,
+					openid: this.$store.state.uid,
 					doctorid: session.Lstorage.getItem('caseId'), //医生id,
 					projectid: res,
 				}

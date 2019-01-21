@@ -58,7 +58,7 @@ export default {
 		});
 		api.getQaList({
 			data: {
-				openid: this.globalData.openid
+				openid: this.$store.state.uid
 			}
 		}).then(res => {
 			if (res.data.flag) {
@@ -77,7 +77,7 @@ export default {
 		});
 		api.getQaDetail({
 			data: {
-				openid: this.globalData.openid,
+				openid: this.$store.state.uid,
 				id: session.Lstorage.getItem('selectId')
 			}
 		}).then(res => {
@@ -102,7 +102,7 @@ export default {
 			this.listConA = 'listConA';
 			api.getQaDetail({
 				data: {
-					openid: this.globalData.openid,
+					openid: this.$store.state.uid,
 					id: session.Lstorage.getItem('selectId')
 				}
 			}).then(res => {

@@ -112,37 +112,35 @@
 	</div>
 </template>
 <script>
-	import {
-		Toast
-	} from 'we-vue';
-	import * as api from '@/assets/js/api';
+import { Toast } from 'we-vue';
+import * as api from '@/assets/js/api';
 export default {
 	data() {
 		return {
-			id:'',
-			vipinfo:'',
-			listYearinfo:'',
-			listDiaryinfo:''
+			id: '',
+			vipinfo: '',
+			listYearinfo: '',
+			listDiaryinfo: ''
 		};
 	},
 	created: function() {
 		var id = this.$route.params.id;
-		this.id = id
-		console.log('id',id)
+		this.id = id;
+		console.log('id', id);
 		this.$store.commit('showBottomNav', {
 			isShow: false
 		});
 		api.goDoctorVipDiaryList({
 			data: {
-				openid: this.globalData.openid,
-				id:1
+				openid: this.$store.state.uid,
+				id: 1
 			}
 		}).then(res => {
 			if (res.data.flag) {
 				console.log('医生用户美丽日记', res.data);
-				this.vipinfo = res.data.vip
-				this.listYearinfo = res.data.listYear
-				this.listDiaryinfo = res.data.listDiary
+				this.vipinfo = res.data.vip;
+				this.listYearinfo = res.data.listYear;
+				this.listDiaryinfo = res.data.listDiary;
 			} else {
 				Toast.text({
 					duration: 1000,
@@ -151,18 +149,18 @@ export default {
 			}
 		});
 	},
-	methods:{
-		goUpdayend:function(res){
-			this.$router.push({ name: 'stationingUpload', params: { id:this.id }});
+	methods: {
+		goUpdayend: function(res) {
+			this.$router.push({ name: 'stationingUpload', params: { id: this.id } });
 		},
-		godetails:function (){
-			this.$router.push({ name: 'stationingBeautyDiaryDetail'});
+		godetails: function() {
+			this.$router.push({ name: 'stationingBeautyDiaryDetail' });
 		},
-		onDelete:function(){
+		onDelete: function() {
 			api.delVipDiary({
 				data: {
-					openid: this.globalData.openid,
-					id:1
+					openid: this.$store.state.uid,
+					id: 1
 				}
 			}).then(res => {
 				if (res.data.flag) {
@@ -175,7 +173,6 @@ export default {
 				}
 			});
 		}
-		
 	}
 };
 </script>
