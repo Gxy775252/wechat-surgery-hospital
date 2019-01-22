@@ -13,7 +13,8 @@
 			<div>
 				<wv-swipe :autoplay="4000" class="swiperImg">
 					<wv-swipe-item v-for="(item, key, index) in swipeContent" :key="key">
-						<img :src="item.cover || ImgNull" class="imgA" />
+						<!-- <img :src="item.cover || ImgNull" class="imgA" /> 待修改-->
+						 <img src="@/assets/images/example/listImgOne.png" class="imgA" />
 						<div v-if="item.isVideo==1" class="playImg">
 							<img src="@/assets/images/icon/playImg.png" />
 						</div>
@@ -23,7 +24,8 @@
 		</div>
 		<div class="doctor">
 			<div class="doctorImg">
-				<img :src="ImgNull" />
+				<!-- <img :src="ImgNull" /> 待修改-->
+				<img src="@/assets/images/example/doctor.png" />
 			</div>
 			<div class="doctorText">
 				<div class="centerText">
@@ -46,7 +48,8 @@
 				</div>
 			</div>
 			<div class="doctorImg">
-				<img :src="ImgNull" />
+				<!-- <img :src="ImgNull" 待修改/> -->
+				<img src="@/assets/images/example/yiqi.png" />
 			</div>
 		</div>
 		<div class="diary" style="width:100%;">

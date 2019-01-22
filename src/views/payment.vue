@@ -9,7 +9,7 @@
 <script>
 	import * as api from '@/assets/js/api';
 	import wx from 'weixin-js-sdk'
-	
+
 	import {
 		Toast
 	} from 'we-vue';
@@ -23,16 +23,17 @@
 			});
 		},
 		mounted: function(){
-			if (typeof WeixinJSBridge == "undefined") { // 判断是否在微信浏览器内
-			    if (document.addEventListener) {
-			        document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-			    } else if (document.attachEvent) {
-			        document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
-			        document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-			    }
-			} else {
+			console.log();
+			// if (typeof WeixinJSBridge == "undefined") { // 判断是否在微信浏览器内
+			//     if (document.addEventListener) {
+			//         document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+			//     } else if (document.attachEvent) {
+			//         document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+			//         document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+			//     }
+			// } else {
 				gotoPay()
-			}
+			// }
 			function gotoPay(){
 				api.getWechatPay({
 					data: {

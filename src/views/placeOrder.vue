@@ -178,6 +178,7 @@ export default {
         data: parmas
       }).then(res => {
         console.log(res, '-------res pay')
+        return;
         if (res.data.flag) {
           if (res.data.finished == 1) {
             // vip 支付
