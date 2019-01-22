@@ -1,125 +1,159 @@
 <!-- 商城订单列表 -->
 <template>
-	<div class="all">
-		<div class="navList">
-			<div>
-				<p>全部</p>
-				<p></p>
-			</div>
-		</div>
-		<div class="conList">
-			<div class="top">
-				<p>订单编号：24783647878</p>
-				<p>待支付</p>
-			</div>
-			<div class="center">
-				<div class="center-left">
-					<div class="leftImg">
-						<img src="../assets/images/example/tuFour.png" />
-					</div>
-					<div class="leftText">
-						<p>活力眼尖的</p>
-						<p>规格：200ml</p>
-					</div>
-				</div>
-				<div class="center-right">
-					<p>￥ 299</p>
-					<p>x1</p>
-				</div>
-			</div>
-			<div class="bottom">
-				<div class="bottom-left">
-					<p>已付金额：</p>
-					<p>￥299</p>
-				</div>
-				<div class="bottom-right">
-					<button class="color2" @click="returnGoods(item.id)">退货/退款</button>
-					<button class="color1" @click="cancel(item.id)">取消订单</button>
-					<button class="color2">去支付</button>
-				</div>
-			</div>
-		</div>
-	</div>
+<div class="all">
+  <div class="navList">
+    <div v-for='(item,key,index) in navList' :key='key' @click='clickNav(item.id)'>
+      <p :class="item.id==navId?'nav-p1':''">{{item.name}}</p>
+      <p :class="item.id==navId?'nav-p2':''"></p>
+    </div>
+  </div>
+  <div class="conList" v-for='(item,key,index) in listOrderInfo' :key='key'>
+    <div class="top">
+      <p>订单编号：{{item.orderno}}</p>
+      <p v-if='item.status==0'>待支付</p>
+      <p v-else-if='item.status==1'>已成交</p>
+      <p v-else-if='item.status==-1'>已申请退货</p>
+      <p v-else-if='item.status==-2'>已退货</p>
+      <p v-else-if='item.status==-3'>取消订单</p>
+    </div>
+    <div class="center" v-for='(item2,key,index) in item.listDetail' :key='key'>
+      <div class="center-left">
+        <div class="leftImg">
+          <img :src="item2.coverResource?item2.coverResource.cover:ImgNull" />
+        </div>
+        <div class="leftText">
+          <p>{{item2.goodsName}}</p>
+          <p>规格：{{item2.sizeName}}</p>
+        </div>
+      </div>
+      <div class="center-right">
+        <p>￥ {{item2.price}}</p>
+        <p>x{{item2.number}}</p>
+      </div>
+    </div>
+    <div class="bottom">
+      <div class="bottom-left">
+        <p>已付金额：</p>
+        <p>￥{{item.money}}</p>
+      </div>
+      <div class="bottom-right">
+        <button class="color2" v-if='item.status==0'>去支付</button>
+        <button class="color1" @click="cancel(item.id)" v-if='item.status==0'>取消订单</button>
+        <button class="color2" @click="returnGoods(item.id)" v-if='item.status==1'>退货/退款</button>
+      </div>
+    </div>
+  </div>
+</div>
 </template>
 
 <script>
 import * as api from '@/assets/js/api';
-import { Toast, Dialog } from 'we-vue';
+import {
+  Toast,
+  Dialog
+} from 'we-vue';
 import * as session from '@/assets/js/session';
 export default {
-	name: 'mineOrder',
-	inject: ['reload'],
-	data() {
-		return {
-			listOrderInfo: '',
-			defaultProps1: {
-				children: 'children',
-				label: 'comName'
-			}
-		};
-	},
-	created: function() {
-		this.$store.commit('showBottomNav', {
-			isShow: false
-		});
-		api.getVipGoodsOrderList({
-			data: {
-				openid: this.$store.state.uid,
-				status: 0
-			}
-		}).then(res => {
-			if (res.data.flag) {
-				console.log('商城订单', res.data);
-				this.listOrderInfo = res.data.listOrder;
-			} else {
-				Toast.text({
-					duration: 1000,
-					message: res.data.msg
-				});
-			}
-		});
-	},
-	methods: {
-		cancel: function(res) {
-			console.log('取消啊啊啊-----', res);
-			Dialog.confirm({
-				title: '提示',
-				message: '是否取消',
-				skin: 'ios',
-				showCancelButton: true
-			})
-				.then(() => {
-					api.cancelGoodsOrder({
-						data: {
-							openid: this.$store.state.uid,
-							orderid: res
-						}
-					}).then(res => {
-						console.log('是否取消了----', res);
-						if (res.data.flag) {
-							Toast.text({
-								duration: 1000,
-								message: '取消成功'
-							});
-							this.reload();
-						} else {
-							Toast.text({
-								duration: 1000,
-								message: res.data.msg
-							});
-						}
-					});
-				})
-				.catch(() => {});
-		},
-		returnGoods:function(res){
-			// 退货页面
-			// 待修改  退货页面需要 商品图片名字 规格 数量 价钱
-			session.Lstorage.setItem('returnId', res);
-			this.$router.push({ name: 'returnGoodsChoice' });
-		}
-		
-	}
+  name: 'mineOrder',
+  inject: ['reload'],
+  data() {
+    return {
+      ImgNull: this.$store.state.ImgNull,
+      listOrderInfo: '',
+      defaultProps1: {
+        children: 'children',
+        label: 'comName'
+      },
+      navId: 0,
+      navList: [{
+        id: 0,
+        name: '全部',
+      }, {
+        id: 1,
+        name: '待支付',
+      }, {
+        id: 2,
+        name: '待收货',
+      }, {
+        id: 3,
+        name: '退款退货',
+      }, {
+        id: 4,
+        name: '未核销',
+      }, ]
+    };
+  },
+  created: function() {
+    this.$store.commit('showBottomNav', {
+      isShow: false
+    });
+
+  },
+  mounted: function() {
+    api.getVipGoodsOrderList({
+      data: {
+        openid: this.$store.state.uid,
+        index: 0
+      }
+    }).then(res => {
+      if (res.data.flag) {
+        console.log('商城订单', res.data);
+        this.listOrderInfo = res.data.listOrder;
+      } else {
+        Toast.text({
+          duration: 1000,
+          message: res.data.msg
+        });
+      }
+    });
+  },
+  methods: {
+    cancel: function(res) {
+      console.log('取消啊啊啊-----', res);
+      Dialog.confirm({
+          title: '提示',
+          message: '是否取消',
+          skin: 'ios',
+          showCancelButton: true
+        })
+        .then(() => {
+          api.cancelGoodsOrder({
+            data: {
+              openid: this.$store.state.uid,
+              orderid: res
+            }
+          }).then(res => {
+            console.log('是否取消了----', res);
+            if (res.data.flag) {
+              Toast.text({
+                duration: 1000,
+                message: '取消成功'
+              });
+              this.reload();
+            } else {
+              Toast.text({
+                duration: 1000,
+                message: res.data.msg
+              });
+            }
+          });
+        })
+        .catch(() => {});
+    },
+    returnGoods: function(res) {
+      // 退货页面
+      // 待修改  退货页面需要 商品图片名字 规格 数量 价钱
+      session.Lstorage.setItem('returnId', res);
+      this.$router.push({
+        name: 'returnGoodsChoice'
+      });
+    },
+    clickNav: function(res) {
+      console.log(res);
+      this.navId = res;
+    },
+
+  }
 };
 </script>
 
