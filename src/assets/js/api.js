@@ -27,7 +27,7 @@ export const uploadPic = (options) => _apiPOST(`${API_ROOT}/wx/uploadPic`, optio
 export const getWechatConfig = (options) => _apiPOST(`${API_ROOT}/wx/getJssdkSign`, options)
 
 // 微信 支付 签名
-export const getWechatPay = (options) => _apiPOST(`${API_ROOT}/wx/getWxpaySign`, options)
+export const getWechatPay = (id, preId, options) => _apiGET(`${API_ROOT}/wx/getWxpaySign?openid=${id}&&prepay_id=${preId}`, options)
 
 /**首页相关 --------------------------------------------**/
 

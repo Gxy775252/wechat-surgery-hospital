@@ -20,7 +20,7 @@ const requestType = (type, url, options = {}) => {
 
 	function callAPI(resolve, reject) {
 		options.data.openid = options.data.openid != null ? options.data.openid : 'test'
-		console.log('请求API-=-=-=-', options.data)
+		console.log('请求API-=-=-=-', options)
 		instance.request(options).then(res => {
 			resolve(res)
 		})
