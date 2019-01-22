@@ -59,18 +59,17 @@
 					<wv-textarea placeholder="请输入文本" :rows="4"></wv-textarea>
 				</div>
 			</div>
-			
+
 			<div class="img">
 				<div class="checkbox-title" style="padding-bottom: calc(3.2rem / 2);">上传照片或者视频（最多5张）</div>
 				<div class="imgA" >
 					<div class="imgA-An" >
 						<img src="../assets/images/icon/upload.png" />
-						
+
 						<form class="form form-horizontal" ref="form"  method="post" enctype="multipart/form-data">
 							<input type="file" style="1px solid red;" name="uploadFile3" @change="changeUpload1('uploadFile3')" accept="image/*" />
 							<input hidden name="uploadName" :value="uploadName">
 						</form>
-	
 
 					</div>
 					<div style="clear: both;"></div>

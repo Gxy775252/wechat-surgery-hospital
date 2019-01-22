@@ -36,7 +36,7 @@
 			</div>
 			<p class="slotP">恭喜你，注册成功</p>
 			<div class="slotDiv">
-				<p>获得1000积分商城支付可抵扣</p>
+				<p>获得积分商城支付可抵扣</p>
 			</div>
 		</Tan-Chuang>
 	</div>

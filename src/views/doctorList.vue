@@ -4,7 +4,7 @@
 		<div class="swiper">
 			<div class="swiperImg">
 				<wv-swipe :autoplay="4000" class="swiperImg">
-					<wv-swipe-item v-for="(item,key,index) in swipeContent" :key="key" v-if="swipeContent.length!=0"> 
+					<wv-swipe-item v-for="(item,key,index) in swipeContent" :key="key" v-if="swipeContent.length!=0">
 						<img :src="item.cover || ImgNull" class="imgA"/>
 						<div v-if="item.isVideo==1" class="playImg">
 							<img src="@/assets/images/icon/playImg.png" />
@@ -17,7 +17,7 @@
 			<div class="box">
 				<div class="boxTop" @click="goDoctorDetail(item.id)">
 					<div class="headImg">
-						<img :src="ImgNull" />
+						<img :src="item.headimg || ImgNull" />
 					</div>
 					<div class="headName">
 						<p>{{item.name}}/DrQi</p>

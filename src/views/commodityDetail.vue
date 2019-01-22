@@ -5,7 +5,7 @@
     <div>
       <wv-swipe :autoplay="4000" class="swiperImg">
         <wv-swipe-item v-for="(item, key, index) in swipeContent" :key="key">
-          <img :src="item.cover || ImgNull" class="imgA" />
+          <img :src="item.cover ? item.cover : ImgNull" class="imgA" />
           <div v-if="item.isVideo == 1" class="playImg">
             <img src="@/assets/images/icon/playImg.png" />
           </div>
@@ -306,7 +306,7 @@ export default {
     };
   },
   created: function() {
-    let that=this;
+    let that = this;
     that.$store.commit('showBottomNav', {
       isShow: false
     });
@@ -457,6 +457,7 @@ export default {
         }
       }).then(res => {
         if (res.data.flag) {
+          this.$store.state.perpay_id = null;
           this.buySizeHidden = false;
           session.Lstorage.setItem('orderId', res.data.orderid);
           this.$router.push({

@@ -2,7 +2,7 @@
 	<div class="all">
 		<div class="top2">
 			<p>已核销</p>
-			<p>积分奖励500，已发放至你的积分账户</p>
+			<p>积分奖励，已发放至你的积分账户</p>
 		</div>
 		<div class="doctor">
 			<div class="doctorTop">

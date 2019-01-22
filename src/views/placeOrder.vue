@@ -5,10 +5,10 @@
     <div class="bigBox">
       <div class="addFont">
         <div>
-          <p class="nameFont">收件人：{{addressInfo.postName || ''}}</p>
-          <p class="nameFont">电话：{{addressInfo.postPhone || ''}}</p>
+          <p class="nameFont">收件人：{{addressInfo != null?addressInfo.postName:''}}</p>
+          <p class="nameFont">电话：{{addressInfo != null?addressInfo.postPhone:''}}</p>
         </div>
-        <p class="add">收件地址：{{addressInfo.postArea || ''}}{{addressInfo.postAddress || ''}}</p>
+        <p class="add">收件地址：{{ addressInfo != null ?  addressInfo.postArea : ''}}{{addressInfo != null ? addressInfo.postAddress : ''}}</p>
       </div>
     </div>
     <div class="buttonImg"><img src="../assets/images/icon/rightGray.png"></div>
@@ -55,7 +55,8 @@
 
 <script>
 import {
-  Toast
+  Toast,
+  Dialog
 } from 'we-vue';
 import * as api from '@/assets/js/api';
 import * as session from '@/assets/js/session';
@@ -106,7 +107,7 @@ export default {
     //       console.log(res,'----------res')
     //     })
     //   })
-    // }
+    // }//config注入  分享使用 待修改
 
     // 订单确认页面
     function initData() {
@@ -134,9 +135,55 @@ export default {
     }
     initData()
   },
+  beforeMount: function() {
+    let that = this;
+    if (this.$store.state.prepay_id != null) {
+      api.submitConfirmOrder({
+        data: {
+          prepay_id: this.$store.state.prepay_id
+        }
+      }).then(res => {
+        if (res.data.flag) {
+          // 已支付
+          Toast.text({
+            duration: 1000,
+            message: '支付成功'
+          })
+          setTimeout(function() {
+            this.$router.push({
+              name: 'successfulPayment'
+            });
+          }, 1500)
+        } else {
+          // 未支付
+          Toast.text({
+            duration: 1000,
+            message: '未支付,'
+          })
+          Dialog.confirm({
+            title: '提示',
+            message: '您有一笔订单未支付，是否继续支付',
+            skin: 'ios',
+            showCancelButton: false
+          }).then(() => {
+            that.$router.push({
+              name: 'mineOrder'
+            });
+          })
+        }
+      })
+    }
+  },
   methods: {
     submitMoney: function() {
       let newMoney = 0
+      if (this.addressInfo == null) {
+        Toast.fail({
+          duration: 1000,
+          message: '请选择地址'
+        })
+        return;
+      }
       if (this.dataPayId == 1) {
         if (this.shutOpentId != 1) {
           newMoney = this.orderInfo.money - this.maxScoreInfo != 0 ? this.orderInfo.money - this.maxScoreInfo : 0
@@ -167,24 +214,29 @@ export default {
       }, {
         postAddress: this.addressInfo.postArea + ',' + this.addressInfo.postAddress
       })
-      // 待修改  支付不知道是那个接口
       this.submitPay(parmas)
-      console.log('--------', parmas);
-      // console.log(this.dataPayId, '1=微信支付2=余额支付');
-      // console.log(this.shutOpentId, '1=不适用积分');
     },
     submitPay: function(parmas) {
       api.submitConfirmOrder({
         data: parmas
       }).then(res => {
         console.log(res, '-------res pay')
+        return;
         if (res.data.flag) {
+          this.$store.state.prepay_id = res.data.prepay_id;
           if (res.data.finished == 1) {
             // vip 支付
-
+            this.$router.push({
+              name: 'successfulPayment',
+            });
           } else {
             // 跳转页面
-            this.$router.push({name:'payment',query:{payId:res.data.prepay_id}});
+            this.$router.push({
+              name: 'payment',
+              query: {
+                payId: res.data.prepay_id
+              }
+            });
           }
         }
       })
