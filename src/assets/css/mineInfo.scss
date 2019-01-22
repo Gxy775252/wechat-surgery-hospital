@@ -54,12 +54,12 @@
 				height: 100%;
 			}
 		}
-		>input{
+		.listInput{
 			position: absolute;
 			right:calc(6rem / 2);
 			height:100%;
 			width:80%;
-			text-align: right;
+			text-align: right !important;
 			font-size:calc(1.73rem/2);
 		}
 	}

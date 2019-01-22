@@ -5,10 +5,10 @@
     <div class="bigBox">
       <div class="addFont">
         <div>
-          <p class="nameFont">收件人：{{addressInfo.postName}}</p>
-          <p class="nameFont">电话：{{addressInfo.postPhone}}</p>
+          <p class="nameFont">收件人：{{addressInfo.postName || ''}}</p>
+          <p class="nameFont">电话：{{addressInfo.postPhone || ''}}</p>
         </div>
-        <p class="add">收件地址：{{addressInfo.postArea}}{{addressInfo.postAddress}}</p>
+        <p class="add">收件地址：{{addressInfo.postArea || ''}}{{addressInfo.postAddress || ''}}</p>
       </div>
     </div>
     <div class="buttonImg"><img src="../assets/images/icon/rightGray.png"></div>
@@ -42,7 +42,7 @@
   <div class="integralBox">
     <div class="integralFont">
       <p class="uses">使用积分</p>
-      <p class="numberInt">（{{scoreBalInfo}}积分共抵扣0000{{maxScoreInfo}}元）</p>
+      <p class="numberInt">（{{scoreBalInfo}}积分共抵扣{{maxScoreInfo}}元）</p>
     </div>
     <img :src="shutOpent" @click="shutClick" />
   </div>
@@ -109,7 +109,7 @@ export default {
     // }
 
     // 订单确认页面
-    function initData(){
+    function initData() {
       api.getConfirmOrder({
         data: {
           openid: _this.$store.state.uid,
@@ -136,36 +136,61 @@ export default {
   },
   methods: {
     submitMoney: function() {
-      let parmas = Object.assign({}, {openid: this.$store.state.uid}, {orderid: this.orderId}, {wxcash: this.dataPayId == 1 ? this.orderInfo.money : '' }, {score: this.shutOpentId != 1 ? this.scoreBalInfo : ''}, {vipcash: this.dataPayId == 2 ? this.cashBalInfo : ''}, {postName: this.addressInfo.postName}, {postPhone: this.addressInfo.postPhone}, {postAddress: this.addressInfo.postAddress})
+      let newMoney = 0
+      if (this.dataPayId == 1) {
+        if (this.shutOpentId != 1) {
+          newMoney = this.orderInfo.money - this.maxScoreInfo != 0 ? this.orderInfo.money - this.maxScoreInfo : 0
+        } else {
+          newMoney = this.orderInfo.money
+        }
+      } else {
+        if (this.shutOpentId != 1) {
+          newMoney = this.cashBalInfo - this.maxScoreInfo != 0 ? this.cashBalInfo - this.maxScoreInfo : 0
+        } else {
+          newMoney = this.cashBalInfo
+        }
+      }
+      let parmas = Object.assign({}, {
+        openid: this.$store.state.uid || 'oYi8Av6WZm8rscL77fxDV8xWkBv0'
+      }, {
+        orderid: this.orderId
+      }, {
+        wxcash: this.dataPayId == 1 ? newMoney : ''
+      }, {
+        score: this.shutOpentId != 1 ? this.maxScoreInfo : ''
+      }, {
+        vipcash: this.dataPayId == 2 ? newMoney : ''
+      }, {
+        postName: this.addressInfo.postName
+      }, {
+        postPhone: this.addressInfo.postPhone
+      }, {
+        postAddress: this.addressInfo.postArea + ',' + this.addressInfo.postAddress
+      })
       // 待修改  支付不知道是那个接口
-      // if (typeof WeixinJSBridge == "undefined") { // 判断是否在微信浏览器内
-      //     if (document.addEventListener) {
-      //         document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-      //     } else if (document.attachEvent) {
-      //         document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
-      //         document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-      //     }
-      // } else {
-      // laalla
-      // }
       this.submitPay(parmas)
-      console.log(this.dataPayId, '1=微信支付2=余额支付');
-      console.log(this.shutOpentId, '1=不适用积分');
+      console.log('--------', parmas);
+      // console.log(this.dataPayId, '1=微信支付2=余额支付');
+      // console.log(this.shutOpentId, '1=不适用积分');
     },
-    submitPay: function(parmas){
-      api.getWechatPay({
+    submitPay: function(parmas) {
+      api.submitConfirmOrder({
         data: parmas
       }).then(res => {
-        console.log(res,'-------res pay')
-        if(res.data.flag){
-          if(res.data.finished == 1){
+        console.log(res, '-------res pay')
+        if (res.data.flag) {
+          if (res.data.finished == 1) {
             // vip 支付
-          }else{
+
+          } else {
             // 跳转页面
+            this.$router.push({name:'payment',query:{payId:res.data.prepay_id}});
           }
         }
       })
     },
+
+
     shutClick: function() {
       if (this.shutOpent == require('../assets/images/icon/shut.png')) {
         this.shutOpent = require('../assets/images/icon/open.png');

@@ -302,7 +302,7 @@ export default {
       disabled: false, //按钮能否点击
       ifListProp: false, //是否显示产品参数内容
       ImgNull: this.$store.state.ImgNull,
-      abc: '',
+      pubicFunction: '',
     };
   },
   created: function() {
@@ -312,7 +312,7 @@ export default {
     });
     that.shopId = session.Lstorage.getItem('shopId');
     // 商品详情
-    that.abc = function(id) {
+    that.pubicFunction = function(id) {
       api.getCommodityDetail({
         data: {
           openid: that.$store.state.uid,
@@ -338,13 +338,13 @@ export default {
         }
       })
     };
-    that.abc(that.shopId);
+    that.pubicFunction(that.shopId);
 
   },
   methods: {
     goCommodityDetail: function(res) {
       //跳转到商品详情
-      this.abc(res);
+      this.pubicFunction(res);
     },
 
     seeParameter: function() {
@@ -452,7 +452,7 @@ export default {
           fromCart: 0,
           goodsid: this.shopId,
           sizeid: this.sizeId,
-          count: this.num,
+          number: this.num,
           cartidList: ''
         }
       }).then(res => {

@@ -48,13 +48,13 @@
 		<div class="list">
 			<p></p>
 			<div class="list-right">
-				<input placeholder="填写具体详细地址" style="right:30px;" ref="areaInput" :value="vipInfo.area!=''?vipInfo.area:''"/>
+				<input placeholder="填写具体详细地址" style="right:30px;" class="listInput" v-model="areaInput"/>
 			</div>
 		</div>
 		<div class="list">
 			<p>职业</p>
 			<div class="list-right">
-				<input placeholder="选择/编辑职业" ref="occupationInput" :value="vipInfo.job!=''?vipInfo.job:''"/>
+				<input placeholder="选择/编辑职业" class="listInput" v-model="occupationInput" />
 				<div class="selectDiv">
 					<img src="@/assets/images/icon/mineHore.png" />
 				</div>
@@ -63,7 +63,7 @@
 		<div class="list">
 			<p>邮箱</p>
 			<div class="list-right">
-				<input placeholder="填写您的邮箱" ref="email" :value="vipInfo.email!=''?vipInfo.email:''"/>
+				<input placeholder="填写您的邮箱" class="listInput" style="text-align:right !important;" v-model="email" />
 				<div class="selectDiv">
 					<img src="@/assets/images/icon/mineHore.png" />
 				</div>
@@ -87,9 +87,9 @@
 import Vue from 'vue';
 import * as api from '@/assets/js/api';
 import chinaAreaData from 'china-area-data';
-import { Picker, DatetimePicker, Toast } from 'we-vue';
+import { Picker, DatetimePicker, Toast,Input } from 'we-vue';
 import * as session from '@/assets/js/session';
-Vue.use(DatetimePicker).use(Picker);
+Vue.use(DatetimePicker).use(Picker).use(Input);
 
 const provinces = Object.values(chinaAreaData[86]);
 // 获取某一省下的市
@@ -137,6 +137,9 @@ export default {
 			birthday: '选择生日',
 			addressPickerShow: false,
 			address: '', //地址
+			occupationInput:'',//职业
+			areaInput:'',//详细地址
+			email:'',//邮箱
 			addressColumns: [
 				{
 					values: provinces
@@ -171,6 +174,10 @@ export default {
 			if (res.data.flag) {
 				console.log('个人中心', res.data);
 				this.vipInfo = res.data.vip;
+				this.areaInput=res.data.vip.area;
+				this.occupationInput=res.data.vip.job;
+				this.email=res.data.vip.email;
+
 			} else {
 				Toast.text({
 					duration: 1000,
@@ -207,21 +214,21 @@ export default {
 				});
 				return;
 			}
-			if (this.$refs.areaInput.value == '') {
+			if (this.areaInput== '') {
 				Toast.text({
 					duration: 1000,
 					message: '请填写详细地址'
 				});
 				return;
 			}
-			if (this.$refs.occupationInput.value == '') {
+			if (this.occupationInput== '') {
 				Toast.text({
 					duration: 1000,
 					message: '请填写职业'
 				});
 				return;
 			}
-			if (this.$refs.email.value == '') {
+			if (this.email == '') {
 				Toast.text({
 					duration: 1000,
 					message: '请填写邮箱'
@@ -234,9 +241,9 @@ export default {
 					gender: gender,
 					birthdate: this.$refs.birthday.innerText,
 					address: this.$refs.address.innerText,
-					area: this.$refs.areaInput.value,
-					job: this.$refs.occupationInput.value,
-					email: this.$refs.email.value
+					area: this.areaInput,
+					job: this.occupationInput,
+					email: this.email
 				}
 			}).then(res => {
 				if (res.data.flag) {

@@ -1,17 +1,17 @@
 <!-- 编辑收货地址 -->
 <template>
 <div class="all" id="allInput">
-  <div class="inputText">
+ <div class="inputText">
     <p>姓名</p>
-    <input placeholder="输入收货人姓名" class="inputText-input" :class="addressInfo.postName!=''?'inputText-input coloeAA':'inputText-input'" :value="addressInfo.postName!=''?addressInfo.postName:''" ref="nameInput" />
+    <wv-input placeholder="输入收货人姓名" class="inputText-input coloeAA"  v-model="nameInput" />
   </div>
   <div class="inputText">
     <p>手机号</p>
-    <input type="number" maxlength="11" placeholder="输入收货人手机号" :class="addressInfo.postPhone!=''?'inputText-input coloeAA':'inputText-input'" :value="addressInfo.postPhone!=''?addressInfo.postPhone:''" ref="phoneInput" />
+	  <wv-input type="number" placeholder="输入收货人手机号" class="inputText-input coloeAA"  v-model="phoneInput" />
   </div>
   <div class="inputText">
     <p>邮政编码</p>
-    <input placeholder="输入邮政编码" class="inputText-input" :class="addressInfo.zipCode!=''?'inputText-input coloeAA':'inputText-input'" :value="addressInfo.zipCode!=''?addressInfo.zipCode:''" ref="zipCodeInput" />
+    <wv-input placeholder="输入邮政编码"  class="inputText-input coloeAA" v-model="zipCodeInput" />
   </div>
   <div class="inputText">
     <p>所在区域</p>
@@ -23,12 +23,12 @@
       <img src="@/assets/images/icon/mineHore.png" />
     </div>
   </div>
-  <div class="inputText">
+ <div class="inputText">
     <p>详细地址</p>
-    <input placeholder="街道、楼牌号等详细地址" class="inputText-input" :class="addressInfo.postAddress!=''?'inputText-input coloeAA':'inputText-input'" :value="addressInfo.postAddress!=''?addressInfo.postAddress:''" ref="addressInput" />
+    <wv-input placeholder="街道、楼牌号等详细地址" class="inputText-input coloeAA"  v-model="addressInput" />
   </div>
   <!-- 地址选择 -->
-  <wv-picker :visible.sync="addressPickerShow" ref="addressPicker" :columns="addressColumns" :visible-item-count="5" @change="onAddressChange" @confirm="confirmAddress" />
+  <wv-picker :visible.sync="addressPickerShow" ref="addressPicker" :columns="addressColumns" :visible-item-count="5" @change="onAddressChange" @confirm="confirmAddress"  v-model="address"/>
   <!-- 地址选择 END-->
   <div class="sub" @click="submit">
     <button>保存</button>
@@ -42,11 +42,13 @@ import {
   Picker,
   Cell,
   Group,
-  Toast
+  Toast,
+	Input
 } from 'we-vue';
 Vue.use(Picker)
   .use(Group)
-  .use(Cell);
+  .use(Cell)
+	.use(Input);
 import chinaAreaData from 'china-area-data';
 import * as api from '@/assets/js/api';
 import * as session from '@/assets/js/session';
@@ -91,6 +93,10 @@ export default {
 
   data() {
     return {
+			phoneInput:'',//手机号
+			zipCodeInput:'',//邮编
+			nameInput:'',//收货人
+			addressInput:'',//详细地址
       selectAddress: '选择所在城市、省份、区县',
       addressPickerShow: false,
       address: [],
@@ -130,6 +136,10 @@ export default {
       }).then(res => {
         if (res.data.flag) {
           console.log('地址列表', res.data);
+					this.phoneInput=res.data.address[0].postPhone;
+					this.zipCodeInput=res.data.address[0].zipCode;
+					this.nameInput=res.data.address[0].postName;
+					this.addressInput=res.data.address[0].postAddress;
           this.addressInfo = res.data.address[0]; //地址内容
         } else {
           Toast.text({
@@ -150,21 +160,22 @@ export default {
     submit: function(res) {
       let that = this;
       let isPhone = /^1(3|4|5|7|8)\d{9}$/;
-      if (this.$refs.nameInput.value == '') {
+      if (this.nameInput == '') {
         Toast.text({
           duration: 1000,
           message: '姓名不可为空'
         });
         return;
       }
-      if (!isPhone.test(this.$refs.phoneInput.value)) {
+			console.log(this.nameInput)
+      if (!isPhone.test(this.phoneInput)) {
         Toast.text({
           duration: 1000,
           message: '请输入正确格式的手机号'
         });
         return;
       }
-      if (this.$refs.addressInput.value == '') {
+      if (this.addressInput == '') {
         Toast.text({
           duration: 1000,
           message: '所在区域不可为空'
@@ -183,11 +194,11 @@ export default {
         data: {
           id: session.Lstorage.getItem('editid'),
           openid: this.$store.state.uid,
-          postName: this.$refs.nameInput.value,
-          postPhone: this.$refs.phoneInput.value,
-          postAddress: this.$refs.addressInput.value,
+          postName: this.nameInput,
+          postPhone: this.phoneInput,
+          postAddress: this.addressInput,
           postArea: this.$refs.areaP.innerText,
-          zipCode: this.$refs.zipCodeInput.value
+          zipCode: this.zipCodeInput
         }
       }).then(res => {
         if (res.data.flag) {

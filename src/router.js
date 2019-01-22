@@ -532,5 +532,15 @@ export default new Router({
 			}
 		},
 		/**驻场医生内容 END**/
+
+		{
+			path: '/payment',
+			name: 'payment',
+			component: () => import('./views/payment.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '支付'
+				next()
+			}
+		},
 	]
 })

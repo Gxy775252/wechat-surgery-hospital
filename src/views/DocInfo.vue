@@ -110,7 +110,7 @@
 		</div>
 		<div class="seeI"><img src="@/assets/images/icon/kanjian.png" /></div>
 		<div class="bottom_btn">
-			<button type="button" name="button" class="btnA">在线预约</button>
+			<button type="button" name="button" class="btnA" @click="goReserve">在线预约</button>
 			<button type="button" name="button" class="btnB">在线咨询</button>
 		</div>
 		<div style="height: 90px;"></div>
@@ -118,68 +118,81 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import { Swipe, SwipeItem, Toast } from 'we-vue';
-import wx from 'weixin-js-sdk';
-import * as api from '@/assets/js/api';
-import * as session from '@/assets/js/session';
+	import Vue from 'vue';
+	import {
+		Swipe,
+		SwipeItem,
+		Toast
+	} from 'we-vue';
+	import wx from 'weixin-js-sdk';
+	import * as api from '@/assets/js/api';
+	import * as session from '@/assets/js/session';
 
-Vue.use(Swipe).use(SwipeItem);
-export default {
-	name: 'DocInfo',
-	data() {
-		return {
-			doctorInfo: '', //医生信息
-			hospInfo: '', //医院信息
-			listPrjInfo: '', //擅长项目列表信息
-			listInstInfo: '', //擅长仪器列表信息
-			listDqpcInfo: '', //证书列表信息
-			swipeContent: '', //轮播
-			info: '', //案例，预约
-			ImgNull: this.$store.state.ImgNull
-		};
-	},
-	created: function() {
-		this.$store.commit('showBottomNav', {
-			isShow: false
-		});
-		api.getDoctorDetail({
-			data: {
-				openid: this.$store.state.uid,
-				id: session.Lstorage.getItem('doctorId')
-			}
-		}).then(res => {
-			// 待修改  此页面报500 暂未做任何处理
-			if (res.data.flag) {
-				console.log('医生详情请求数据', res.data);
-				this.doctorInfo = res.data.doctor;
-				this.hospInfo = res.data.hosp;
-				this.listPrjInfo = res.data.listPrj;
-				this.listInstInfo = res.data.listInst;
-				this.listDqpcInfo = res.data.listDqpc;
-				this.swipeContent = res.data.listBanner;
-				this.info = res.data; //预约数 案例数
-			} else {
-				Toast.text({
-					duration: 1000,
-					message: res.data.msg
-				});
-			}
-		});
-	},
-	methods: {
-		goDoctorCase: function() {
-			// 跳转医生案例页面并将医生id缓存
-			session.Lstorage.setItem('caseId', session.Lstorage.getItem('doctorId'));
-			this.$router.push({
-				name: 'doctorCase'
+	Vue.use(Swipe).use(SwipeItem);
+	export default {
+		name: 'DocInfo',
+		data() {
+			return {
+				doctorInfo: '', //医生信息
+				hospInfo: '', //医院信息
+				listPrjInfo: '', //擅长项目列表信息
+				listInstInfo: '', //擅长仪器列表信息
+				listDqpcInfo: '', //证书列表信息
+				swipeContent: '', //轮播
+				info: '', //案例，预约
+				ImgNull: this.$store.state.ImgNull
+			};
+		},
+		created: function() {
+			this.$store.commit('showBottomNav', {
+				isShow: false
 			});
+			api.getDoctorDetail({
+				data: {
+					openid: this.$store.state.uid,
+					id: session.Lstorage.getItem('doctorId')
+				}
+			}).then(res => {
+				// 待修改  此页面报500 暂未做任何处理
+				if (res.data.flag) {
+					console.log('医生详情请求数据', res.data);
+					this.doctorInfo = res.data.doctor;
+					this.hospInfo = res.data.hosp;
+					this.listPrjInfo = res.data.listPrj;
+					this.listInstInfo = res.data.listInst;
+					this.listDqpcInfo = res.data.listDqpc;
+					this.swipeContent = res.data.listBanner;
+					this.info = res.data; //预约数 案例数
+				} else {
+					Toast.text({
+						duration: 1000,
+						message: res.data.msg
+					});
+				}
+			});
+		},
+		methods: {
+			goDoctorCase: function() {
+				// 跳转医生案例页面并将医生id缓存
+				session.Lstorage.setItem('caseId', session.Lstorage.getItem('doctorId'));
+				this.$router.push({
+					name: 'doctorCase'
+				});
+			},
+			goReserve: function() {
+				console.log('点击了');
+				this.$router.push({
+					name: 'reserve',
+					query: {
+						ReserveId: session.Lstorage.getItem('doctorId')
+					}
+				});
+			},
 		}
-	}
-};
+	};
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/css/DocInfo.scss';
-@import '@/assets/css/doctorList.scss';
+	@import '@/assets/css/DocInfo.scss';
+	@import '@/assets/css/doctorList.scss';
 </style>
