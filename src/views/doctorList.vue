@@ -39,6 +39,7 @@
 						<img src="@/assets/images/icon/playImg.png" />
 					</div>
 				</div>
+				<div style='height:1px'></div>
 			</div>
 		</div>
 	</div>

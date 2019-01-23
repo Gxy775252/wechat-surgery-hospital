@@ -201,14 +201,26 @@ export const getVipDiaryDetail = (options) => _apiPOST(`${API_ROOT}/wx/getVipDia
 //获取我的日记详情
 export const saveDiary = (options) => _apiPOST(`${API_ROOT}/wx/saveDiary`, options)
 
+//设置密码
+export const setGiftPwd = (options) => _apiPOST(`${API_ROOT}/wx/setGiftPwd`, options)
+
 //重置密码
 export const getResetGiftPwd = (options) => _apiPOST(`${API_ROOT}/wx/resetGiftPwd`, options)
 
 //  我的商城订单
 export const getVipGoodsOrderList = (options) => _apiPOST(`${API_ROOT}/wx/getVipGoodsOrderList`, options)
 
+//  我的商城订单详情
+export const getVipGoodsOrderDetail = (options) => _apiPOST(`${API_ROOT}/wx/getVipGoodsOrderDetail`, options)
+
 //  取消商城单
 export const cancelGoodsOrder = (options) => _apiPOST(`${API_ROOT}/wx/cancelGoodsOrder`, options)
+
+//  订单物流页
+export const goVipGoodsOrderLogistics = (options) => _apiPOST(`${API_ROOT}/wx/goVipGoodsOrderLogistics`, options)
+
+// 退货页面
+export const goOrderComment = (options) => _apiPOST(`${API_ROOT}/wx/goOrderComment`, options)
 
 //  取消预约单
 export const cancelPrjtOrder = (options) => _apiPOST(`${API_ROOT}/wx/cancelPrjtOrder`, options)

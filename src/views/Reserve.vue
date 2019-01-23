@@ -216,6 +216,7 @@ export default {
         }
       }).then(res => {
         if (res.data.flag) {
+          console.log('--',res.data);
           for (let i in res.data.listDate) {
             res.data.listDate[i].date = res.data.listDate[i].date.substring(5, res.data.listDate[i].date.leng);
             switch (res.data.listDate[i].dow) {
@@ -374,9 +375,6 @@ export default {
       this.listConA3 = 'listConA';
     },
     prickject: function() {
-      if (this.$route.query.ReserveId != undefined) {
-        return;
-      }
       this.fruitPickerShow2 = true;
     },
     confirmPerson2: function(picker) {
@@ -421,6 +419,7 @@ export default {
         }
       }).then(res => {
         if (res.data.flag) {
+          console.log('xiangmu---',res.data);
           this.fruitColumns2[0].values = res.data.listProject;
         } else {
           Toast.text({

@@ -20,8 +20,8 @@
 					<p>用户<span></span></p>
 					<p>{{item.name}}</p>
 				</div>
-				<div class="name-right" v-if="item.status == 1">未核销</div>
-				<div class="name-right" v-if="item.status == 2">已核销</div>
+				<div class="name-right" v-if="item.status == 1">未完成</div>
+				<div class="name-right" v-if="item.status == 2">已完成</div>
 			</div>
 			<div class="top">
 				<div>
@@ -38,17 +38,16 @@
 				</div>
 				<div>
 					<p>预约医生</p>
-					<!-- 待修改-没有预约医生字段 -->
-					<p>暂无</p>
+					<p>{{item.doctorName}}</p>
 				</div>
 			</div>
 		</div>
 		<div v-if="listOrderinfo.length==0" class="cartNull">
 			<img src="../assets/images/icon/cartNull.png" />
 			<p>暂无信息</p >
-		</div>	
+		</div>
 	</div>
-	
+
 
 </template>
 
@@ -102,7 +101,6 @@ export default {
 				if (res.data.flag) {
 					console.log('医生订单全部', res.data);
 					(this.listOrderinfo = res.data.listOrder), (this.backId = 0);
-					console.log('id', this.backId);
 				} else {
 					Toast.text({
 						duration: 1000,
@@ -122,7 +120,6 @@ export default {
 				if (res.data.flag) {
 					console.log('医生订单未核销', res.data);
 					(this.listOrderinfo = res.data.listOrder), (this.backId = 1);
-					console.log('id', this.backId);
 				} else {
 					Toast.text({
 						duration: 1000,
@@ -141,7 +138,6 @@ export default {
 				if (res.data.flag) {
 					console.log('医生订单已核销', res.data);
 					(this.listOrderinfo = res.data.listOrder), (this.backId = 2);
-					console.log('id', this.backId);
 				} else {
 					Toast.text({
 						duration: 1000,

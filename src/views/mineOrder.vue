@@ -14,9 +14,9 @@
       <p v-else-if='item.status==1'>已成交</p>
       <p v-else-if='item.status==-1'>已申请退货</p>
       <p v-else-if='item.status==-2'>已退货</p>
-      <p v-else-if='item.status==-3'>取消订单</p>
+      <p v-else-if='item.status==-3'>已取消</p>
     </div>
-    <div class="center" v-for='(item2,key,index) in item.listDetail' :key='key'>
+    <div class="center" v-for='(item2,key,index) in item.listDetail' :key='key' @click="goDetail(item.id)">
       <div class="center-left">
         <div class="leftImg">
           <img :src="item2.coverResource?item2.coverResource.cover:ImgNull" />
@@ -39,7 +39,7 @@
       <div class="bottom-right">
         <button class="color2" v-if='item.status==0'>去支付</button>
         <button class="color1" @click="cancel(item.id)" v-if='item.status==0'>取消订单</button>
-        <button class="color2" @click="returnGoods(item.id)" v-if='item.status==1'>退货/退款</button>
+        <button class="color2" @click="returnGoods(item.id,item.money)" v-if='item.status==1'>退货/退款</button>
       </div>
     </div>
   </div>
@@ -76,7 +76,7 @@ export default {
         name: '待收货',
       }, {
         id: 3,
-        name: '退款退货',
+        name: '退货/退款',
       }, {
         id: 4,
         name: '未核销',
@@ -140,17 +140,43 @@ export default {
         })
         .catch(() => {});
     },
-    returnGoods: function(res) {
+    returnGoods: function(res, money) {
       // 退货页面
-      // 待修改  退货页面需要 商品图片名字 规格 数量 价钱
-      session.Lstorage.setItem('returnId', res);
+      session.Lstorage.setItem('returnMoney1', money);
       this.$router.push({
-        name: 'returnGoodsChoice'
+        name: 'returnGoodsChoice',
+        query: {
+          returnId: res
+        }
+      });
+    },
+    goDetail: function(res) {
+      this.$router.push({
+        name: 'minePaymentOrder',
+        query: {
+          orderid: res
+        },
       });
     },
     clickNav: function(res) {
       console.log(res);
       this.navId = res;
+      api.getVipGoodsOrderList({
+        data: {
+          openid: this.$store.state.uid,
+          index: res,
+        }
+      }).then(res => {
+        if (res.data.flag) {
+          console.log('商城订单', res.data);
+          this.listOrderInfo = res.data.listOrder;
+        } else {
+          Toast.text({
+            duration: 1000,
+            message: res.data.msg
+          });
+        }
+      });
     },
 
   }
