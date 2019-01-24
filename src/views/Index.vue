@@ -13,8 +13,7 @@
     <div>
       <wv-swipe :autoplay="4000" class="swiperImg">
         <wv-swipe-item v-for="(item, key, index) in swipeContent" :key="key">
-          <!-- <img :src="item.cover || ImgNull" class="imgA" /> 待修改-->
-          <img src="@/assets/images/example/listImgOne.png" class="imgA" />
+          <img :src="item.cover || ImgNull" class="imgA" />
           <div v-if="item.isVideo==1" class="playImg">
             <img src="@/assets/images/icon/playImg.png" />
           </div>

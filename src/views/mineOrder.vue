@@ -10,11 +10,7 @@
   <div class="conList" v-for='(item,key,index) in listOrderInfo' :key='key'>
     <div class="top">
       <p>订单编号：{{item.orderno}}</p>
-      <p v-if='item.status==0'>待支付</p>
-      <p v-else-if='item.status==1'>已成交</p>
-      <p v-else-if='item.status==-1'>已申请退货</p>
-      <p v-else-if='item.status==-2'>已退货</p>
-      <p v-else-if='item.status==-3'>已取消</p>
+      <p>{{item.showStatus}}</p>
     </div>
     <div class="center" v-for='(item2,key,index) in item.listDetail' :key='key' @click="goDetail(item.id)">
       <div class="center-left">
@@ -37,9 +33,12 @@
         <p>￥{{item.money}}</p>
       </div>
       <div class="bottom-right">
-        <button class="color2" v-if='item.status==0'>去支付</button>
         <button class="color1" @click="cancel(item.id)" v-if='item.status==0'>取消订单</button>
-        <button class="color2" @click="returnGoods(item.id,item.money)" v-if='item.status==1'>退货/退款</button>
+        <button class="color2" v-if='item.status==0' @click='fukuan(item.id)'>立即付款</button>
+        <button class="color1" @click="seeWuLiu(item.id)" v-if='item.status==1 && item.refundStatus==0'>查看物流</button>
+        <button class="color2" @click="returnGoods(item.id,item.money)" v-if='item.status==1 && item.refundStatus==0'>退货/退款</button>
+        <button class="color2" @click="succHuo(item.id)" v-if='item.status==1 && (item.logStatus==1 || item.logStatus==2)'>确认收货</button>
+        <button class="color2" @click='gocommod(item.id)' v-if='item.canEva==1'>评价</button>
       </div>
     </div>
   </div>
@@ -108,6 +107,53 @@ export default {
     });
   },
   methods: {
+    fukuan: function(res) {
+      let that = this;
+      // 付款
+      api.repayGoodsOrder({
+        data: {
+          openid: this.$store.state.uid,
+          orderid: res
+        }
+      }).then(res => {
+        if (res.data.flag) {
+          that.$router.push({
+            name: 'payment',
+            query: {
+              payId: res.data.prepay_id
+            }
+          });
+        } else {
+          Toast.text({
+            duration: 1000,
+            message: res.data.msg
+          });
+        }
+      });
+    },
+    succHuo: function(res) {
+      // 确认收货
+      api.confirmReceipt({
+        data: {
+          openid: this.$store.state.uid,
+          orderid: res
+        }
+      }).then(res => {
+        console.log('是否取消了----', res);
+        if (res.data.flag) {
+          Toast.text({
+            duration: 1000,
+            message: '确认收货'
+          });
+          this.reload();
+        } else {
+          Toast.text({
+            duration: 1000,
+            message: res.data.msg
+          });
+        }
+      });
+    },
     cancel: function(res) {
       console.log('取消啊啊啊-----', res);
       Dialog.confirm({
@@ -178,7 +224,23 @@ export default {
         }
       });
     },
-
+    seeWuLiu: function(res) {
+      this.$router.push({
+        name: 'mineViewLogistics',
+        query: {
+          wuLiuId: res
+        }
+      });
+    },
+    gocommod: function(res) {
+      console.log(res);
+      this.$router.push({
+        name: 'commodityEvaluation',
+        query: {
+          orderid: res
+        },
+      });
+    },
   }
 };
 </script>

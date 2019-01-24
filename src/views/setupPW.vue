@@ -116,20 +116,23 @@ export default {
     // 判断密码是否是数字，是否有连续或者倒叙的方法
     pwdFun: function(pwds) {
       var reg = /^[0-9]+$/;
-      if (reg.test(this.pwd)) {
+      if (reg.test(pwds)) {
         var add = 1;
         var reduce = 1;
+        var repeat = 1;
         for (var i = 0; i < pwds.length; i++) {
           var one = parseInt(pwds[(i)]) + 1;
           var two = parseInt(pwds[(i + 1)]);
           var three = parseInt(pwds[(i)]) - 1;
           var four = parseInt(pwds[(i + 1)]);
+          var five = parseInt(pwds[(i)]);
+          var six = parseInt(pwds[(i + 1)]);
           if (one == two) {
             add = add + 1;
             if (add >= 3) {
               Toast.text({
                 duration: 1000,
-                message: '密码格式不正常'
+                message: '密码格式不正确'
               });
               return 1;
             }
@@ -141,23 +144,33 @@ export default {
             if (reduce >= 3) {
               Toast.text({
                 duration: 1000,
-                message: '密码格式不正常'
+                message: '密码格式不正确'
               });
               return 1;
             }
           } else {
             reduce = 1;
           }
+          if (five == six) {
+            repeat = repeat + 1;
+            if (repeat >= 3) {
+              Toast.text({
+                duration: 1000,
+                message: '密码格式不正确'
+              });
+              return 1;
+            }
+          } else {
+            repeat = 1;
+          }
         }
       } else {
         Toast.text({
           duration: 1000,
-          message: '密码格式不正常'
+          message: '密码格式不正确'
         });
         return 1;
       }
-
-
     },
   }
 }

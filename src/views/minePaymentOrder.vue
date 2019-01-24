@@ -1,6 +1,6 @@
 <template>
 <div class="all">
-  <div class="top" v-if='orderInfo.status==0'>
+  <div class="top" v-if="orderInfo.status==0">
     <div class="top-left">
       <p>待支付</p>
       <p></p>
@@ -9,7 +9,7 @@
       <img src="../assets/images/icon/daizhifu.png" />
     </div>
   </div>
-  <div class="top" v-if='orderInfo.status==1'>
+  <div class="top" v-if="(orderInfo.showStatus=='待发货' || orderInfo.showStatus=='已申请退货')&&orderInfo.status==1">
     <div class="top-left">
       <p>待发货</p>
       <p>您的快递正在仓库等待快递小哥，请耐心等待</p>
@@ -18,22 +18,28 @@
       <img src="../assets/images/icon/daifahuo.png" />
     </div>
   </div>
-  <div class="top" v-if='orderInfo.status==-3'>
+  <div class="top" v-if="orderInfo.showStatus=='待收货'">
     <div class="top-left">
-      <p>已取消</p>
-      <p></p>
+      <p>待收货</p>
+      <p>您的宝贝已经在路上向您飞奔过来</p>
     </div>
-    <div class="top-right">
-      <!-- <img src="../assets/images/icon/daizhifu.png" /> -->
+    <div class="top-right" style='width:calc(6.8rem/2);height:calc(5.73rem/2);'>
+      <img src="../assets/images/icon/daishouhuo.png" />
     </div>
   </div>
 
-  <div class="dizhi">
+  <div class="dizhi" style='height:calc(11.33rem/2);'>
     <div>
       <p>收件人：{{orderInfo.postName}}</p>
       <p>电话：{{orderInfo.postPhone}}</p>
     </div>
     <p>地址：{{orderInfo.postAddress}}</p>
+  </div>
+  <div class="dizhi" @click='seeWuLiu(orderInfo.id)' v-if='orderInfo.status==1 && (orderInfo.showStatus=="已申请退货" || orderInfo.showStatus=="待发货" ||orderInfo.showStatus=="待收货")'>
+    <div>
+      <p>您的快递已发货，点击查看</p>
+      <p></p>
+    </div>
   </div>
   <div class="center" v-for="(item,key,index) in listDetailInfo" :key='key'>
     <div class="center-left">
@@ -73,15 +79,28 @@
     <img src="@/assets/images/icon/kanjian.png" />
   </div>
   <div style="height:3rem;"></div>
-  <div class="bottomOperation" v-if='orderInfo.status==0'>
+  <div class="bottomOperation" v-if="orderInfo.status==0">
     <div class="leftOperation">￥{{orderInfo.money}}</div>
     <div class="centerOperation" @click="closeOrder">取消订单</div>
-    <div class="rightOperation">立即付款</div>
+    <div class="rightOperation" @click='fukuan(orderInfo.id)'>立即付款</div>
   </div>
-  <div class="bottomOperation" v-if='orderInfo.status==1'>
+  <div class="bottomOperation" v-if="orderInfo.status==1 && (orderInfo.logStatus!=3 || orderInfo.logStatus!=8)">
     <div class="leftOperation">￥{{orderInfo.money}}</div>
-    <div class="centerOperation" @click='seeWuLiu(orderInfo.id)'>查看物流</div>
-    <div class="rightOperation" @click="returnMoney(orderInfo.id,orderInfo.money)">退货/退款</div>
+    <div class="centerOperation" @click='succHuo(orderInfo.id)'>确认收货</div>
+    <div class="rightOperation" @click="returnGoods(orderInfo.id,orderInfo.money)">退货/退款</div>
+  </div>
+  <div class="bottomOperation" v-if="orderInfo.status==1 && orderInfo.refundStatus ==1">
+    <div class="leftOperation">￥{{orderInfo.money}}</div>
+    <div class="centerOperation" @click='funAA'>退货/退款</div>
+    <div class="rightOperation" @click='succHuo(orderInfo.id)'>确认收货</div>
+  </div>
+  <div class="bottomOperation" v-if="orderInfo.status==1 && (orderInfo.logStatus==3 || orderInfo.logStatus==8) && orderInfo.canEva==1">
+    <div class="leftOperation">￥{{orderInfo.money}}</div>
+    <div class="centerOperation" style='background:#fff;'></div>
+    <div class="rightOperation" @click='gocommod(orderInfo.id)'>评价</div>
+  </div>
+  <div>
+
   </div>
 </div>
 </template>
@@ -122,7 +141,7 @@ export default {
       if (res.data.flag) {
         console.log('商城订单', res.data);
         this.listDetailInfo = res.data.listDetail;
-        this.orderInfo = res.data.order[0];
+        this.orderInfo = res.data.order;
       } else {
         Toast.text({
           duration: 1000,
@@ -132,6 +151,53 @@ export default {
     });
   },
   methods: {
+    fukuan: function(res) {
+      let that = this;
+      // 付款
+      api.repayGoodsOrder({
+        data: {
+          openid: this.$store.state.uid,
+          orderid: res
+        }
+      }).then(res => {
+        if (res.data.flag) {
+          that.$router.push({
+            name: 'payment',
+            query: {
+              payId: res.data.prepay_id
+            }
+          });
+        } else {
+          Toast.text({
+            duration: 1000,
+            message: res.data.msg
+          });
+        }
+      });
+    },
+    succHuo: function(res) {
+      // 确认收货
+      api.confirmReceipt({
+        data: {
+          openid: this.$store.state.uid,
+          orderid: res
+        }
+      }).then(res => {
+        console.log('是否取消了----', res);
+        if (res.data.flag) {
+          Toast.text({
+            duration: 1000,
+            message: '确认收货'
+          });
+          this.reload();
+        } else {
+          Toast.text({
+            duration: 1000,
+            message: res.data.msg
+          });
+        }
+      });
+    },
     seeWuLiu: function(res) {
       this.$router.push({
         name: 'mineViewLogistics',
@@ -181,7 +247,22 @@ export default {
           });
         })
         .catch(() => {});
-    }
+    },
+    funAA: function() {
+      Toast.text({
+        duration: 1000,
+        message: '已申请退货/退款'
+      });
+    },
+    gocommod: function(res) {
+      console.log(res);
+      this.$router.push({
+        name: 'commodityEvaluation',
+        query: {
+          orderid: res
+        },
+      });
+    },
   }
 }
 </script>

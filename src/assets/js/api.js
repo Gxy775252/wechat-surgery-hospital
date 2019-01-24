@@ -20,6 +20,9 @@ export const getAndSendSms = (options) => _apiPOST(`${API_ROOT}/wx/getAndSendSms
 // post获取数据
 export const postRegister = (options) => _apiPOST(`${API_ROOT}/wx/register`, options)
 
+//	检测openid是否是vip
+export const ifVipExisted = (options) => _apiPOST(`${API_ROOT}/wx/ifVipExisted`, options)
+
 //	上传图片
 export const uploadPic = (options) => _apiPOST(`${API_ROOT}/wx/uploadPic`, options)
 
@@ -135,6 +138,8 @@ export const getHospitalProjectList = (options) => _apiPOST(`${API_ROOT}/wx/getH
 // 获取项目的可选医生列表
 export const getProjectDoctorList = (options) => _apiPOST(`${API_ROOT}/wx/getProjectDoctorList`, options)
 
+// 获取项目详情
+export const goProjectDetail = (options) => _apiPOST(`${API_ROOT}/wx/goProjectDetail`, options)
 
 // 模板消息-预约详情页
 export const goModelOrderDetail = (options) => _apiPOST(`${API_ROOT}/wx/goModelOrderDetail`, options)
@@ -218,6 +223,12 @@ export const cancelGoodsOrder = (options) => _apiPOST(`${API_ROOT}/wx/cancelGood
 
 //  订单物流页
 export const goVipGoodsOrderLogistics = (options) => _apiPOST(`${API_ROOT}/wx/goVipGoodsOrderLogistics`, options)
+
+//  订单物流页
+export const confirmReceipt = (options) => _apiPOST(`${API_ROOT}/wx/confirmReceipt`, options)
+//  重新付款
+export const repayGoodsOrder = (options) => _apiPOST(`${API_ROOT}/wx/repayGoodsOrder`, options)
+
 
 // 退货页面
 export const goOrderComment = (options) => _apiPOST(`${API_ROOT}/wx/goOrderComment`, options)

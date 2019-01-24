@@ -30,7 +30,7 @@
         </div>
       </div>
       <span></span>
-      <div v-show="ifSee">查看项目详情</div>
+      <div v-show="ifSee" @click='goDetail2'>查看项目详情</div>
     </div>
     <div class="Allselect-stores Third">
       <p>Doctors</p>
@@ -104,13 +104,13 @@
       </div>
     </div>
   </div>
-  <div class="integralBox">
+  <!-- <div class="integralBox">
     <div class="integralFont">
       <p class="uses">使用积分</p>
       <p class="numberInt">（1000积分共抵扣0000元）</p>
     </div>
     <img :src="shutOpent" @click="shutClick" />
-  </div>
+  </div> -->
   <div class="diary">
     <div class="diaryLeft">
       <img src="@/assets/images/icon/level.jpg" />
@@ -151,6 +151,9 @@ Vue.use(Picker).use(Group).use(Cell);
 export default {
   data() {
     return {
+      storesId: 0, //存储门店id
+      subjectsId: 0, //存储项目id
+      docId: 0, //存储医生id
       nameInput: '',
       phoneInput: '',
       briefInput: '',
@@ -186,16 +189,16 @@ export default {
         values: []
       }],
       shutOpent: require('../assets/images/icon/shut.png'),
-      shutOpentId: 1, //1=不使用积分2=使用积分
-      dataPayId: 1, //1=微信支付2=余额支付
+      // shutOpentId: 1, //1=不使用积分2=使用积分
+      dataPayId: 2, //2=微信支付1=余额支付
       dataPay: [{
-          id: 1,
+          id: 2,
           img: require('../assets/images/icon/wechat.png'),
           payFont: '微信支付',
           isshow: true
         },
         {
-          id: 2,
+          id: 1,
           img: require('../assets/images/icon/wallet.png'),
           payFont: '余额支付',
           isshow: false
@@ -216,7 +219,7 @@ export default {
         }
       }).then(res => {
         if (res.data.flag) {
-          console.log('--',res.data);
+          console.log('--', res.data);
           for (let i in res.data.listDate) {
             res.data.listDate[i].date = res.data.listDate[i].date.substring(5, res.data.listDate[i].date.leng);
             switch (res.data.listDate[i].dow) {
@@ -252,10 +255,16 @@ export default {
             that.fruitColumns3[0].values = '';
           } else {
             that.listConA1 = 'listConA';
-            that.listConA2 = 'listConA';
+            that.listConA3 = 'listConA';
             that.stores.name = res.data.listHosp[0].name;
-            that.subjects.name = res.data.listProject[0].name;
-            that.fruitColumns3[0].values = res.data.listDoctor;
+            that.storesId = res.data.listHosp[0].id;
+            that.fruitColumns2[0].values = res.data.listProject;
+            for (let i in res.data.listDoctor) {
+              if (res.data.listDoctor[i].id == doctorid) {
+                that.doctor.name = res.data.listDoctor[i].name
+                that.docId = res.data.listDoctor[i].id;
+              }
+            }
           }
         } else {
           Toast.text({
@@ -265,20 +274,69 @@ export default {
         }
       })
     };
-    if (this.$route.query.ReserveId != undefined) {
-      this.pubicFunction(this.$route.query.ReserveId);
-    } else {
-      this.pubicFunction('');
+
+    api.ifVipExisted({
+      data: {
+        openid: that.$store.state.uid,
+      }
+    }).then(res => {
+      if (res.data.flag) {
+        if (this.$route.query.ReserveId != undefined) {
+          this.pubicFunction(this.$route.query.ReserveId);
+        } else {
+          this.pubicFunction('');
+        }
+      } else {
+        this.$router.push({
+          name: 'register'
+        });
+      }
+    })
+  },
+  beforeMount: function() {
+    let that = this;
+    if (this.$store.state.prepay_id != null) {
+      api.submitConfirmOrder({
+        data: {
+          prepay_id: this.$store.state.prepay_id
+        }
+      }).then(res => {
+        if (res.data.flag) {
+          // 已支付
+          Toast.text({
+            duration: 1000,
+            message: '支付成功'
+          })
+          setTimeout(function() {
+            this.$router.push({
+              name: 'successfulPayment'
+            });
+          }, 1500)
+        } else {
+          // 未支付
+          Toast.text({
+            duration: 1000,
+            message: '未支付,'
+          })
+        }
+      })
     }
   },
   methods: {
     submit: function(res) {
       let that = this;
       let isPhone = /^1(3|4|5|7|8)\d{9}$/;
-      if (!isPhone.test(this.phoneInput)) {
+      if (this.stores.name == '选择门店(必填)') {
         Toast.text({
           duration: 1000,
-          message: '请输入正确格式的手机号'
+          message: '请选择门店'
+        });
+        return;
+      }
+      if (this.subjects.name == '选择项目(必填)') {
+        Toast.text({
+          duration: 1000,
+          message: '请选择项目'
         });
         return;
       }
@@ -286,6 +344,13 @@ export default {
         Toast.text({
           duration: 1000,
           message: '预约人姓名不能为空'
+        });
+        return;
+      }
+      if (!isPhone.test(this.phoneInput)) {
+        Toast.text({
+          duration: 1000,
+          message: '请输入正确格式的手机号'
         });
         return;
       }
@@ -297,14 +362,6 @@ export default {
         return;
       }
       // 提交内容
-      console.log('门店', this.stores.name);
-      console.log('项目', this.subjects.name);
-      console.log('医生', this.doctor.name);
-      console.log('名字', this.nameInput);
-      console.log('电话', this.phoneInput);
-      console.log('备注', this.briefInput);
-      // shutOpentId: 1, //1=不使用积分2=使用积分
-      // dataPayId: 1, //1=微信支付2=余额支付
       let subDate, subDow, subPeriod;
       for (let i in that.listDateInfo) {
         if (that.listDateInfo[i].date === that.date1) {
@@ -324,22 +381,52 @@ export default {
           showCancelButton: true
         })
         .then(() => {
+          api.submitProjectOrder({
+            data: {
+              openid: this.$store.state.uid || 'oYi8Av6WZm8rscL77fxDV8xWkBv0',
+              projectid: this.subjectsId,
+              doctorid: this.docId,
+              date10: subDate,
+              period: subPeriod,
+              name: this.nameInput,
+              phone: this.phoneInput,
+              memo: this.briefInput,
+              payByVip: this.dataPayId,
+            }
+          }).then(res => {
+            if (res.data.flag) {
+              console.log('预约', res.data);
+              if (res.data.finished == 1) {
+                // 直接跳转
+                this.$router.push({
+                  name: 'successReserve',
+                  query: {
+                    subDate: subDate,
+                    subPeriod: subPeriod,
+                    subjectsName: that.subjects.name,
+                  },
+                });
+              } else {
+                this.$store.state.prepay_id = null;
+                // 跳转页面
+                this.$router.push({
+                  name: 'payment',
+                  query: {
+                    payId: res.data.prepay_id
+                  }
+                });
+                this.$store.state.prepay_id = res.data.prepay_id;
 
-
-          // 待修改内容
+              }
+            } else {
+              Toast.text({
+                duration: 1000,
+                message: res.data.msg
+              });
+            }
+          });
         })
-        .catch(() => {
-
-        });
-    },
-    shutClick: function() {
-      if (this.shutOpent == require('@/assets/images/icon/shut.png')) {
-        this.shutOpent = require('@/assets/images/icon/open.png');
-        this.shutOpentId = 2;
-      } else {
-        this.shutOpent = require('@/assets/images/icon/shut.png');
-        this.shutOpentId = 1;
-      }
+        .catch(() => {});
     },
     selectPay: function(id) {
       this.dataPayId = id;
@@ -366,11 +453,11 @@ export default {
       this.fruitPickerShow3 = true;
     },
     confirmPerson3: function(picker) {
-      // if(){}
       if (picker.getValues()[0] == undefined) {
         this.fruitPickerShow3 = false;
         return;
       }
+      this.docId = picker.getValues()[0].id;
       this.doctor = picker.getValues()[0];
       this.listConA3 = 'listConA';
     },
@@ -397,6 +484,7 @@ export default {
           });
         }
       });
+      this.subjectsId = picker.getValues()[0].id;
       this.subjects = picker.getValues()[0];
       this.listConA2 = 'listConA';
       this.ifSee = true;
@@ -419,7 +507,7 @@ export default {
         }
       }).then(res => {
         if (res.data.flag) {
-          console.log('xiangmu---',res.data);
+          console.log('xiangmu---', res.data);
           this.fruitColumns2[0].values = res.data.listProject;
         } else {
           Toast.text({
@@ -428,9 +516,19 @@ export default {
           });
         }
       });
+      this.storesId = picker.getValues()[0].id;
       this.stores = picker.getValues()[0];
       this.listConA1 = 'listConA';
-    }
+    },
+    goDetail2: function() {
+      // 跳转项目详情
+      this.$router.push({
+        name: 'reserveDetail2',
+        query: {
+          detail2Id: this.subjectsId
+        }
+      });
+    },
   },
 };
 </script>

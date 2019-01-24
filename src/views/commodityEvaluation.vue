@@ -1,54 +1,155 @@
 <template>
-	<div class="all">
-		<div class="center">
-			<div class="center-left">
-				<div class="leftImg">
-					<img src="../assets/images/example/tuFour.png" />
-				</div>
-				<div class="leftText">
-					<p>活力眼尖的</p>
-					<p>规格：200ml</p>
-				</div>
-			</div>
-			<div class="center-right">
-				<p>￥ 299</p>
-				<p>x1</p>
-			</div>
-		</div>
-		<div class="upload">
-			<p>上传凭证</p>
-			<div class="upload-img"></div>
-		</div>
-		<div class="upload">
-			<p>描述您对商品的评价</p>
-			<div class="pingjia">
-				<wv-textarea placeholder="请输入文本" :rows="6":max-length="10"></wv-textarea>
-			</div>
-		</div>
-		<div class="bottom">
-			<button>提交</button>
-		</div>
-	</div>
+<div class="all">
+  <div v-for='(item,key,index) in listDetailInfo' :key='key'>
+    <div class="center">
+      <div class="center-left">
+        <div class="leftImg">
+          <img :src="item.coverResource!=null?item.coverResource.cover:ImgNull" />
+        </div>
+        <div class="leftText">
+          <p>{{item.goodsName}}</p>
+          <p>规格：{{item.sizeName}}</p>
+        </div>
+      </div>
+      <div class="center-right">
+        <p>￥ {{item.price}}</p>
+        <p>x{{item.number}}</p>
+      </div>
+    </div>
+    <div class="box">
+      <div class="srarsFont">
+        滑动星星进行总体评价
+      </div>
+      <div class="srarsBoxA">
+        <Five-Srars @starsNumA="starsNumB" :id="item.id" :size="4.4" :marginRight="2.06"></Five-Srars>
+      </div>
+    </div>
+    <div class="upload">
+      <p>描述您对商品的评价</p>
+      <div class="pingjia">
+        <wv-textarea placeholder="请输入文本" :rows="3" :show-counter="false"></wv-textarea>
+      </div>
+    </div>
+  </div>
+  <div class="bottom" @click='submit'>
+    <button>提交</button>
+  </div>
+</div>
 </template>
 
 <script>
 import Vue from 'vue';
-import { Textarea } from 'we-vue'
+import {
+  Textarea,
+  Toast
+} from 'we-vue'
 Vue.use(Textarea)
-	export default {
-		data() {
-			return {
+import * as api from '@/assets/js/api';
+import FiveSrars from '@/components/fiveStars.vue';
+import * as session from '@/assets/js/session';
+export default {
+  data() {
+    return {
+      ImgNull: this.$store.state.ImgNull,
+      listDetailInfo: '',
+      numberBox: [],
+    };
+  },
+  components: {
+    'Five-Srars': FiveSrars
+  },
+  created: function() {
+    this.$store.commit('showBottomNav', {
+      isShow: false
+    });
+  },
+  mounted: function() {
+    api.goOrderComment({
+      data: {
+        openid: this.$store.state.uid,
+        orderid: this.$route.query.orderid,
+      }
+    }).then(res => {
+      if (res.data.flag) {
+        console.log('商城订单', res.data);
+        this.listDetailInfo = res.data.listDetail;
+      } else {
+        Toast.text({
+          duration: 1000,
+          message: res.data.msg
+        });
+      }
+    });
+  },
+  methods: {
+    starsNumB: function(e) {
+      var data = {
+        'detailid': e.id,
+        'stars': e.index
+      };
+      if (this.numberBox.length == 0) {
+        this.numberBox.push(data);
+      } else {
+        for (var i = 0; i < this.numberBox.length; i++) {
+          if (this.numberBox[i].detailid == e.id) {
+            this.numberBox[i].stars = e.index;
+            return;
+          }
+        }
+        this.numberBox.push(data);
+      }
+    },
+    submit: function() {
+      // 提交
+      if (this.listDetailInfo.length != this.numberBox.length) {
+        Toast.text({
+          duration: 1000,
+          message: '请打分'
+        });
+        return;
+      }
+      // api.submitComment({
+      //   data: {
+      //     openid: this.$store.state.uid,
+      //     orderid:this.$route.query.orderid,
+      // 		 commentList:,
+      //   }
+      // }).then(res => {
+      //   console.log('全部收益', res.data);
+      //   if (res.data.flag) {
+      //     Toast.text({
+      //       duration: 1000,
+      //       message: '评价成功'
+      //     });
+      //   } else {
+      //     Toast.text({
+      //       duration: 1000,
+      //       message: res.data.msg
+      //     });
+      //   }
+      // });
+    },
+  }
 
-			};
-		},
-		created: function() {
-			this.$store.commit('showBottomNav', {
-				isShow: false
-			});
-		}
-	}
+}
 </script>
 
 <style lang="scss" scoped>
-	@import '@/assets/css/commodityEvaluation.scss';
+@import '@/assets/css/commodityEvaluation.scss';
+.box {
+    padding: calc(3rem/2) 0;
+    background: #fff;
+    margin-bottom: calc(2rem/2);
+}
+
+.srarsFont {
+    color: #333;
+    font-size: calc(1.6rem/2);
+    margin-left: calc(3.33rem/ 2);
+}
+
+.srarsBoxA {
+    margin-top: calc(1.6rem/2);
+    margin-left: calc(3.33rem/ 2);
+}
 </style>

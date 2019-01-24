@@ -33,7 +33,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="hospital">
+		<div class="hospital" @click='goMap(hospInfo.position,hospInfo.name,hospInfo.address)'>
 			<img :src="doctorInfo.headimg || ImgNull" alt="" class="hospital_img" />
 			<div class="hospital_info">
 				<div class="hospital_name">
@@ -118,81 +118,129 @@
 </template>
 
 <script>
-	import Vue from 'vue';
-	import {
-		Swipe,
-		SwipeItem,
-		Toast
-	} from 'we-vue';
-	import wx from 'weixin-js-sdk';
-	import * as api from '@/assets/js/api';
-	import * as session from '@/assets/js/session';
+import Vue from 'vue';
+import {
+  Swipe,
+  SwipeItem,
+  Toast
+} from 'we-vue';
+import wx from 'weixin-js-sdk';
+import * as api from '@/assets/js/api';
+import * as session from '@/assets/js/session';
 
-	Vue.use(Swipe).use(SwipeItem);
-	export default {
-		name: 'DocInfo',
-		data() {
-			return {
-				doctorInfo: '', //医生信息
-				hospInfo: '', //医院信息
-				listPrjInfo: '', //擅长项目列表信息
-				listInstInfo: '', //擅长仪器列表信息
-				listDqpcInfo: '', //证书列表信息
-				swipeContent: '', //轮播
-				info: '', //案例，预约
-				ImgNull: this.$store.state.ImgNull
-			};
-		},
-		created: function() {
-			this.$store.commit('showBottomNav', {
-				isShow: false
-			});
-			api.getDoctorDetail({
-				data: {
-					openid: this.$store.state.uid,
-					id: session.Lstorage.getItem('doctorId')
-				}
-			}).then(res => {
-				// 待修改  此页面报500 暂未做任何处理
-				if (res.data.flag) {
-					console.log('医生详情请求数据', res.data);
-					this.doctorInfo = res.data.doctor;
-					this.hospInfo = res.data.hosp;
-					this.listPrjInfo = res.data.listPrj;
-					this.listInstInfo = res.data.listInst;
-					this.listDqpcInfo = res.data.listDqpc;
-					this.swipeContent = res.data.listBanner;
-					this.info = res.data; //预约数 案例数
-				} else {
-					Toast.text({
-						duration: 1000,
-						message: res.data.msg
-					});
-				}
-			});
-		},
-		methods: {
-			goDoctorCase: function() {
-				// 跳转医生案例页面并将医生id缓存
-				session.Lstorage.setItem('caseId', session.Lstorage.getItem('doctorId'));
-				this.$router.push({
-					name: 'doctorCase'
-				});
-			},
-			goReserve: function() {
-				console.log('点击了');
-				this.$router.push({
-					name: 'reserve',
-					query: {
-						ReserveId: session.Lstorage.getItem('doctorId')
-					}
-				});
-			},
-		}
-	};
+Vue.use(Swipe).use(SwipeItem);
+export default {
+  name: 'DocInfo',
+  data() {
+    return {
+      doctorInfo: '', //医生信息
+      hospInfo: '', //医院信息
+      listPrjInfo: '', //擅长项目列表信息
+      listInstInfo: '', //擅长仪器列表信息
+      listDqpcInfo: '', //证书列表信息
+      swipeContent: '', //轮播
+      info: '', //案例，预约
+      ImgNull: this.$store.state.ImgNull
+    };
+  },
+  created: function() {
+    this.$store.commit('showBottomNav', {
+      isShow: false
+    });
+    this.getConfig = function() {
+      return new Promise((rel, ret) => {
+        api.getWechatConfig({
+          data: {
+            url: window.location.href.split('#')[0]
+          }
+        }).then(res => {
+          console.log(res, '----------res')
+          let {
+            appId,
+            timestamp,
+            nonceStr,
+            signature
+          } = res.data.config
+          if (res.data.flag) {
+            wx.config({
+              debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+              appId: appId, // 必填，公众号的唯一标识
+              timestamp: timestamp, // 必填，生成签名的时间戳
+              nonceStr: nonceStr, // 必填，生成签名的随机串
+              signature: signature, // 必填，签名
+              jsApiList: ['openLocation'] // 必填，需要使用的JS接口列表
+            });
+            rel('success')
+          }
+        })
+      })
+    }
+
+  },
+  mounted: function() {
+    this.getConfig().then(res => {
+      if (res == 'success') {
+        api.getDoctorDetail({
+          data: {
+            openid: this.$store.state.uid,
+            id: session.Lstorage.getItem('doctorId')
+          }
+        }).then(res => {
+          // 待修改  此页面报500 暂未做任何处理
+          if (res.data.flag) {
+            console.log('医生详情请求数据', res.data);
+            this.doctorInfo = res.data.doctor;
+            this.hospInfo = res.data.hosp;
+            this.listPrjInfo = res.data.listPrj;
+            this.listInstInfo = res.data.listInst;
+            this.listDqpcInfo = res.data.listDqpc;
+            this.swipeContent = res.data.listBanner;
+            this.info = res.data; //预约数 案例数
+          } else {
+            Toast.text({
+              duration: 1000,
+              message: res.data.msg
+            });
+          }
+        });
+      }
+    })
+  },
+  methods: {
+    goMap: function(res, name, address) {
+      let lat = res.split(',')[0],
+        lon = res.split(',')[1];
+      // 查看地图
+      wx.openLocation({
+        latitude: lat, // 纬度，浮点数，范围为90 ~ -90
+        longitude: lon, // 经度，浮点数，范围为180 ~ -180。
+        name: name, // 位置名
+        address: address, // 地址详情说明
+        scale: 1, // 地图缩放级别,整形值,范围从1~28。默认为最大
+        infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
+      });
+    },
+    goDoctorCase: function() {
+      // 跳转医生案例页面并将医生id缓存
+      session.Lstorage.setItem('caseId', session.Lstorage.getItem('doctorId'));
+      this.$router.push({
+        name: 'doctorCase'
+      });
+    },
+    goReserve: function() {
+      console.log('点击了');
+      this.$router.push({
+        name: 'reserve',
+        query: {
+          ReserveId: session.Lstorage.getItem('doctorId')
+        }
+      });
+    },
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-	@import '@/assets/css/DocInfo.scss';
-	@import '@/assets/css/doctorList.scss';
+@import '@/assets/css/DocInfo.scss';
+@import '@/assets/css/doctorList.scss';
 </style>

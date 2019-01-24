@@ -48,7 +48,7 @@
 				text-align: left;
 			}
 			.listConA{
-				color:#333 !important; 
+				color:#333 !important;
 			}
 			.listImg{
 				width:calc(1rem/2);
@@ -96,7 +96,7 @@
 			text-align: center;
 			padding: 5px 0;
 			color: #333;
-			
+
 			> p:first-child {
 				font-size: calc(1.6rem / 2);
 			}
@@ -209,6 +209,7 @@
 	.integralFont {
 		margin-left: calc(3.2rem / 2);
 		display: flex;
+		align-items: center;
 		.uses {
 			font-size: calc(1.6rem / 2);
 			color: #333;

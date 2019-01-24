@@ -5,25 +5,25 @@
       <img src="../assets/images/icon/wuping.png" />
     </div>
     <div class="topText">
-      <p class="text-top">1件商品</p>
-      <p class="text-bottom">快递：快递100</p>
-      <p class="text-bottom">快递单号：274934779</p>
+      <p class="text-top">{{orderInfo.products}}件商品</p>
+      <p class="text-bottom">快递：{{orderInfo.logCode}}</p>
+      <p class="text-bottom">快递单号：{{orderInfo.logNo}}</p>
     </div>
   </div>
   <div class="box">
     <div class="diaryList">
       <p class="yearFont">物流详情</p>
       <p class="yearFontA">Logistics details</p>
-      <div class="monthBox">
+      <div class="monthBox" v-for='(item,key,index) in traceListInfo' :key='key'>
         <div class="month">
           <div class="monthImg"><img src="@/assets/images/icon/level.jpg"></div>
           <p>您的宝贝正在派件</p>
         </div>
         <div class="con">
-          <p>派件员 王强 18293829302 正在为您派件</p>
+          <p>{{item.AcceptStation}}</p>
         </div>
         <div class="con">
-          <p>2017-04-01 12：00：00</p>
+          <p>{{item.AcceptTime}}</p>
         </div>
       </div>
     </div>
@@ -43,7 +43,8 @@ import * as session from '@/assets/js/session';
 export default {
   data() {
     return {
-
+      orderInfo: '',
+      traceListInfo: ''
     };
   },
   created: function() {
@@ -60,6 +61,8 @@ export default {
     }).then(res => {
       if (res.data.flag) {
         console.log('试卷和但是', res.data);
+        this.orderInfo = res.data.order;
+        this.traceListInfo = res.data.traceList;
       } else {
         Toast.text({
           duration: 1000,

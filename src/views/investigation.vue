@@ -12,7 +12,7 @@
   <div class="boxB">
     <div class="srarsLine" v-for='(item,key,index) in listDetailInfo' :key='key'>
       <div class="srarsFiveS">{{item.detail}}</div>
-      <Five-Srars :size="3.2" :marginRight="2.06"  @starsNumA="starsNumB" :id="item.id" ></Five-Srars>
+      <Five-Srars :size="3.2" :marginRight="2.06" @starsNumA="starsNumB" :id="item.id"></Five-Srars>
     </div>
   </div>
   <div class="line"></div>
@@ -38,11 +38,10 @@ Vue.use(Textarea)
 export default {
   data() {
     return {
-      number1: 0,
       textCon: '',
       listDetailInfo: '',
-			numberBox:[],
-			stars:''
+      numberBox: [],
+      stars: ''
     };
   },
   components: {
@@ -71,40 +70,42 @@ export default {
     });
   },
   methods: {
-		starsNumA:function(e){
-			console.log(e);
-			this.stars=e.index;
-		},
+    starsNumA: function(e) {
+      console.log(e);
+      this.stars = e.index;
+    },
     starsNumB: function(e) {
-		var data={'detailid':e.id,'stars':e.index};
-		if(this.numberBox.length==0){
-			this.numberBox.push(data);
-		}else{
-			for(var i=0;i<this.numberBox.length;i++){
-						if(this.numberBox[i].detailid==e.id){
-								this.numberBox[i].stars=e.index;
-								return ;
-						}
-			}
-			this.numberBox.push(data);
-		}
+      var data = {
+        'detailid': e.id,
+        'stars': e.index
+      };
+      if (this.numberBox.length == 0) {
+        this.numberBox.push(data);
+      } else {
+        for (var i = 0; i < this.numberBox.length; i++) {
+          if (this.numberBox[i].detailid == e.id) {
+            this.numberBox[i].stars = e.index;
+            return;
+          }
+        }
+        this.numberBox.push(data);
+      }
     },
     submit: function() {
       // 提交
-			if(this.listDetailInfo.length!=this.numberBox.length || this.stars==''){
-				Toast.text({
-				          duration: 1000,
-				          message: '请打分'
-				        });
-				        return;
-			}
+      if (this.listDetailInfo.length != this.numberBox.length || this.stars == '') {
+        Toast.text({
+          duration: 1000,
+          message: '请打分'
+        });
+        return;
+      }
       api.submitSurvey({
         data: {
           openid: this.$store.state.uid,
-          // chargeid: session.Lstorage.getItem('chargeId'),
-					stars:this.stars,
-					detailList:JSON.stringify(this.numberBox),
-					orderid:1//带修改
+          stars: this.stars,
+          detailList: JSON.stringify(this.numberBox),
+          orderid: this.$route.query.orderid || 1, //带修改
         }
       }).then(res => {
         console.log('全部收益', res.data);

@@ -14,21 +14,28 @@
     </div>
   </div>
   <div class="listAll" v-for="(item,key,index) in dataList" :key='key'>
-    <div class="insList" @click="goDetail(item.id)">
+    <div class="insList">
       <div class="insImg">
         <img :src="item.coverResource.cover  || ImgNull" />
+				<div v-if="item.coverResource.isVideo==1" class="playImg" @click="isVideoFun(item.coverResource.url)">
+					<img src="@/assets/images/icon/playImg.png" />
+				</div>
       </div>
-      <div class="insInfo">
-        <p>{{item.name}}</p>
+      <div class="insInfo"  @click="goDetail(item.id)">
+        <p>{{item.name}}{{item.url}}</p>
         <p>{{item.brief}}</p>
       </div>
     </div>
     <div style="clear: both;"></div>
   </div>
+	<div v-if="isVideoPlay">
+		<Video-Play :videoUrl="videoUrl"  @surt='surt' :isNone="isNone"></Video-Play>
+	</div>
 </div>
 </template>
 
 <script>
+	import VideoPlay from '@/components/videoPlay.vue' 
 import Vue from 'vue';
 import {
   Swipe,
@@ -49,9 +56,15 @@ export default {
     return {
       dataList: '',
       swipeContent: '',
-      ImgNull: this.$store.state.ImgNull
+      ImgNull: this.$store.state.ImgNull,
+			isVideoPlay:false,
+			videoUrl:'',
+			isNone:'false'
     };
   },
+	components:{
+		'Video-Play':VideoPlay
+	},
   created: function() {
     this.$store.commit('showBottomNav', {
       isShow: false
@@ -75,6 +88,16 @@ export default {
     });
   },
   methods: {
+		isVideoFun:function(e){;
+			this.videoUrl=e;
+			this.isVideoPlay=true;
+			this.isNone=true;
+			console.log(this.isNone)
+		},
+		surt:function(e){
+			this.isNone=false;
+			this.isVideoPlay=false;
+		},
     goDetail: function(res) {
       // 跳转到仪器详情并将仪器id缓存
       session.Lstorage.setItem('instr', res);

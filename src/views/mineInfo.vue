@@ -1,6 +1,6 @@
 <!-- 我的信息 -->
 <template>
-	<div>
+	<div style='backgeound:#fff;'>
 		<div class="head">
 			<div class="headImg">
 				<img :src="vipInfo.headimg || ImgNull" />
