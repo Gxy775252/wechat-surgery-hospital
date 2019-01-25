@@ -101,7 +101,6 @@ export default {
     goDetail: function(res) {
       // 跳转到仪器详情并将仪器id缓存
       session.Lstorage.setItem('instr', res);
-      // 跳转到皮肤页面
       this.$router.push({
         name: 'instrumentDetail'
       });

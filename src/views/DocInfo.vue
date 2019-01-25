@@ -4,14 +4,15 @@
 		<div class="header">
 			<div class="swiper">
 				<div class="swiperImg">
-					<wv-swipe :autoplay="4000" class="swiperImg">
+					<wv-swipe :autoplay="4000" class="swiperImg" v-if="isId!=1">
 						<wv-swipe-item v-for="(item, key, index) in swipeContent" :key="key">
-							<img :src="item.cover || ImgNull" class="imgA" />
-							<div v-if="item.isVideo == 1" class="playImg">
+							<img :src="item.cover ? item.cover : ImgNull" class="imgA" />
+							<div v-if="item.isVideo==1" class="playImg" @click.stop="isIdFun(item.url)">
 								<img src="@/assets/images/icon/playImg.png" />
 							</div>
 						</wv-swipe-item>
 					</wv-swipe>
+					<Samll-Video class="swiperImg" @surt="surt" v-if="isId==1" :videoUrl="videoUrl" :aspectRatio="aspectRatio"></Samll-Video>
 				</div>
 			</div>
 			<div class="dortor_name">
@@ -127,7 +128,7 @@ import {
 import wx from 'weixin-js-sdk';
 import * as api from '@/assets/js/api';
 import * as session from '@/assets/js/session';
-
+import SamllVideo from '@/components/samllVideoPlay.vue';
 Vue.use(Swipe).use(SwipeItem);
 export default {
   name: 'DocInfo',
@@ -140,8 +141,14 @@ export default {
       listDqpcInfo: '', //证书列表信息
       swipeContent: '', //轮播
       info: '', //案例，预约
-      ImgNull: this.$store.state.ImgNull
+      ImgNull: this.$store.state.ImgNull,
+      videoUrl: '',
+      isId: 0,
+      aspectRatio: '16:9',
     };
+  },
+  components: {
+    'Samll-Video': SamllVideo
   },
   created: function() {
     this.$store.commit('showBottomNav', {
@@ -178,6 +185,7 @@ export default {
 
   },
   mounted: function() {
+    console.log('----', session.Lstorage.getItem('doctorId'));
     this.getConfig().then(res => {
       if (res == 'success') {
         api.getDoctorDetail({
@@ -186,7 +194,24 @@ export default {
             id: session.Lstorage.getItem('doctorId')
           }
         }).then(res => {
-          // 待修改  此页面报500 暂未做任何处理
+          res.data.listBanner = [{
+              id: 1,
+              isVideo: "0",
+              cover: "http://tcjh.suitang1973.com/pic/cover1.jpg",
+              url: "http://img.tukuppt.com/video_show/2269348/00/02/23/5b52ff923e41e.mp4",
+              sourceid: '1',
+              redirectType: '0',
+              //0医生 1仪器 2商品 3项目
+            },
+            {
+              id: 2,
+              isVideo: "1",
+              cover: "http://tcjh.suitang1973.com/pic/cover1.jpg",
+              url: "http://img.tukuppt.com/video_show/2269348/00/02/23/5b52ff923e41e.mp4",
+              sourceid: '1',
+              redirectType: '0',
+            },
+          ]
           if (res.data.flag) {
             console.log('医生详情请求数据', res.data);
             this.doctorInfo = res.data.doctor;
@@ -235,6 +260,13 @@ export default {
           ReserveId: session.Lstorage.getItem('doctorId')
         }
       });
+    },
+    isIdFun: function(e) {
+      this.isId = 1;
+      this.videoUrl = e
+    },
+    surt: function(e) {
+      this.isId = e
     },
   }
 };

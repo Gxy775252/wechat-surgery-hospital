@@ -27,7 +27,7 @@
   </div>
   <div style='height:3rem;'></div>
   <div class="bottom_btn">
-    <button type="button" name="button" class="btnA">在线预约</button>
+    <button type="button" name="button" class="btnA" @click="goReserve">在线预约</button>
     <button type="button" name="button" class="btnB">在线咨询</button>
   </div>
 
@@ -101,6 +101,12 @@ export default {
     });
   },
   methods: {
+    goReserve: function() {
+      console.log('点击了');
+      this.$router.push({
+        name: 'reserve',
+      });
+    },
     // 选择皮肤分析
     prickPro: function() {
       this.fruitPickerShow = true;
