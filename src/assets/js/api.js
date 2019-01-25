@@ -50,6 +50,9 @@ export const getDoctorDetail = (options) => _apiPOST(`${API_ROOT}/wx/goDoctorDet
 // 获取医生案例列表信息
 export const getDoctorCase = (options) => _apiPOST(`${API_ROOT}/wx/goDoctorCase`, options)
 
+// 获取医生案例列表信息
+export const goCaseDetail = (options) => _apiPOST(`${API_ROOT}/wx/goCaseDetail`, options)
+
 // 获取仪器列表信息
 export const getInstrumentList = (options) => _apiPOST(`${API_ROOT}/wx/goInstList`, options)
 

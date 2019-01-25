@@ -54,6 +54,15 @@ export default new Router({
       }
     },
     {
+      path: '/doctorCaseDetail',
+      name: 'doctorCaseDetail',
+      component: () => import('./views/doctorCaseDetail.vue'),
+      beforeEnter: (to, from, next) => {
+        document.title = '案例详情'
+        next()
+      }
+    },
+    {
       path: '/instrumentList',
       name: 'instrumentList',
       component: () => import('./views/instrumentList.vue'),
@@ -203,7 +212,7 @@ export default new Router({
       name: 'reserveDetail2',
       component: () => import('./views/reserveDetail2.vue'),
       beforeEnter: (to, from, next) => {
-        document.title = '预约'
+        document.title = '项目详情'
         next()
       }
     },
