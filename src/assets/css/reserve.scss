@@ -91,6 +91,9 @@
 		align-items: center;
 		overflow-x: auto;
 		overflow-y: hidden;
+		>div:last-child{
+			padding-right: 15px;
+		}
 		.list {
 			margin-left: calc(2.66rem / 2);
 			text-align: center;

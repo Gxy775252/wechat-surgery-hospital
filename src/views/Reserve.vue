@@ -53,7 +53,6 @@
   </div>
   <div class="Allselect" style="padding: calc(3rem / 2) 0;">
     <div class="Allselect-top">
-      <!-- active -->
       <div v-for="(item,key,index) in listDateInfo" :key='key' @click="clickList(item.date)" :class="item.date===date1? 'listA list':'list'">
         <p>星期{{item.dow}}</p>
         <p>{{item.date}}</p>
@@ -500,6 +499,7 @@ export default {
         this.fruitPickerShow = false;
         return;
       }
+      console.log('aaaa',);
       api.getHospitalProjectList({
         data: {
           openid: this.$store.state.uid,

@@ -4,9 +4,9 @@ import router from './router'
 import store from './store'
 import 'we-vue/lib/style.css'
 import {
-	Tabbar,
-	TabbarItem,
-	Badge
+  Tabbar,
+  TabbarItem,
+  Badge
 } from 'we-vue'
 import config from './assets/js/config'
 import 'babel-polyfill'
@@ -14,50 +14,50 @@ import wx from 'weixin-js-sdk'
 import * as API from '@/assets/js/api'
 import VideoPlayer from 'vue-video-player'
 import {
-	parseUrl
+  parseUrl
 } from './assets/js/utils'
 router.beforeEach((to, from, next) => {
-	// document.title = to.meta.title		//修改各个页面的title
-	var uid = store.state.uid //获取uid
-	store.commit('setToPath', {
-		path: to.fullPath
-	})
-	if (uid != null) { //待修改  改成==null 上传服务器的时候修改
-		let code = parseUrl('code')
-		if (code != null) {
-			API.getUserWechatInfo({
-				data: {
-					code: code
-				}
-			}).then(res => {
-				if (res.data.flag) {
-					let {
-						data
-					} = res
-					let wechatInfo = Object.assign({
-						openid: data.openid
-					}, {
-						nickname: data.nickname
-					}, {
-						headimg: data.headimg
-					})
-					store.commit('setWechatInfo', {
-						wechatInfo: wechatInfo
-					})
-					// next(to.fullPath)
-					// window.location.href = `${window.location.href}${to.fullPath}`
-					// setTimeout(() => {
-					next()
-					// }, 2000)
-				}
-			})
-		} else {
-			window.location.href =
-				`https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx347f2c6ff3c8a16d&redirect_uri=${window.location.origin}?path=aaa&response_type=code&scope=snsapi_userinfo#wechat_redirect`
-		}
-	} else {
-		next()
-	}
+  // document.title = to.meta.title		//修改各个页面的title
+  var uid = store.state.uid //获取uid
+  store.commit('setToPath', {
+    path: to.fullPath
+  })
+  if (uid == null) { //待修改  改成==null 上传服务器的时候修改
+    let code = parseUrl('code')
+    if (code != null) {
+      API.getUserWechatInfo({
+        data: {
+          code: code
+        }
+      }).then(res => {
+        if (res.data.flag) {
+          let {
+            data
+          } = res
+          let wechatInfo = Object.assign({
+            openid: data.openid
+          }, {
+            nickname: data.nickname
+          }, {
+            headimg: data.headimg
+          })
+          store.commit('setWechatInfo', {
+            wechatInfo: wechatInfo
+          })
+          // next(to.fullPath)
+          // window.location.href = `${window.location.href}${to.fullPath}`
+          // setTimeout(() => {
+          next()
+          // }, 2000)
+        }
+      })
+    } else {
+      window.location.href =
+        `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx347f2c6ff3c8a16d&redirect_uri=${window.location.origin}?path=aaa&response_type=code&scope=snsapi_userinfo#wechat_redirect`
+    }
+  } else {
+    next()
+  }
 })
 
 // API.postAPI({data: {
@@ -79,7 +79,7 @@ Vue.config.productionTip = false
 Vue.config.debug = true
 
 new Vue({
-	router,
-	store,
-	render: h => h(App)
+  router,
+  store,
+  render: h => h(App)
 }).$mount('#app')
