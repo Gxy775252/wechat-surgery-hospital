@@ -32,7 +32,7 @@
   <div class="white">
     <div v-html=""></div>
   </div>
-  <div style="height: 3rem;"></div>
+  <div class="divHeight"></div>
 </div>
 </template>
 

@@ -45,7 +45,7 @@
   </div>
 
 
-  <div style="height: 6rem;"></div>
+  <div class="divHeight"></div>
   <div class="buttonA" @click="goUpdayend(1)">
     <button>上传美丽日记</button>
   </div>

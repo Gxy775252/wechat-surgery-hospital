@@ -50,7 +50,7 @@
 				<p>2018/45/222</p>
 			</div>
 		</div>
-		<div style="height: 3rem;"></div>
+		<div class="divHeight"></div>
 		<div class="bottom">
 			<button>退款</button>
 		</div>

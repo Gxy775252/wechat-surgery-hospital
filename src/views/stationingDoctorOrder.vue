@@ -14,7 +14,7 @@
 				<p></p>
 			</div>
 		</div>
-	<div class="conList" v-for="(item,key,index) in listOrderinfo" :key="key"@click="goOrderdetails(item.id)">
+		<div class="conList" v-for="(item,key,index) in listOrderinfo" :key="key" @click="goOrderdetails(item.id)">
 			<div class="name">
 				<div class="name-left">
 					<p>用户<span></span></p>
@@ -44,7 +44,7 @@
 		</div>
 		<div v-if="listOrderinfo.length==0" class="cartNull">
 			<img src="../assets/images/icon/cartNull.png" />
-			<p>暂无信息</p >
+			<p>暂无信息</p>
 		</div>
 	</div>
 
@@ -52,46 +52,23 @@
 </template>
 
 <script>
-import { Toast } from 'we-vue';
-import * as api from '@/assets/js/api';
-import * as session from '@/assets/js/session';
-export default {
-	data() {
-		return {
-			listOrderinfo: [],
-			backId: 0,
-			ImgNull: this.$store.state.ImgNull
-		};
-	},
-	created: function() {
-		this.$store.commit('showBottomNav', {
-			isShow: false
-		});
-		api.getDoctorOrderList({
-			data: {
-				openid: this.$store.state.uid,
-				status: 0
-			}
-		}).then(res => {
-			if (res.data.flag) {
-				console.log('医生订单详情', res.data);
-				(this.listOrderinfo = res.data.listOrder), (this.backId = 0);
-			} else {
-				Toast.text({
-					duration: 1000,
-					message: res.data.msg
-				});
-			}
-		});
-	},
-	methods: {
-		//跳转订单详情
-		goOrderdetails: function(res) {
-			session.Lstorage.setItem('id', res);
-			this.$router.push({ name: 'stationingDoctorOrderDetail' });
+	import {
+		Toast
+	} from 'we-vue';
+	import * as api from '@/assets/js/api';
+	import * as session from '@/assets/js/session';
+	export default {
+		data() {
+			return {
+				listOrderinfo: [],
+				backId: 0,
+				ImgNull: this.$store.state.ImgNull
+			};
 		},
-		//点击全部订单
-		whole: function() {
+		created: function() {
+			this.$store.commit('showBottomNav', {
+				isShow: false
+			});
 			api.getDoctorOrderList({
 				data: {
 					openid: this.$store.state.uid,
@@ -99,7 +76,7 @@ export default {
 				}
 			}).then(res => {
 				if (res.data.flag) {
-					console.log('医生订单全部', res.data);
+					console.log('医生订单详情', res.data);
 					(this.listOrderinfo = res.data.listOrder), (this.backId = 0);
 				} else {
 					Toast.text({
@@ -109,47 +86,74 @@ export default {
 				}
 			});
 		},
-		//点击未核销订单
-		unfinished: function() {
-			api.getDoctorOrderList({
-				data: {
-					openid: this.$store.state.uid,
-					status: 1
-				}
-			}).then(res => {
-				if (res.data.flag) {
-					console.log('医生订单未核销', res.data);
-					(this.listOrderinfo = res.data.listOrder), (this.backId = 1);
-				} else {
-					Toast.text({
-						duration: 1000,
-						message: res.data.msg
-					});
-				}
-			});
-		},
-		onOver: function() {
-			api.getDoctorOrderList({
-				data: {
-					openid: this.$store.state.uid,
-					status: 2
-				}
-			}).then(res => {
-				if (res.data.flag) {
-					console.log('医生订单已核销', res.data);
-					(this.listOrderinfo = res.data.listOrder), (this.backId = 2);
-				} else {
-					Toast.text({
-						duration: 1000,
-						message: res.data.msg
-					});
-				}
-			});
+		methods: {
+			//跳转订单详情
+			goOrderdetails: function(res) {
+				session.Lstorage.setItem('id', res);
+				this.$router.push({
+					name: 'stationingDoctorOrderDetail'
+				});
+			},
+			//点击全部订单
+			whole: function() {
+				api.getDoctorOrderList({
+					data: {
+						openid: this.$store.state.uid,
+						status: 0
+					}
+				}).then(res => {
+					if (res.data.flag) {
+						console.log('医生订单全部', res.data);
+						(this.listOrderinfo = res.data.listOrder), (this.backId = 0);
+					} else {
+						Toast.text({
+							duration: 1000,
+							message: res.data.msg
+						});
+					}
+				});
+			},
+			//点击未核销订单
+			unfinished: function() {
+				api.getDoctorOrderList({
+					data: {
+						openid: this.$store.state.uid,
+						status: 1
+					}
+				}).then(res => {
+					if (res.data.flag) {
+						console.log('医生订单未核销', res.data);
+						(this.listOrderinfo = res.data.listOrder), (this.backId = 1);
+					} else {
+						Toast.text({
+							duration: 1000,
+							message: res.data.msg
+						});
+					}
+				});
+			},
+			onOver: function() {
+				api.getDoctorOrderList({
+					data: {
+						openid: this.$store.state.uid,
+						status: 2
+					}
+				}).then(res => {
+					if (res.data.flag) {
+						console.log('医生订单已核销', res.data);
+						(this.listOrderinfo = res.data.listOrder), (this.backId = 2);
+					} else {
+						Toast.text({
+							duration: 1000,
+							message: res.data.msg
+						});
+					}
+				});
+			}
 		}
-	}
-};
+	};
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/css/stationingDoctorOrder.scss';
+	@import '@/assets/css/stationingDoctorOrder.scss';
 </style>

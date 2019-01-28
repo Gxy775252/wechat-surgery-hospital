@@ -5,10 +5,10 @@ const constants = require('./constants')
 const API_ROOT = 'http://api.slb.realistevip.com'
 
 import {
-  _apiPOST,
-  _apiGET,
-  _apiPUT,
-  _apiDELETE
+	_apiPOST,
+	_apiGET,
+	_apiPUT,
+	_apiDELETE
 } from './apiUtils'
 
 // 根据code 换取用户信息 /wx/getOpenidByCode
@@ -26,14 +26,19 @@ export const ifVipExisted = (options) => _apiPOST(`${API_ROOT}/wx/ifVipExisted`,
 //	上传图片
 export const uploadPic = (options) => _apiPOST(`${API_ROOT}/wx/uploadPic`, options)
 
+//	上传文件
+export const uploadFile = (options) => _apiPOST(`${API_ROOT}/wx/uploadFile`, options)
+
 // 微信 config /wx/getJssdkSign
 export const getWechatConfig = (options) => _apiPOST(`${API_ROOT}/wx/getJssdkSign`, options)
 
 // 微信 支付 签名
-export const getWechatPay = (id, preId, options) => _apiGET(`${API_ROOT}/wx/getWxpaySign?openid=${id}&&prepay_id=${preId}`, options)
+export const getWechatPay = (id, preId, options) => _apiGET(
+	`${API_ROOT}/wx/getWxpaySign?openid=${id}&&prepay_id=${preId}`, options)
 
 // 检查预支付id是否已支付
-export const checkPrepayidPaid = (id, preId, options) => _apiGET(`${API_ROOT}/wx/checkPrepayidPaid?openid=${id}&&prepay_id=${preId}`, options)
+export const checkPrepayidPaid = (id, preId, options) => _apiGET(
+	`${API_ROOT}/wx/checkPrepayidPaid?openid=${id}&&prepay_id=${preId}`, options)
 
 
 /**首页相关 --------------------------------------------**/
@@ -265,6 +270,9 @@ export const getChargeInterestList = (options) => _apiPOST(`${API_ROOT}/wx/getCh
 
 
 /**驻场医生 -------------------------------------------- start**/
+
+// 驻场医生-个人中心
+export const registerDoctor = (options) => _apiPOST(`${API_ROOT}/wx/registerDoctor`, options)
 
 // 驻场医生-个人中心
 export const getDoctorDetailSettled = (options) => _apiPOST(`${API_ROOT}/wx/getDoctorDetail`, options)

@@ -91,7 +91,7 @@
 		<div class="seeI">
 			<img src="@/assets/images/icon/kanjian.png" />
 		</div>
-		<div style="height: 5rem;"></div>
+		<div class="divHeight"></div>
 		<div class="botton">
 			<button >分享订单</button>
 			<!-- 分享后进入的页面 -->

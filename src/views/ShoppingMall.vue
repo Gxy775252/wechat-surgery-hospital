@@ -1,6 +1,6 @@
 <!-- 商城首页 -->
 <template>
-	<div>
+	<div style="background: #FFFFFF;">
 		<div class="mallTop">
 			<div class="mallCenter">
 				<div class="mallImg">
@@ -53,8 +53,8 @@
 		<div class="list">
 			<div class="listText" v-for="(item,key,index) in listHotInfo" :key="key">
 				<div class="listImg" v-if="isId!=item.id">
-					<img :src="item.resource.cover || ImgNull" />
-					<div v-if="item.resource.isVideo==1 " class="playImg" @click="isIdFun(item.resource.url,item.id)">
+					<img :src="item.resource.cover || ImgNull" @click="goCommodityDetail(item.id)" />
+					<div v-if="item.resource.isVideo==1 " class="playImg" @click.stop="isIdFun(item.resource.url,item.id)">
 						<img src="@/assets/images/icon/playImg.png" />
 					</div>
 				</div>
@@ -74,7 +74,7 @@
 		<div class="seeI">
 			<img src="@/assets/images/icon/kanjian.png" />
 		</div>
-		<div style="height:3rem;"></div>
+		<div class="divHeight"></div>
 	</div>
 </template>
 
@@ -114,6 +114,8 @@
 			this.$store.commit('showBottomNav', {
 				isShow: true
 			});
+		},
+		mounted: function() {
 			api.getShoppingMall({
 				data: {
 					openid: this.$store.state.uid,

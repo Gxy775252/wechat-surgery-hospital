@@ -4,7 +4,7 @@
 		<div class="header">
 			<div class="swiper">
 				<div class="swiperImg">
-					<wv-swipe :autoplay="4000" class="swiperImg"v-if="isId!=-1">
+					<wv-swipe :autoplay="4000" class="swiperImg" v-if="isId!=-1">
 						<wv-swipe-item v-for="(item,key,index) in swipeContent" :key="key" v-if="swipeContent.length!=0">
 							<img :src="item.cover || ImgNull" class="imgA" @click="funcitonA(item.sourceid)" v-if="item.redirectType==0" />
 							<div v-if="item.isVideo==1" class="playImg" @click.stop="isIdFun(item.url,-1)">
@@ -23,7 +23,7 @@
 						<img :src="item.headimg || ImgNull" />
 					</div>
 					<div class="headName">
-						<p>{{item.name}}/DrQi</p>
+						<p>{{item.name}}/{{item.ename}}</p>
 						<p>{{item.title}}</p>
 					</div>
 					<div class="headXian">
@@ -37,8 +37,8 @@
 					<div class="docName" v-html="item.brief"></div>
 				</div>
 				<div class="boxBottom" v-if="item.coverResource!=null && isId!=item.id">
-					<img :src="item.coverResource.cover || ImgNull" />
-					<div v-if="item.coverResource.isVideo==1 " class="playImg" @click="isIdFun(item.coverResource.url,item.id)">
+					<img :src="item.coverResource.cover || ImgNull" @click="goDoctorDetail(item.id)" />
+					<div v-if="item.coverResource.isVideo==1 " class=" playImg" @click.stop="isIdFun(item.coverResource.url,item.id)">
 						<img src="@/assets/images/icon/playImg.png" />
 					</div>
 				</div>

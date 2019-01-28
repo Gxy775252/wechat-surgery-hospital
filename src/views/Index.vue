@@ -1,6 +1,6 @@
 <!-- 首页 -->
 <template>
-	<div style='overflow: hidden;'>
+	<div style='overflow: hidden;background: #fff;'>
 		<div class="TopContent">
 			<div class="logo">
 				<img src="@/assets/images/icon/logo.png" />
@@ -99,8 +99,7 @@
 		<div class="seeI">
 			<img src="@/assets/images/icon/kanjian.png" />
 		</div>
-
-		<div style="height:3rem;"></div>
+		<div class="divHeight"></div>
 		<!-- 选择肤质 -->
 		<wv-picker :visible.sync="fruitPickerShow" :columns="fruitColumns" value-key="title" @confirm="confirmPerson" />
 	</div>

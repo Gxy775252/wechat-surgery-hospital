@@ -126,7 +126,7 @@
   <div class="submit" @click="submit">
     <button>立即预约</button>
   </div>
-  <div style="height:3rem;"></div>
+  <div class="divHeight"></div>
   <!-- 选择门店 -->
   <wv-picker :visible.sync="fruitPickerShow" :columns="fruitColumns" value-key="name" @confirm="confirmPerson" />
   <!-- 选择项目 -->

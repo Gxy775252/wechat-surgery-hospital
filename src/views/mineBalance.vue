@@ -64,7 +64,7 @@
 				</div>
 			</div>
 		</div>
-		<div style="height: 6rem;"></div>
+		<div class="divHeight"></div>
 		<div class="buttonA" @click="goRecharge">
 			<button>充值</button>
 		</div>

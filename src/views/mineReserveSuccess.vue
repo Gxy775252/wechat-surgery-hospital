@@ -40,7 +40,7 @@
   <div class="seeI">
     <img src="@/assets/images/icon/kanjian.png" />
   </div>
-  <div style='height:3rem;'></div>
+  <div class="divHeight"></div>
   <div class="bottom" v-if='yuyue'>
     <button @click="model">取消预约</button>
   </div>

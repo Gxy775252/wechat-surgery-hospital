@@ -114,7 +114,7 @@
 			<img src="@/assets/images/icon/cart.png" />
 		</div>
 		<div class="seeI"><img src="@/assets/images/icon/kanjian.png" /></div>
-		<div style="height: 3rem;"></div>
+		<div class="divHeight"></div>
 		<!-- 加入购物车规格弹层内容 -->
 		<div class="selectModel" v-if="addSizeHidden">
 			<div class="modelInside">
@@ -262,7 +262,7 @@
 					<p class='listPA'>{{item.prop}}</p>
 					<p class='listPB'>{{item.descript}}</p>
 				</div>
-				<div style="height:4rem;"></div>
+				<div class="divHeight"></div>
 				<div class="bottomA">
 					<button class="success" @click='successColse'>确定</button>
 				</div>
@@ -285,6 +285,7 @@
 	import SamllVideo from '@/components/samllVideoPlay.vue';
 
 	export default {
+
 		name: 'commodityDetail',
 		data() {
 			return {
@@ -369,8 +370,10 @@
 			};
 			that.pubicFunction(that.shopId);
 
+
 		},
 		methods: {
+
 			goCommodityDetail: function(res) {
 				//跳转到商品详情
 				this.pubicFunction(res);
@@ -387,6 +390,8 @@
 
 			openaddSize: function() {
 				// 通过加入点击显示的弹层
+// 				console.log('显示弹层',this.function2Public());
+// 				return;
 				this.addSizeHidden = true;
 			},
 
@@ -430,7 +435,12 @@
 				this.num += 1;
 			},
 
+			fll: function() {
+				return 1;
+			},
 			addToCart: function(res) {
+				let that = this;
+				this.disabled = true;
 				// 加入购物车
 				if (this.sizeId == 0) {
 					Toast.text({
@@ -439,7 +449,6 @@
 					});
 					return;
 				}
-				this.disabled = true;
 				api.addCart({
 					data: {
 						openid: this.$store.state.uid,
@@ -463,6 +472,8 @@
 					}
 					this.disabled = false;
 				});
+
+
 			},
 
 			immediatePurchase: function() {
@@ -566,7 +577,26 @@
 			surt: function(e) {
 				this.isId = e
 			},
-		}
+			// 待修改
+// 			function2Public: function() {
+// 				// 检测当前openid是否注册过
+// 				api.ifVipExisted({
+// 					data: {
+// 						openid: this.$store.state.uid,
+// 					}
+// 				}).then(res => {
+// 					console.log('显示收到的内容');
+// 					if (res.data.flag) {
+// 						return true;
+// 					} else {
+// 						return false;
+// 					}
+// 				});
+// 			},
+
+
+		},
+
 	};
 </script>
 

@@ -54,7 +54,7 @@
 			<button type="button" name="button" class="btnA" @click="goReserve">在线预约</button>
 			<button type="button" name="button" class="btnB">在线咨询</button>
 		</div>
-		<div style="height: 3rem;"></div>
+		<div class="divHeight"></div>
 	</div>
 </template>
 

@@ -78,7 +78,7 @@
   <div class="seeI">
     <img src="@/assets/images/icon/kanjian.png" />
   </div>
-  <div style="height:3rem;"></div>
+  <div class="divHeight"></div>
   <div class="bottomOperation" v-if="orderInfo.status==0">
     <div class="leftOperation">￥{{orderInfo.money}}</div>
     <div class="centerOperation" @click="closeOrder">取消订单</div>
@@ -233,11 +233,14 @@ export default {
             }
           }).then(res => {
             if (res.data.flag) {
-              that.reload();
+							that.$store.state.prepay_id = null;
               Toast.text({
                 duration: 1000,
                 message: '取消成功'
               });
+							setTimeout(function(){
+								history.go(-1);
+							},1000)
             } else {
               Toast.text({
                 duration: 1000,

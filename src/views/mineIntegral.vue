@@ -34,7 +34,7 @@
       </div>
     </div>
   </div>
-  <div style="height: 3rem;"></div>
+  <div class="divHeight"></div>
   <div class="buttonA">
     <button @click="give">送积分</button>
   </div>
