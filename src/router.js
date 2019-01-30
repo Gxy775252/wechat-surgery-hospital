@@ -54,6 +54,15 @@ export default new Router({
 			}
 		},
 		{
+			path: '/doctorCaseDetail',
+			name: 'doctorCaseDetail',
+			component: () => import('./views/doctorCaseDetail.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '案例详情'
+				next()
+			}
+		},
+		{
 			path: '/instrumentList',
 			name: 'instrumentList',
 			component: () => import('./views/instrumentList.vue'),
@@ -195,6 +204,15 @@ export default new Router({
 			component: () => import('./views/Reserve.vue'),
 			beforeEnter: (to, from, next) => {
 				document.title = '预约'
+				next()
+			}
+		},
+		{
+			path: '/reserveDetail2',
+			name: 'reserveDetail2',
+			component: () => import('./views/reserveDetail2.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '项目详情'
 				next()
 			}
 		},
@@ -532,6 +550,27 @@ export default new Router({
 			}
 		},
 		/**驻场医生内容 END**/
+
+		/**核销员**/
+		{
+			path: '/checkPeople-load',
+			name: 'checkPeople-load',
+			component: () => import('./views/checkPeople-load.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '注册'
+				next()
+			}
+		},
+		{
+			path: '/checkPeople-List',
+			name: 'checkPeople-List',
+			component: () => import('./views/checkPeople-List.vue'),
+			beforeEnter: (to, from, next) => {
+				document.title = '核销员'
+				next()
+			}
+		},
+		/**核销员 END**/
 
 		{
 			path: '/payment',

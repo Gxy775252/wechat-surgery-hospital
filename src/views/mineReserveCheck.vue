@@ -2,7 +2,7 @@
 	<div class="all">
 		<div class="top2">
 			<p>已核销</p>
-			<p>积分奖励500，已发放至你的积分账户</p>
+			<p>积分奖励，已发放至你的积分账户</p>
 		</div>
 		<div class="doctor">
 			<div class="doctorTop">
@@ -91,7 +91,7 @@
 		<div class="seeI">
 			<img src="@/assets/images/icon/kanjian.png" />
 		</div>
-		<div style="height: 5rem;"></div>
+		<div class="divHeight"></div>
 		<div class="botton">
 			<button >分享订单</button>
 			<!-- 分享后进入的页面 -->

@@ -9,8 +9,8 @@
 				<p>您可以去个人中心查看我的订单的进度，也可以返回首页继续利兰其他商品</p>
 			</div>
 			<div class="successOperation">
-				<button>查看订单</button>
-				<button>返回首页</button>
+				<button @click="seeMine">查看订单</button>
+				<button @click="returnIndex">返回首页</button>
 			</div>
 		</div>
 		<div class="successTips">
@@ -23,18 +23,30 @@
 </template>
 
 <script>
-export default {
-    data() {
-        return {};
-    },
-    created: function() {
-        this.$store.commit('showBottomNav', {
-            isShow: false
-        });
-    }
-};
+	export default {
+		data() {
+			return {};
+		},
+		created: function() {
+			this.$store.commit('showBottomNav', {
+				isShow: false
+			});
+		},
+		methods: {
+			returnIndex: function() {
+				this.$router.push({
+					name: 'index',
+				});
+			},
+			seeMine: function() {
+				this.$router.push({
+					name: 'mine',
+				});
+			},
+		}
+	};
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/css/successfulPayment.scss';
+	@import '@/assets/css/successfulPayment.scss';
 </style>

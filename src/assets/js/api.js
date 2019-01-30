@@ -2,7 +2,7 @@
 const constants = require('./constants')
 
 // const API_ROOT = constants.requestUrl.substr(0, constants.requestUrl.length - 1)
-const API_ROOT = 'http://tcjh.suitang1973.com'
+const API_ROOT = 'http://api.slb.realistevip.com'
 
 import {
 	_apiPOST,
@@ -20,14 +20,26 @@ export const getAndSendSms = (options) => _apiPOST(`${API_ROOT}/wx/getAndSendSms
 // post获取数据
 export const postRegister = (options) => _apiPOST(`${API_ROOT}/wx/register`, options)
 
+//	检测openid是否是vip
+export const ifVipExisted = (options) => _apiPOST(`${API_ROOT}/wx/ifVipExisted`, options)
+
 //	上传图片
 export const uploadPic = (options) => _apiPOST(`${API_ROOT}/wx/uploadPic`, options)
+
+//	上传文件
+export const uploadFile = (options) => _apiPOST(`${API_ROOT}/wx/uploadFile`, options)
 
 // 微信 config /wx/getJssdkSign
 export const getWechatConfig = (options) => _apiPOST(`${API_ROOT}/wx/getJssdkSign`, options)
 
 // 微信 支付 签名
-export const getWechatPay = (id, preId, options) => _apiGET(`${API_ROOT}/wx/getWxpaySign?openid=${id}&&prepay_id=${preId}`, options)
+export const getWechatPay = (id, preId, options) => _apiGET(
+	`${API_ROOT}/wx/getWxpaySign?openid=${id}&&prepay_id=${preId}`, options)
+
+// 检查预支付id是否已支付
+export const checkPrepayidPaid = (id, preId, options) => _apiGET(
+	`${API_ROOT}/wx/checkPrepayidPaid?openid=${id}&&prepay_id=${preId}`, options)
+
 
 /**首页相关 --------------------------------------------**/
 
@@ -42,6 +54,9 @@ export const getDoctorDetail = (options) => _apiPOST(`${API_ROOT}/wx/goDoctorDet
 
 // 获取医生案例列表信息
 export const getDoctorCase = (options) => _apiPOST(`${API_ROOT}/wx/goDoctorCase`, options)
+
+// 获取医生案例列表信息
+export const goCaseDetail = (options) => _apiPOST(`${API_ROOT}/wx/goCaseDetail`, options)
 
 // 获取仪器列表信息
 export const getInstrumentList = (options) => _apiPOST(`${API_ROOT}/wx/goInstList`, options)
@@ -132,7 +147,7 @@ export const getHospitalProjectList = (options) => _apiPOST(`${API_ROOT}/wx/getH
 export const getProjectDoctorList = (options) => _apiPOST(`${API_ROOT}/wx/getProjectDoctorList`, options)
 
 // 获取项目详情
-export const getProjectDetail = (options) => _apiPOST(`${API_ROOT}/wx/getProjectDetail`, options)
+export const goProjectDetail = (options) => _apiPOST(`${API_ROOT}/wx/goProjectDetail`, options)
 
 // 模板消息-预约详情页
 export const goModelOrderDetail = (options) => _apiPOST(`${API_ROOT}/wx/goModelOrderDetail`, options)
@@ -199,26 +214,54 @@ export const getVipDiaryDetail = (options) => _apiPOST(`${API_ROOT}/wx/getVipDia
 //获取我的日记详情
 export const saveDiary = (options) => _apiPOST(`${API_ROOT}/wx/saveDiary`, options)
 
+//设置密码
+export const setGiftPwd = (options) => _apiPOST(`${API_ROOT}/wx/setGiftPwd`, options)
+
 //重置密码
 export const getResetGiftPwd = (options) => _apiPOST(`${API_ROOT}/wx/resetGiftPwd`, options)
 
-//  我的预约单列表
+//  我的商城订单
 export const getVipGoodsOrderList = (options) => _apiPOST(`${API_ROOT}/wx/getVipGoodsOrderList`, options)
+
+//  我的商城订单详情
+export const getVipGoodsOrderDetail = (options) => _apiPOST(`${API_ROOT}/wx/getVipGoodsOrderDetail`, options)
+
+//  取消商城单
+export const cancelGoodsOrder = (options) => _apiPOST(`${API_ROOT}/wx/cancelGoodsOrder`, options)
+
+//  取消商城单
+export const submitComment = (options) => _apiPOST(`${API_ROOT}/wx/submitComment`, options)
+
+//  订单物流页
+export const goVipGoodsOrderLogistics = (options) => _apiPOST(`${API_ROOT}/wx/goVipGoodsOrderLogistics`, options)
+
+//  订单物流页
+export const confirmReceipt = (options) => _apiPOST(`${API_ROOT}/wx/confirmReceipt`, options)
+//  重新付款
+export const repayGoodsOrder = (options) => _apiPOST(`${API_ROOT}/wx/repayGoodsOrder`, options)
+
+
+// 退货页面
+export const goOrderComment = (options) => _apiPOST(`${API_ROOT}/wx/goOrderComment`, options)
 
 //  取消预约单
 export const cancelPrjtOrder = (options) => _apiPOST(`${API_ROOT}/wx/cancelPrjtOrder`, options)
 
-//  取消预约单
-export const getVipPrjtOrderDetail = (options) => _apiPOST(`${API_ROOT}/wx/getVipPrjtOrderDetail`, options)
+//  我的预约单列表
+export const getVipPrjtOrderList = (options) => _apiPOST(`${API_ROOT}/wx/getVipPrjtOrderList`, options)
 
-//  取消商城单
-export const cancelGoodsOrder = (options) => _apiPOST(`${API_ROOT}/wx/cancelGoodsOrder`, options)
+//  我的预约单详情
+export const getVipPrjtOrderDetail = (options) => _apiPOST(`${API_ROOT}/wx/getVipPrjtOrderDetail`, options)
 
 //  申请退货退款页面
 export const refundOrder = (options) => _apiPOST(`${API_ROOT}/wx/refundOrder`, options)
 
 // 获取拉新二维码信息
-export const getVipShare = (options) => _apiPOST(`${API_ROOT}/wx/goVipShare`, options)
+export const goVipShare = (options) => _apiPOST(`${API_ROOT}/wx/goVipShare`, options)
+
+// 获取拉新二维码信息
+export const goVipShareList = (options) => _apiPOST(`${API_ROOT}/wx/goVipShareList`, options)
+
 
 // 获取充值积分收益列表信息
 export const getChargeInterestList = (options) => _apiPOST(`${API_ROOT}/wx/getChargeInterestList`, options)
@@ -227,6 +270,9 @@ export const getChargeInterestList = (options) => _apiPOST(`${API_ROOT}/wx/getCh
 
 
 /**驻场医生 -------------------------------------------- start**/
+
+// 驻场医生-个人中心
+export const registerDoctor = (options) => _apiPOST(`${API_ROOT}/wx/registerDoctor`, options)
 
 // 驻场医生-个人中心
 export const getDoctorDetailSettled = (options) => _apiPOST(`${API_ROOT}/wx/getDoctorDetail`, options)

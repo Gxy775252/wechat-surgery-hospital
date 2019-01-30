@@ -17,9 +17,9 @@ export default {
 	},
 	methods: {
 		clickDetermine: function() {
-			if (this.data == 'register') {
+			// if (this.data == 'register') {
 				this.$emit('HideTanChuang', { data: this.data });
-			}
+			// }
 		}
 	}
 };

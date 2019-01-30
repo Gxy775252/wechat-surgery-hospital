@@ -1,146 +1,177 @@
-.navList{
+.navList {
 	width: 100%;
-	height:calc(6.53rem/2);
-	background:#fff;
+	height: calc(6.53rem/2);
+	background: #fff;
 	display: -webkit-box;
 	align-items: center;
 	overflow-x: scroll;
 	overflow-y: hidden;
-	>div{
-		padding:6px calc(2rem/2);
-		margin-left:5px;
-		>p:first-child{
-			font-size:calc(1.73rem/2);
+
+	> div {
+		padding: 6px calc(2rem/2);
+		margin-left: 5px;
+
+		> p:first-child {
+			font-size: calc(1.73rem/2);
 		}
-		>p:last-child{
-			width:calc(2.5rem/2);
-			height:calc(0.2rem/2);
-			background:#008e83;
-			margin:auto;
-			margin-top:5px;
+
+		> p:last-child {
+			width: calc(2.5rem/2);
+			height: calc(0.2rem/2);
+			margin: 5px auto auto;
 		}
 	}
 }
-.conList{
-	width:calc(47.6rem/2);
-	background:#fff;
-	margin:auto;
-	margin-top:calc(2rem/2);
-	.top{
+
+.nav-p1 {
+	color: #008e83;
+}
+
+.nav-p2 {
+	background: #008e83;
+}
+
+.conList {
+	width: calc(47.6rem/2);
+	background: #fff;
+	margin: calc(2rem/2) auto auto;
+
+	.top {
 		width: 100%;
-		padding:15px 0;
+		padding: 15px 0;
 		border-bottom: 1px solid #f7f7f7;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		>p:first-child{
-			font-size:calc(1.53rem/2);
-			margin-left:calc(2.33rem/2);
-			color:#666;
+
+		> p:first-child {
+			font-size: calc(1.53rem/2);
+			margin-left: calc(2.33rem/2);
+			color: #666;
 		}
-		>p:last-child{
-			font-size:calc(1.66rem/2);
+
+		> p:last-child {
+			font-size: calc(1.66rem/2);
 			margin-right: calc(2.33rem/2);
-			color:#008e83;
+			color: #008e83;
 		}
 	}
-	.center{
+
+	.center {
 		margin: auto;
 		border-bottom: 1px solid #f7f7f7;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		padding: 20px 0;
-		&-left{
+
+		&-left {
 			display: flex;
-			.leftImg{
-				width:calc(9.13rem/2);
-				height:calc(9.13rem/2);
-				margin-left:calc(2.53rem/2);
-				>img{
+
+			.leftImg {
+				width: calc(9.13rem/2);
+				height: calc(9.13rem/2);
+				margin-left: calc(2.53rem/2);
+
+				> img {
 					width: 100%;
 					height: 100%;
 				}
 			}
-			.leftText{
-				margin-left:calc(1.86rem/2);
-				>p:first-child{
-					font-size:calc(1.73rem/2);
-					color:#333;
-					margin-top:3px;
+
+			.leftText {
+				margin-left: calc(1.86rem/2);
+
+				> p:first-child {
+					font-size: calc(1.73rem/2);
+					color: #333;
+					margin-top: 3px;
 				}
-				>p:last-child{
-					font-size:calc(1.06rem/2);
-					color:#666;
-					height:calc(2.13rem/2);
+
+				> p:last-child {
+					font-size: calc(1.06rem/2);
+					color: #666;
+					height: calc(2.13rem/2);
 					line-height: calc(2.13rem/2);
 					background: #f7f7f7;
-					padding:5px 10px;
+					padding: 5px 10px;
 					border-radius: 4px;
-					margin-top:5px;
+					margin-top: 5px;
 				}
 			}
 		}
-		&-right{
+
+		&-right {
 			text-align: right;
 			margin-right: calc(2.33rem/2);
-			height:calc(9.13rem/2);
+			height: calc(9.13rem/2);
 			position: relative;
-			>p:first-child{
-				font-size:calc(1.46rem/2);
+
+			> p:first-child {
+				font-size: calc(1.46rem/2);
 				color: #333;
 			}
-			>p:last-child{
-				font-size:calc(1.66rem/2);
-				color:#333;
+
+			> p:last-child {
+				font-size: calc(1.66rem/2);
+				color: #333;
 				position: absolute;
 				bottom: 0;
 				right: 0;
 			}
 		}
 	}
-	.bottom{
-		padding:15px 0;
+
+	.bottom {
+		padding: 15px 0;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		&-left{
-			margin-left:calc(2.33rem/2);
+
+		&-left {
+			margin-left: calc(2.33rem/2);
 			display: flex;
 			align-items: center;
-			>p:first-child{
-				font-size:calc(1.53rem/2);
-				color:#999;
+
+			> p:first-child {
+				font-size: calc(1.53rem/2);
+				color: #999;
 			}
-			>p:last-child{
-				font-size:calc(1.86rem/2);
-				color:#008e83;
+
+			> p:last-child {
+				font-size: calc(1.86rem/2);
+				color: #008e83;
 			}
 		}
-		&-right{
-			>button{
-				width:calc(10.53rem/2);
-				height:calc(3.93rem/2);
-				font-size:calc(1.53rem/2);
-				color:#333;
+
+		&-right {
+			> button {
+				width: calc(10.53rem/2);
+				height: calc(3.93rem/2);
+				font-size: calc(1.53rem/2);
+				color: #333;
 				margin-right: calc(2.33rem/2);
 				border-radius: 4px;
 			}
 		}
 	}
 }
+
 .color1 {
 	background: #fff;
 	border: 1px solid #e2e2e2;
 	color: #333 !important;
 }
+
 .color2 {
 	background: #008e83;
 	color: #fff !important;
 }
+
 .navSelect1 {
 	color: #008e83 !important;
 }
+
 .navSelect2 {
 	background: #008e83 !important;
 }

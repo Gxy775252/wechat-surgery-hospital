@@ -43,7 +43,7 @@
 					<div style="clear: both;"></div>
 				</div>
 			</div>
-			<div style="height: 6rem;"></div>
+			<div class="divHeight"></div>
 		</div>
 		<div class="buttonA">
 			<button>提交</button>
@@ -95,7 +95,7 @@
 					<div style="clear: both;"></div>
 				</div>
 			</div>
-			<div style="height: 6rem;"></div>
+			<div class="divHeight"></div>
 		</div>
 		<div class="buttonA">
 			<button>提交</button>

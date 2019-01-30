@@ -1,6 +1,6 @@
 <!-- 我的信息 -->
 <template>
-	<div>
+	<div style='backgeound:#fff;'>
 		<div class="head">
 			<div class="headImg">
 				<img :src="vipInfo.headimg || ImgNull" />
@@ -48,7 +48,7 @@
 		<div class="list">
 			<p></p>
 			<div class="list-right">
-				<input placeholder="填写具体详细地址" style="right:30px;" class="listInput" v-model="areaInput"/>
+				<input placeholder="填写具体详细地址" style="right:30px;" class="listInput" v-model="areaInput" />
 			</div>
 		</div>
 		<div class="list">
@@ -69,6 +69,7 @@
 				</div>
 			</div>
 		</div>
+		<div class="divHeight"></div>
 		<!-- 日期选择器 -->
 		<wv-datetime-picker ref="picker" type="date" v-model="dateTime" @confirm="onConfirm" :start-date="new Date('1970/01/01 00:00')"
 		 :end-date="new Date()">
@@ -84,174 +85,102 @@
 	</div>
 </template>
 <script>
-import Vue from 'vue';
-import * as api from '@/assets/js/api';
-import chinaAreaData from 'china-area-data';
-import { Picker, DatetimePicker, Toast,Input } from 'we-vue';
-import * as session from '@/assets/js/session';
-Vue.use(DatetimePicker).use(Picker).use(Input);
+	import Vue from 'vue';
+	import * as api from '@/assets/js/api';
+	import chinaAreaData from 'china-area-data';
+	import {
+		Picker,
+		DatetimePicker,
+		Toast,
+		Input
+	} from 'we-vue';
+	import * as session from '@/assets/js/session';
+	Vue.use(DatetimePicker).use(Picker).use(Input);
 
-const provinces = Object.values(chinaAreaData[86]);
-// 获取某一省下的市
-const getCities = province => {
-	let provinceCode;
-	for (let i in chinaAreaData[86]) {
-		if (province === chinaAreaData[86][i]) {
-			provinceCode = i;
-			break;
+	const provinces = Object.values(chinaAreaData[86]);
+	// 获取某一省下的市
+	const getCities = province => {
+		let provinceCode;
+		for (let i in chinaAreaData[86]) {
+			if (province === chinaAreaData[86][i]) {
+				provinceCode = i;
+				break;
+			}
+		}
+		return typeof chinaAreaData[provinceCode] === 'object' ?
+			Object.values(chinaAreaData[provinceCode]) : [];
+	};
+	// 获取某一市下的区/县
+	function getAreas(province, city) {
+		let provinceCode, cityCode;
+		for (let i in chinaAreaData[86]) {
+			if (province === chinaAreaData[86][i]) {
+				provinceCode = i;
+				break;
+			}
+		}
+		for (let i in chinaAreaData[provinceCode]) {
+			if (city === chinaAreaData[provinceCode][i]) {
+				cityCode = i;
+				break;
+			}
+		}
+		if (chinaAreaData[cityCode]) {
+			return typeof chinaAreaData[cityCode] === 'object' ?
+				Object.values(chinaAreaData[cityCode]) : [];
+		} else {
+			// 只有两级的情况
+			return [];
 		}
 	}
-	return typeof chinaAreaData[provinceCode] === 'object'
-		? Object.values(chinaAreaData[provinceCode])
-		: [];
-};
-// 获取某一市下的区/县
-function getAreas(province, city) {
-	let provinceCode, cityCode;
-	for (let i in chinaAreaData[86]) {
-		if (province === chinaAreaData[86][i]) {
-			provinceCode = i;
-			break;
-		}
-	}
-	for (let i in chinaAreaData[provinceCode]) {
-		if (city === chinaAreaData[provinceCode][i]) {
-			cityCode = i;
-			break;
-		}
-	}
-	if (chinaAreaData[cityCode]) {
-		return typeof chinaAreaData[cityCode] === 'object'
-			? Object.values(chinaAreaData[cityCode])
-			: [];
-	} else {
-		// 只有两级的情况
-		return [];
-	}
-}
-export default {
-	name: 'mineInfo',
-	data() {
-		return {
-			dateTime: new Date(),
-			birthday: '选择生日',
-			addressPickerShow: false,
-			address: '', //地址
-			occupationInput:'',//职业
-			areaInput:'',//详细地址
-			email:'',//邮箱
-			addressColumns: [
-				{
-					values: provinces
-				},
-				{
-					values: getCities('北京市')
-				},
-				{
-					values: getAreas('北京市', '市辖区')
-				}
-			],
-			vipInfo: '',
-			ifSex: 1, //性别
-			ImgNull: this.$store.state.ImgNull
-		};
-	},
-	created: function() {
-		this.$store.commit('showBottomNav', {
-			isShow: false
-		});
-		api.getVipDetail({
-			data: {
-				openid: this.$store.state.uid
-			}
-		}).then(res => {
-			res.data.vip.birthdate = res.data.vip.birthdate.split(' ')[0];
-			if (res.data.vip.gender == '男') {
-				this.ifSex = 1;
-			} else {
-				this.ifSex = 2;
-			}
-			if (res.data.flag) {
-				console.log('个人中心', res.data);
-				this.vipInfo = res.data.vip;
-				this.areaInput=res.data.vip.area;
-				this.occupationInput=res.data.vip.job;
-				this.email=res.data.vip.email;
-
-			} else {
-				Toast.text({
-					duration: 1000,
-					message: res.data.msg
-				});
-			}
-		});
-	},
-	mounted() {
-		this.$nextTick(() => {
-			this.$refs.addressPicker.setValues(['北京市', '市辖区', '东城区']);
-		});
-	},
-	methods: {
-		// 保存用户信息
-		submit() {
-			var gender = '';
-			if (this.ifSex == 1) {
-				gender = '男';
-			} else {
-				gender = '女';
-			}
-			if (this.$refs.birthday.innerText == '选择生日') {
-				Toast.text({
-					duration: 1000,
-					message: '请选择生日'
-				});
-				return;
-			}
-			if (this.$refs.address.innerText == '选择省、区、县') {
-				Toast.text({
-					duration: 1000,
-					message: '请选择省、区、县'
-				});
-				return;
-			}
-			if (this.areaInput== '') {
-				Toast.text({
-					duration: 1000,
-					message: '请填写详细地址'
-				});
-				return;
-			}
-			if (this.occupationInput== '') {
-				Toast.text({
-					duration: 1000,
-					message: '请填写职业'
-				});
-				return;
-			}
-			if (this.email == '') {
-				Toast.text({
-					duration: 1000,
-					message: '请填写邮箱'
-				});
-				return;
-			}
-			api.saveVipInfo({
+	export default {
+		name: 'mineInfo',
+		data() {
+			return {
+				dateTime: new Date(),
+				birthday: '选择生日',
+				addressPickerShow: false,
+				address: '', //地址
+				occupationInput: '', //职业
+				areaInput: '', //详细地址
+				email: '', //邮箱
+				addressColumns: [{
+						values: provinces
+					},
+					{
+						values: getCities('北京市')
+					},
+					{
+						values: getAreas('北京市', '市辖区')
+					}
+				],
+				vipInfo: '',
+				ifSex: 1, //性别
+				ImgNull: this.$store.state.ImgNull
+			};
+		},
+		created: function() {
+			this.$store.commit('showBottomNav', {
+				isShow: false
+			});
+			api.getVipDetail({
 				data: {
-					openid: this.$store.state.uid,
-					gender: gender,
-					birthdate: this.$refs.birthday.innerText,
-					address: this.$refs.address.innerText,
-					area: this.areaInput,
-					job: this.occupationInput,
-					email: this.email
+					openid: this.$store.state.uid
 				}
 			}).then(res => {
+				res.data.vip.birthdate = res.data.vip.birthdate.split(' ')[0];
+				if (res.data.vip.gender == '男') {
+					this.ifSex = 1;
+				} else {
+					this.ifSex = 2;
+				}
 				if (res.data.flag) {
-					console.log('保存信息', res.data);
-					Toast.text({
-						duration: 1000,
-						message: '保存成功'
-					});
+					console.log('个人中心', res.data);
+					this.vipInfo = res.data.vip;
+					this.areaInput = res.data.vip.area;
+					this.occupationInput = res.data.vip.job;
+					this.email = res.data.vip.email;
+
 				} else {
 					Toast.text({
 						duration: 1000,
@@ -260,53 +189,127 @@ export default {
 				}
 			});
 		},
+		mounted() {
+			this.$nextTick(() => {
+				this.$refs.addressPicker.setValues(['北京市', '市辖区', '东城区']);
+			});
+		},
+		methods: {
+			// 保存用户信息
+			submit() {
+				var gender = '';
+				if (this.ifSex == 1) {
+					gender = '男';
+				} else {
+					gender = '女';
+				}
+				if (this.$refs.birthday.innerText == '选择生日') {
+					Toast.text({
+						duration: 1000,
+						message: '请选择生日'
+					});
+					return;
+				}
+				if (this.$refs.address.innerText == '选择省、区、县') {
+					Toast.text({
+						duration: 1000,
+						message: '请选择省、区、县'
+					});
+					return;
+				}
+				if (this.areaInput == '') {
+					Toast.text({
+						duration: 1000,
+						message: '请填写详细地址'
+					});
+					return;
+				}
+				if (this.occupationInput == '') {
+					Toast.text({
+						duration: 1000,
+						message: '请填写职业'
+					});
+					return;
+				}
+				if (this.email == '') {
+					Toast.text({
+						duration: 1000,
+						message: '请填写邮箱'
+					});
+					return;
+				}
+				api.saveVipInfo({
+					data: {
+						openid: this.$store.state.uid,
+						gender: gender,
+						birthdate: this.$refs.birthday.innerText,
+						address: this.$refs.address.innerText,
+						area: this.areaInput,
+						job: this.occupationInput,
+						email: this.email
+					}
+				}).then(res => {
+					if (res.data.flag) {
+						console.log('保存信息', res.data);
+						Toast.text({
+							duration: 1000,
+							message: '保存成功'
+						});
+					} else {
+						Toast.text({
+							duration: 1000,
+							message: res.data.msg
+						});
+					}
+				});
+			},
 
-		// 选择性别
-		sex(res) {
-			this.ifSex = res;
-		},
+			// 选择性别
+			sex(res) {
+				this.ifSex = res;
+			},
 
-		// 选择日期功能
-		openPicker(res) {
-			this.$refs[res].open();
-		},
-		onConfirm(res) {
-			let year = res.getFullYear();
-			let month = res.getMonth() + 1;
-			let date = res.getDate();
-			this.birthday = `${year}-${month}-${date}`;
-		},
-		// 选择日期功能 END
+			// 选择日期功能
+			openPicker(res) {
+				this.$refs[res].open();
+			},
+			onConfirm(res) {
+				let year = res.getFullYear();
+				let month = res.getMonth() + 1;
+				let date = res.getDate();
+				this.birthday = `${year}-${month}-${date}`;
+			},
+			// 选择日期功能 END
 
-		// 选择地区功能
-		PickerShow: function() {
-			this.addressPickerShow = true;
-		},
-		onAddressChange(picker, addressValues, slotIndex) {
-			if (slotIndex === 0) {
-				const cities = getCities(addressValues[0]);
-				picker.setColumnValues(1, cities);
-				picker.setColumnValues(2, getAreas(addressValues[0], cities[0]));
-			} else if (slotIndex === 1) {
-				picker.setColumnValues(2, getAreas(addressValues[0], addressValues[1]));
+			// 选择地区功能
+			PickerShow: function() {
+				this.addressPickerShow = true;
+			},
+			onAddressChange(picker, addressValues, slotIndex) {
+				if (slotIndex === 0) {
+					const cities = getCities(addressValues[0]);
+					picker.setColumnValues(1, cities);
+					picker.setColumnValues(2, getAreas(addressValues[0], cities[0]));
+				} else if (slotIndex === 1) {
+					picker.setColumnValues(2, getAreas(addressValues[0], addressValues[1]));
+				}
+			},
+			confirmAddress(picker) {
+				this.address = picker.getValues();
 			}
 		},
-		confirmAddress(picker) {
-			this.address = picker.getValues();
-		}
-	},
-	filters: {
-		pickerValueFilter(val) {
-			if (Array.isArray(val)) {
-				return val.toString();
-			} else {
-				return '选择省、区、县';
+		filters: {
+			pickerValueFilter(val) {
+				if (Array.isArray(val)) {
+					return val.toString();
+				} else {
+					return '选择省、区、县';
+				}
 			}
 		}
-	}
-};
-// };
+	};
+	// };
 </script>
 <style lang="scss" scoped>
-@import '@/assets/css/mineInfo.scss';
+	@import '@/assets/css/mineInfo.scss';
 </style>

@@ -2,7 +2,7 @@
 	<div class="all">
 		<div class="top2">
 			<p v-if="orderInfo.status == 2">已完成</p>
-			<p v-if="orderInfo.status == 1">未核销</p>
+			<p v-if="orderInfo.status == 1">未完成</p>
 			<p>{{orderInfo.memo}}</p>
 		</div>
 		<div class="doctorName">
@@ -27,7 +27,7 @@
 			</div>
 		</div>
 		<div class="seeBingLi">
-			<div class="seeBingLi-left" @click="goVieaCases">
+			<div class="seeBingLi-left">
 				<p class="fontA">查看病例</p>
 				<p class="fontB"></p>
 				<p class="fontC">View Cases</p>
@@ -107,9 +107,7 @@ export default {
 		});
 	},
 	methods: {
-		goVieaCases: function() {
-			this.$router.push({ name: 'stationingDoctorOrder' });
-		}
+
 	}
 };
 </script>

@@ -118,17 +118,38 @@
 	}
 }
 .imgA {
-	margin-left: calc(3.33rem / 2);
+	margin:0px calc(3.33rem / 2);
+	display:flex;
+	flex-wrap: wrap;
 	&-An {
-		width: calc(13.33rem / 2);
-		height: calc(13.33rem / 2);
-		float: left;
-		margin-right: calc(1.33rem / 2);
-		margin-top: calc(1.33rem / 2);
+		width: 30%;
+		// width: calc(13.33rem / 2);
+		// height: calc(13.33rem / 2);
+		height: 100%;
+		// float: left;
+		// margin-right: calc(1.33rem / 2);
+		// margin-top: calc(1.33rem / 2);
 		> img {
 			width: 100%;
 			height: 100%;
 		}
+	}
+}
+.imgA>div:first-child{
+	margin-left: 0%;
+}
+.imgA>div:nth-child(4){
+	margin-left: 0%;
+}
+.imgBdiv{
+	margin-bottom: calc(2rem / 2);
+	height: calc(13.33rem / 2);
+	width: 30%;
+	margin-left: 5%;
+	position: relative;
+	> img {
+		width: 100%;
+		height: 100%;
 	}
 }
 .buttonA {
@@ -151,4 +172,81 @@ input::-webkit-input-placeholder {
 }
 .listConA {
 	color: #333 !important;
+}
+.DafaultBox{
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(0,0,0,0.7);
+	z-index: 9999;
+}
+.buttonBg{
+	background-color: rgba(0,0,0,0);
+	text-align: center;
+	margin-top:60%; 
+	color: #fff;
+}
+.closeImg{
+   position: absolute;
+   top: 0;
+   right: 0;
+   z-index: 99;
+   width:calc(3rem/2);
+   height:calc(3rem/2);
+   >img{
+	   margin-left: calc(1rem/2);
+	   width:calc(2rem/2);
+	   height:calc(2rem/2)
+   }
+}
+.allBox{
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(0,0,0,0.7);
+	z-index: 999;
+}
+.contentBox{
+	width: 100%;
+	position: absolute;
+	top:30%;
+	height: 40%;
+	background-color: #fff;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	>div{
+		width: 40%;
+		height: 60%;
+		text-align: center;
+		position: relative;
+		>img{
+			width: 100%;
+			height: 100%;
+		}
+	}
+}
+.sCbutton{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 999;
+	opacity: 0;
+}
+.gbBox{
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	// background-color: rgba(0,0,0,0.7);
+	z-index: -91;
 }
